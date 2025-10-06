@@ -21,36 +21,36 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-   <!-- Fast logo preloader with progress -->
-<div class="loader-min" id="loader" aria-hidden="true">
-  <div class="loader-card logo-only lg"> 
-    <span class="logo-glow" aria-hidden="true"></span>
+    <!-- Fast logo preloader with progress -->
+    <div class="loader-min" id="loader" aria-hidden="true">
+      <div class="loader-card logo-only lg">
+        <span class="logo-glow" aria-hidden="true"></span>
 
-    <!-- Dark theme logo -->  
-    <img
-      class="loader-logo dark"
-      src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
-      alt="IEEE SB-MCET"
-      width="220"
-      height="56"
-    />
-    <!-- Light theme logo -->
-    <img
-      class="loader-logo light"
-      src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
-      alt="IEEE SB-MCET"
-      width="220"
-      height="56"
-    />
+        <!-- Dark theme logo -->
+        <img
+          class="loader-logo dark"
+          src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET"
+          width="220"
+          height="56"
+        />
+        <!-- Light theme logo -->
+        <img
+          class="loader-logo light"
+          src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET"
+          width="220"
+          height="56"
+        />
 
-    <div class="min-bar" aria-hidden="true">
-      <span class="min-fill" id="loaderFill" style="width: 0%"></span>
+        <div class="min-bar" aria-hidden="true">
+          <span class="min-fill" id="loaderFill" style="width: 0%"></span>
+        </div>
+        <div class="min-legend">
+          <span id="loaderPct">0%</span>
+        </div>
+      </div>
     </div>
-    <div class="min-legend">
-      <span id="loaderPct">0%</span>
-    </div>
-  </div>
-</div>
     <!-- Progress bar -->
     <div class="progress" id="progress"></div>
 
@@ -58,13 +58,23 @@
     <div class="utility-bar">
       <a href="https://www.ieee.org/" aria-label="IEEE.org">IEEE.org</a>
       <span class="utility-dot"></span>
-      <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" aria-label="IEEE Xplore">IEEE Xplore Digital Library</a>
+      <a
+        href="https://ieeexplore.ieee.org/Xplore/home.jsp"
+        aria-label="IEEE Xplore"
+        >IEEE Xplore Digital Library</a
+      >
       <span class="utility-dot"></span>
-      <a href="https://standards.ieee.org/" aria-label="IEEE Standards">IEEE Standards</a>
+      <a href="https://standards.ieee.org/" aria-label="IEEE Standards"
+        >IEEE Standards</a
+      >
       <span class="utility-dot"></span>
-      <a href="https://spectrum.ieee.org/" aria-label="IEEE Spectrum">IEEE Spectrum Online</a>
+      <a href="https://spectrum.ieee.org/" aria-label="IEEE Spectrum"
+        >IEEE Spectrum Online</a
+      >
       <span class="utility-dot"></span>
-      <a href="https://www.ieee.org/sitemap.html" aria-label="More IEEE Sites">More IEEE Sites</a>
+      <a href="https://www.ieee.org/sitemap.html" aria-label="More IEEE Sites"
+        >More IEEE Sites</a
+      >
     </div>
 
     <!-- Header -->
@@ -134,9 +144,9 @@
             of MCET
           </h1>
           <p class="subtitle">
-            We foster technological growth through hands-on learning, leadership,
-            and collaboration. Dive into our events, projects, and a community
-            built to help you excel.
+            We foster technological growth through hands-on learning,
+            leadership, and collaboration. Dive into our events, projects, and a
+            community built to help you excel.
           </p>
           <div class="hero-cta">
             <a class="btn btn-primary magnetic" href="#events">
@@ -269,7 +279,9 @@
             <div class="live" id="liveNow" data-status="offline">
               <div
                 class="thumb"
-                style="--img: url('https://picsum.photos/seed/live-now/200/200')"
+                style="
+                  --img: url('https://picsum.photos/seed/live-now/200/200');
+                "
               ></div>
               <div class="live-meta">
                 <div class="live-top">
@@ -286,7 +298,9 @@
             <div class="live" id="upCard" data-status="upcoming">
               <div
                 class="thumb"
-                style="--img: url('https://picsum.photos/seed/upcoming/200/200')"
+                style="
+                  --img: url('https://picsum.photos/seed/upcoming/200/200');
+                "
               ></div>
               <div class="live-meta">
                 <div class="live-top">
@@ -336,7 +350,10 @@
             <article class="card event tilt evt">
               <div class="shine"></div>
               <div class="media">
-                <img src="https://picsum.photos/seed/rise/1200/800" alt="RISE" />
+                <img
+                  src="https://picsum.photos/seed/rise/1200/800"
+                  alt="RISE"
+                />
                 <div class="overlay"></div>
               </div>
               <div class="meta">
@@ -536,21 +553,9 @@
       <div class="container">
         <div class="section-head">
           <h2 class="section-title">Meet Our Team (ExeCom)</h2>
-          <a class="btn btn-ghost magnetic" href="#">View Full ExeCom</a>
+          <a class="btn btn-ghost magnetic" href="execom.html">View Full ExeCom</a>
         </div>
         <div class="team" data-reveal>
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/member1/300/300')"
-            ></div>
-            <div>
-              <h4>Vijayalekshmi SV</h4>
-              <div class="role">Student Branch Counsellor</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-
           <div class="card member tilt">
             <div
               class="avatar"
@@ -607,6 +612,18 @@
             <div>
               <h4>Arathy G</h4>
               <div class="role">Treasurer & WIE Rep.</div>
+            </div>
+            <div class="shine"></div>
+          </div>
+
+          <div class="card member tilt">
+            <div
+              class="avatar"
+              style="--img: url('https://picsum.photos/seed/member6/300/300')"
+            ></div>
+            <div>
+              <h4>Gokul GR</h4>
+              <div class="role">Webmaster</div>
             </div>
             <div class="shine"></div>
           </div>
@@ -685,12 +702,31 @@
     </footer>
 
     <!-- Bottom color switcher -->
-    <div class="switcher" id="switcher" role="group" aria-label="Color switcher">
-      <button class="swatch theme" id="switchTheme" title="Toggle theme">🌗</button>
+    <div
+      class="switcher"
+      id="switcher"
+      role="group"
+      aria-label="Color switcher"
+    >
+      <button class="swatch theme" id="switchTheme" title="Toggle theme">
+        🌗
+      </button>
       <button class="swatch ocean" data-preset="ocean" title="Ocean"></button>
-      <button class="swatch violet" data-preset="violet" title="Violet"></button>
-      <button class="swatch sunset" data-preset="sunset" title="Sunset"></button>
-      <button class="swatch emerald" data-preset="emerald" title="Emerald"></button>
+      <button
+        class="swatch violet"
+        data-preset="violet"
+        title="Violet"
+      ></button>
+      <button
+        class="swatch sunset"
+        data-preset="sunset"
+        title="Sunset"
+      ></button>
+      <button
+        class="swatch emerald"
+        data-preset="emerald"
+        title="Emerald"
+      ></button>
       <button class="swatch amber" data-preset="amber" title="Amber"></button>
     </div>
 

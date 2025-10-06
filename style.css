@@ -894,7 +894,7 @@ section {
         rgba(var(--accent-2), 0.24),
         rgba(var(--accent), 0.22)
       ),
-    url("https://picsum.photos/seed/campusmap/1200/800") center/cover no-repeat;
+    url("asset/sb_contact_img.png") center/cover no-repeat;
   position: relative;
 }
 .form {
