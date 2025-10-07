@@ -569,3 +569,16 @@ function applyAccent(preset) {
   // Safety cap if DOMContentLoaded is delayed unusually
   setTimeout(finish, 3000);
 })();
+
+
+  const menuToggle = document.getElementById('menuToggle');
+  const menuLinks = document.getElementById('menuLinks');
+  const mobileUtility = document.getElementById('mobileUtility');
+
+  menuToggle.addEventListener('click', () => {
+    menuLinks.classList.toggle('show');
+    mobileUtility.classList.toggle('show');
+    // Optional animation effect on button
+    menuToggle.textContent = menuLinks.classList.contains('show') ? '✕' : '☰';
+  });
+

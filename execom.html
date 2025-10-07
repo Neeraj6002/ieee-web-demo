@@ -1,775 +1,693 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>ExeCom • IEEE SB-MCET</title>
-    <meta
-      name="description"
-      content="Executive Committee of IEEE SB-MCET — advisors, core
-      committee, chapter leads, and coordinators."
-    />
-    <meta name="theme-color" content="#0f1020" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <!-- Fast logo preloader with progress -->
-    <div class="loader-min" id="loader" aria-hidden="true">
-      <div class="loader-card logo-only lg">
-        <span class="logo-glow" aria-hidden="true"></span>
 
-        <!-- Dark theme logo -->
-        <img
-          class="loader-logo dark"
-          src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
-          alt="IEEE SB-MCET"
-          width="220"
-          height="56"
-        />
-        <!-- Light theme logo -->
-        <img
-          class="loader-logo light"
-          src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
-          alt="IEEE SB-MCET"
-          width="220"
-          height="56"
-        />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ExeCom • IEEE SB-MCET</title>
+  <meta name="description" content="Executive Committee of IEEE SB-MCET — advisors, core
+      committee, chapter leads, and coordinators." />
+  <meta name="theme-color" content="#0f1020" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
 
-        <div class="min-bar" aria-hidden="true">
-          <span class="min-fill" id="loaderFill" style="width: 0%"></span>
+<body>
+  <!-- Fast logo preloader with progress -->
+  <div class="loader-min" id="loader" aria-hidden="true">
+    <div class="loader-card logo-only lg">
+      <span class="logo-glow" aria-hidden="true"></span>
+
+      <!-- Dark theme logo -->
+      <img class="loader-logo dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET"
+        width="220" height="56" />
+      <!-- Light theme logo -->
+      <img class="loader-logo light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET"
+        width="220" height="56" />
+
+      <div class="min-bar" aria-hidden="true">
+        <span class="min-fill" id="loaderFill" style="width: 0%"></span>
+      </div>
+      <div class="min-legend">
+        <span id="loaderPct">0%</span>
+      </div>
+    </div>
+  </div>
+  <!-- Progress bar -->
+  <div class="progress" id="progress"></div>
+
+  <!-- Utility bar -->
+  <div class="utility-bar">
+    <a href="https://www.ieee.org/" aria-label="IEEE.org">IEEE.org</a>
+    <span class="utility-dot"></span>
+    <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" aria-label="IEEE Xplore">IEEE Xplore Digital Library</a>
+    <span class="utility-dot"></span>
+    <a href="https://standards.ieee.org/" aria-label="IEEE Standards">IEEE Standards</a>
+    <span class="utility-dot"></span>
+    <a href="https://spectrum.ieee.org/" aria-label="IEEE Spectrum">IEEE Spectrum Online</a>
+    <span class="utility-dot"></span>
+    <a href="https://www.ieee.org/sitemap.html" aria-label="More IEEE Sites">More IEEE Sites</a>
+  </div>
+
+  <!-- Header -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <!-- Left logo -->
+      <a href="index.html" class="logo logo-left" aria-label="IEEE SB-MCET">
+        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
+        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET logo (light)" width="220" height="56" />
+      </a>
+
+      <nav class="menu">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#yearbook">Yearbook</a>
+        <a href="execom.html" class="active">ExeCom</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <!-- Right logo -->
+      <a href="#" class="logo logo-right" aria-label="IEEE">
+        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="MCET logo (dark)" width="200"
+          height="56" />
+        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="MCET logo (light)" width="200"
+          height="56" />
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <canvas class="hero-canvas" id="space"></canvas>
+    <div class="hero-gradient" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge" data-reveal>
+          <span class="dot"></span>
+          <span>Executive Committee</span>
         </div>
-        <div class="min-legend">
-          <span id="loaderPct">0%</span>
+        <h1 class="title" id="heroTitle">
+          Meet the
+          <span class="gradient">ExeCom</span>
+          powering IEEE SB‑MCET
+        </h1>
+        <p class="subtitle">
+          Advisors, core team, chapter leads, and coordinators — a student-led
+          crew that ships events, projects, and community.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary magnetic" href="#core-2025">
+            Core Committee 2024–25
+            <span aria-hidden="true">⟶</span>
+            <span class="shine"></span>
+          </a>
+          <a class="btn btn-ghost magnetic" href="#chapters">
+            Chapters & Societies
+            <span class="shine"></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="card tilt" data-reveal>
+        <div class="shine"></div>
+        <h3 class="card-title">How we work</h3>
+        <p class="card-text">
+          We plan, execute, and iterate. Open collaboration, transparent
+          roles, and steady momentum — focused on real outcomes.
+        </p>
+        <div class="chips">
+          <span class="chip">Leadership</span>
+          <span class="chip">Inclusion</span>
+          <span class="chip">Accountability</span>
         </div>
       </div>
     </div>
-    <!-- Progress bar -->
-    <div class="progress" id="progress"></div>
+  </section>
 
-    <!-- Utility bar -->
-    <div class="utility-bar">
-      <a href="https://www.ieee.org/" aria-label="IEEE.org">IEEE.org</a>
-      <span class="utility-dot"></span>
-      <a
-        href="https://ieeexplore.ieee.org/Xplore/home.jsp"
-        aria-label="IEEE Xplore"
-        >IEEE Xplore Digital Library</a
-      >
-      <span class="utility-dot"></span>
-      <a href="https://standards.ieee.org/" aria-label="IEEE Standards"
-        >IEEE Standards</a
-      >
-      <span class="utility-dot"></span>
-      <a href="https://spectrum.ieee.org/" aria-label="IEEE Spectrum"
-        >IEEE Spectrum Online</a
-      >
-      <span class="utility-dot"></span>
-      <a href="https://www.ieee.org/sitemap.html" aria-label="More IEEE Sites"
-        >More IEEE Sites</a
-      >
-    </div>
-
-    <!-- Header -->
-    <header class="nav" id="nav">
-      <div class="nav-inner">
-        <!-- Left logo -->
-        <a href="index.html" class="logo logo-left" aria-label="IEEE SB-MCET">
-          <img
-            class="logo-img dark"
-            src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
-            alt="IEEE SB-MCET logo (dark)"
-            width="220"
-            height="56"
-          />
-          <img
-            class="logo-img light"
-            src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
-            alt="IEEE SB-MCET logo (light)"
-            width="220"
-            height="56"
-          />
-        </a>
-
-        <nav class="menu">
-          <a href="about.html">About</a>
-          <a href="events.html">Events</a>
-          <a href="gallery.html">Gallery</a>
-          <a href="index.html#yearbook">Yearbook</a>
-          <a href="execom.html" class="active">ExeCom</a>
-          <a href="contact.html">Contact</a>
-        </nav>
-
-        <!-- Right logo -->
-        <a href="#" class="logo logo-right" aria-label="IEEE">
-          <img
-            class="logo-img dark"
-            src="./IEEE Logos/ieee mb white png.png"
-            alt="MCET logo (dark)"
-            width="200"
-            height="56"
-          />
-          <img
-            class="logo-img light"
-            src="./IEEE Logos/ieee mb black png.png"
-            alt="MCET logo (light)"
-            width="200"
-            height="56"
-          />
-        </a>
+  <!-- Advisors -->
+  <section id="advisors">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Advisory & Faculty</h2>
+        <p class="section-sub">
+          Guidance and mentorship from our Student Branch Counsellors.
+        </p>
       </div>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero">
-      <canvas class="hero-canvas" id="space"></canvas>
-      <div class="hero-gradient" aria-hidden="true"></div>
-
-      <div class="hero-inner">
-        <div>
-          <div class="hero-badge" data-reveal>
-            <span class="dot"></span>
-            <span>Executive Committee</span>
+      <div class="team" data-reveal>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/biju.png')" aria-hidden="true"></div>
+          <div>
+            <h4>Biju G R</h4>
+            <div class="role">Student Branch Counsellor</div>
           </div>
-          <h1 class="title" id="heroTitle">
-            Meet the
-            <span class="gradient">ExeCom</span>
-            powering IEEE SB‑MCET
-          </h1>
-          <p class="subtitle">
-            Advisors, core team, chapter leads, and coordinators — a student-led
-            crew that ships events, projects, and community.
-          </p>
-          <div class="hero-cta">
-            <a class="btn btn-primary magnetic" href="#core-2025">
-              Core Committee 2024–25
-              <span aria-hidden="true">⟶</span>
-              <span class="shine"></span>
-            </a>
-            <a class="btn btn-ghost magnetic" href="#chapters">
-              Chapters & Societies
-              <span class="shine"></span>
-            </a>
-          </div>
-        </div>
-
-        <div class="card tilt" data-reveal>
           <div class="shine"></div>
-          <h3 class="card-title">How we work</h3>
-          <p class="card-text">
-            We plan, execute, and iterate. Open collaboration, transparent
-            roles, and steady momentum — focused on real outcomes.
-          </p>
-          <div class="chips">
-            <span class="chip">Leadership</span>
-            <span class="chip">Inclusion</span>
-            <span class="chip">Accountability</span>
+        </div>
+
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/Shihi miss.png')" aria-hidden="true"></div>
+          <div>
+            <h4>Shiji S R</h4>
+            <div class="role">PES SBC Counsellor</div>
           </div>
+          <div class="shine"></div>
+        </div>
+
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/nishada.png')" aria-hidden="true"></div>
+          <div>
+            <h4>Nishadha S G</h4>
+            <div class="role">WIE SBC Counsellor</div>
+          </div>
+          <div class="shine"></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Advisors -->
-    <section id="advisors">
-      <div class="container">
-        <div class="section-head">
-          <h2 class="section-title">Advisory & Faculty</h2>
-          <p class="section-sub">
-            Guidance and mentorship from our Student Branch Counsellors.
-          </p>
-        </div>
-        <div class="team" data-reveal>
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/advisor2/300/300')"
-              aria-hidden="true"
-            ></div>
-            <div>
-              <h4>Biju G R</h4>
-              <div class="role">Student Branch Counsellor</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/advisor2/300/300')"
-              aria-hidden="true"
-            ></div>
-            <div>
-              <h4>Shiji S R</h4>
-              <div class="role">PES SBC Counsellor</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/advisor2/300/300')"
-              aria-hidden="true"
-            ></div>
-            <div>
-              <h4>Nishadha S G</h4>
-              <div class="role">WIE SBC Counsellor</div>
-            </div>
-            <div class="shine"></div>
-          </div>
+  <section id="core-2025">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Core Committee • 2024–25</h2>
+        <div class="chips">
+          <a class="chip" href="#core-2025">2024–25</a>
+          <a class="chip" href="#past-cores">Past Years</a>
+          <a class="chip" href="#coordinators">Coordinators</a>
         </div>
       </div>
-    </section>
 
-    <!-- Core Committee -->
-    <section id="core-2025">
-      <div class="container">
-        <div class="section-head">
-          <h2 class="section-title">Core Committee • 2024–25</h2>
-          <div class="chips">
-            <a class="chip" href="#core-2025">2024–25</a>
-            <a class="chip" href="#past-cores">Past Years</a>
-            <a class="chip" href="#coordinators">Coordinators</a>
+      <div class="team" data-reveal>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/sameen.jpg')"></div>
+          <div>
+            <h4>Sameen Sardar S</h4>
+            <div class="role">Chairperson</div>
           </div>
+          <div class="shine"></div>
         </div>
 
-        <div class="team" data-reveal>
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/chair/300/300')"
-            ></div>
-            <div>
-              <h4>Sameen Sardar S</h4>
-              <div class="role">Chairperson</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/prx.jpg')"></div>
+          <div>
+            <h4>Prasanth Somakumar Nair</h4>
+            <div class="role">Vice-Chair & LINK Rep.</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/vice/300/300')"
-            ></div>
-            <div>
-              <h4>Prasanth Somakumar Nair</h4>
-              <div class="role">Vice‑Chair & LINK Rep.</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/varun.jpg')"></div>
+          <div>
+            <h4>Varun Vinod</h4>
+            <div class="role">Secretary & CS SBC Chair</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/secretary/300/300')"
-            ></div>
-            <div>
-              <h4>Varun Vinod</h4>
-              <div class="role">Secretary & CS SBC Chair</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/arathy.jpg')"></div>
+          <div>
+            <h4>Arathy G</h4>
+            <div class="role">Treasurer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/treasurer/300/300')"
-            ></div>
-            <div>
-              <h4>Arathy G</h4>
-              <div class="role">Treasurer</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/gr.jpg')"></div>
+          <div>
+            <h4>Gokul GR</h4>
+            <div class="role">Webmaster</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <!-- Extended core roles (placeholders to be updated) -->
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/jointsec/300/300')"
-            ></div>
-            <div>
-              <h4>Gokul GR</h4>
-              <div class="role">Webmaster</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/kk.jpg')"></div>
+          <div>
+            <h4>Kshethra Krishna</h4>
+            <div class="role">WIE Chair & Content Lead</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/techlead/300/300')"
-            ></div>
-            <div>
-              <h4>Kshethra Krishna</h4>
-              <div class="role">WIE Chair & Content Lead</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/shaheen.jpg')"></div>
+          <div>
+            <h4>Muhammad Shaheen S</h4>
+            <div class="role">Program Lead</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/medialead/300/300')"
-            ></div>
-            <div>
-              <h4>Muhammad Shaheen S</h4>
-              <div class="role">Program Lead</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/andudu.jpg')"></div>
+          <div>
+            <h4>Anandu B Kurup</h4>
+            <div class="role">Design Lead</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="
-                --img: url('https://picsum.photos/seed/eventslead/300/300');
-              "
-            ></div>
-            <div>
-              <h4>Anandu B Kurup</h4>
-              <div class="role">Design Lead</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/vivek.jpg')"></div>
+          <div>
+            <h4>Vivekanand V S</h4>
+            <div class="role">Publicity Lead & Student Relations</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="
-                --img: url('https://picsum.photos/seed/eventslead/300/300');
-              "
-            ></div>
-            <div>
-              <h4>Vivekanand V S</h4>
-              <div class="role">Publicity Lead & Student Relations</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/anand.jpg')"></div>
+          <div>
+            <h4>Anand B</h4>
+            <div class="role">MDC Lead</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="
-                --img: url('https://picsum.photos/seed/eventslead/300/300');
-              "
-            ></div>
-            <div>
-              <h4>Anand B</h4>
-              <div class="role">MDC Lead</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/midhun.jpg')"></div>
+          <div>
+            <h4>Midhun Nair R I</h4>
+            <div class="role">Media Lead</div>
           </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="
-                --img: url('https://picsum.photos/seed/eventslead/300/300');
-              "
-            ></div>
-            <div>
-              <h4>Midhun Nair R I</h4>
-              <div class="role">Media Lead</div>
-            </div>
-            <div class="shine"></div>
-          </div>
+          <div class="shine"></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!--General Members-->
-    <section id="chapters">
-      <div class="container">
-        <div class="section-head">
-          <h2 class="section-title">General Members</h2>
-          <p class="section-sub">
-            The people who keep programs moving — operations, design, outreach,
-            content, and beyond.
-          </p>
+  <!--Team Coordinators-->
+  <section id="coordinators">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Team Coordinators</h2>
+        <p class="section-sub">
+          The people who keep programs moving — operations, design, outreach,
+          content, and beyond.
+        </p>
+      </div>
+
+      <div class="team" data-reveal>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/jasi.png')"></div>
+          <div>
+            <h4>Jasi Ansari</h4>
+            <div class="role">
+              Joint Secretary, CS SBC Secretary, Content Curator
+            </div>
+          </div>
+          <div class="shine"></div>
         </div>
 
-        <div class="team" data-reveal>
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/wielead/300/300')"
-            ></div>
-            <div>
-              <h4>Jasi Ansari</h4>
-              <div class="role">
-                Joint Secretary, CS SBC Secretary, Content Curator
-              </div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/vignash.jpg')"></div>
+          <div>
+            <h4>Vignesh Narrayan</h4>
+            <div class="role">PES SBC Secretary & Designer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/raslead/300/300')"
-            ></div>
-            <div>
-              <h4>Vignesh Narrayan</h4>
-              <div class="role">PES SBC Secretary & Designer</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/anagha.png')"></div>
+          <div>
+            <h4>Anagha S H</h4>
+            <div class="role">WIE Vice-Chair & Program Co-ordinator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/cslead/300/300')"
-            ></div>
-            <div>
-              <h4>Anagha S H</h4>
-              <div class="role">WIE Vice-Chair & Program Co-ordinator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/nikhitha.png')"></div>
+          <div>
+            <h4>Nikhita Felix</h4>
+            <div class="role">Designer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Nikhita Felix</h4>
-              <div class="role">Designer</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/sangeet.png')"></div>
+          <div>
+            <h4>Sangeeth K Pradeep</h4>
+            <div class="role">Media Team</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Sangeeth K Pradeep</h4>
-              <div class="role">Media Team</div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/ap.png')"></div>
+          <div>
+            <h4>Anantha Padmanabhan P</h4>
+            <div class="role">
+              CS SBC & Membership Development Co-ordinator
             </div>
-            <div class="shine"></div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Anantha Padmanabhan P</h4>
-              <div class="role">
-                CS SBC & Membership Development Co-ordinator
-              </div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/gautham.png')"></div>
+          <div>
+            <h4>Gauthan Sanker P K</h4>
+            <div class="role">CS Web Master & Designer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Gauthan Sanker P K</h4>
-              <div class="role">CS Web Master & Designer</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/vai.jpg')"></div>
+          <div>
+            <h4>Vaibhav S Prasad</h4>
+            <div class="role">Designer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Vaibhav S Prasad</h4>
-              <div class="role">Designer</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/fardeen.png')"></div>
+          <div>
+            <h4>Fardeensha S</h4>
+            <div class="role">Membership Development Co-ordinator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Fardeensha S</h4>
-              <div class="role">Membership Development Co-ordinator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/naina.png')"></div>
+          <div>
+            <h4>Naina Mariam Anish</h4>
+            <div class="role">Publicity Co-ordinator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Naina Mariam Anish</h4>
-              <div class="role">Publicity Co-ordinator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/gowrip.png')"></div>
+          <div>
+            <h4>Gowri P</h4>
+            <div class="role">PES SBC Vice-Chair & Program Co-ordinator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Gowri P</h4>
-              <div class="role">PES SBC Vice-Chair & Program Co-ordinator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/gowrisd.png')"></div>
+          <div>
+            <h4>Gowri SD</h4>
+            <div class="role">WIE Secretary & Content Curator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Gowri SD</h4>
-              <div class="role">WIE Secretary & Content Curator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/neeraj.png')"></div>
+          <div>
+            <h4>Neeraj J</h4>
+            <div class="role">WIE Webmaster & Designer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Neeraj J</h4>
-              <div class="role">WIE Webmaster & Designer</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/sanjana.png')"></div>
+          <div>
+            <h4>Sanjana S S</h4>
+            <div class="role">Designer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Sanjana S S</h4>
-              <div class="role">Designer</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/sameera.png')"></div>
+          <div>
+            <h4>Sameerah</h4>
+            <div class="role">Program Co-ordinator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Sameerah</h4>
-              <div class="role">Program Co-ordinator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/sha.png')"></div>
+          <div>
+            <h4>Muhammed Sha</h4>
+            <div class="role">Program Co-ordinator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Muhammed Sha</h4>
-              <div class="role">Program Co-ordinator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/adhi.png')"></div>
+          <div>
+            <h4>Adithiynath S</h4>
+            <div class="role">Designer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Adithiynath S</h4>
-              <div class="role">Designer</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/aiswariya.png')"></div>
+          <div>
+            <h4>Aiswariya</h4>
+            <div class="role">Publicity Co-ordinator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Aiswariya</h4>
-              <div class="role">Publicity Co-ordinator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/aswini.png')"></div>
+          <div>
+            <h4>Aswini S Nair</h4>
+            <div class="role">Content Curator</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Aswini S Nair</h4>
-              <div class="role">Content Curator</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/babu.png')"></div>
+          <div>
+            <h4>Chandana Babu</h4>
+            <div class="role">Media Team</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Chandana Babu</h4>
-              <div class="role">Media Team</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/sameera.png')"></div>
+          <div>
+            <h4>Amruthapriya</h4>
+            <div class="role">Media Team</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Amruthapriya</h4>
-              <div class="role">Media Team</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/ciya.png')"></div>
+          <div>
+            <h4>Ciya Shine</h4>
+            <div class="role"></div>
           </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/spslead/300/300')"
-            ></div>
-            <div>
-              <h4>Ciya Shine</h4>
-              <div class="role"></div>
-            </div>
-            <div class="shine"></div>
-          </div>
+          <div class="shine"></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Chapters & Societies -->
-    <section id="coordinators">
-      <div class="container">
-        <div class="section-head">
-          <h2 class="section-title">Team Coordinators</h2>
-          <p class="section-sub">
-            Focused tracks enabling depth across domains and interests.
-          </p>
-        </div>
 
-        <div class="team" data-reveal>
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/pr/300/300')"
-            ></div>
-            <div>
-              <h4>Firstname Lastname</h4>
-              <div class="role">Public Relations</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/design/300/300')"
-            ></div>
-            <div>
-              <h4>Firstname Lastname</h4>
-              <div class="role">Design & Brand</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/web/300/300')"
-            ></div>
-            <div>
-              <h4>Firstname Lastname</h4>
-              <div class="role">Web & Platforms</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/logi/300/300')"
-            ></div>
-            <div>
-              <h4>Firstname Lastname</h4>
-              <div class="role">Logistics & Ops</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/editorial/300/300')"
-            ></div>
-            <div>
-              <h4>Firstname Lastname</h4>
-              <div class="role">Editorial & Outreach</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/finance/300/300')"
-            ></div>
-            <div>
-              <h4>Firstname Lastname</h4>
-              <div class="role">Finance & Sponsorships</div>
-            </div>
-            <div class="shine"></div>
-          </div>
-        </div>
+  <!-- Chapters & Societies -->
+  <!-- WIE -->
+  <section id="chapters">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">WIE ExeCom</h2>
+        <p class="section-sub">
+          Focused tracks enabling depth across domains and interests.
+        </p>
       </div>
-    </section>
-
-    <!-- Past cores (compact) -->
-    <section id="past-cores">
-      <div class="container">
-        <div class="section-head">
-          <h2 class="section-title">Past Executive Committees</h2>
-          <p class="section-sub">
-            A nod to the teams who built the foundation and momentum.
-          </p>
+      <div class="team" data-reveal>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/nishada.png')"></div>
+          <div>
+            <h4>Nishadha S G</h4>
+            <div class="role">WIE SBC Counsellor</div>
+          </div>
+          <div class="shine"></div>
         </div>
 
-        <div class="split">
-          <div class="card media-card tilt" data-reveal>
-            <div
-              class="media-img"
-              style="
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/kk.jpg')"></div>
+          <div>
+            <h4>Kshethra Krishna</h4>
+            <div class="role">WIE Chair & Content Lead</div>
+          </div>
+          <div class="shine"></div>
+        </div>
+
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/anagha.png')"></div>
+          <div>
+            <h4>Anagha S H</h4>
+            <div class="role">WIE Vice-Chair & Program Co-ordinator</div>
+          </div>
+          <div class="shine"></div>
+        </div>
+
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/gowrisd.png')"></div>
+          <div>
+            <h4>Gowri SD</h4>
+            <div class="role">WIE Secretary & Content Curator</div>
+          </div>
+          <div class="shine"></div>
+        </div>
+
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/neeraj.png')"></div>
+          <div>
+            <h4>Neeraj J</h4>
+            <div class="role">WIE Webmaster & Designer</div>
+          </div>
+          <div class="shine"></div>
+        </div>
+
+      </div>
+  </section>
+
+<!-- PES ExeCom -->
+<section id="chapters">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">PES ExeCom</h2>
+      <p class="section-sub">
+        Focused tracks enabling depth across domains and interests.
+      </p>
+    </div>
+    <div class="team" data-reveal>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/Shihi miss.png')"></div>
+        <div>
+          <h4>Mrs. Shiji S R</h4>
+          <div class="role">PES SBC Advisor</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/anand.jpg')"></div>
+        <div>
+          <h4>Anand B</h4>
+          <div class="role">PES Chair & MDC lead</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/gowrip.png')"></div>
+        <div>
+          <h4>Gowri P</h4>
+          <div class="role">PES SBC Vice-Chair & Program Co-ordinator</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/vignash.jpg')"></div>
+        <div>
+          <h4>Vignesh Narayanan S S</h4>
+          <div class="role">PES SBC Secretary & Designer</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CS ExeCom -->
+<section id="chapters">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">CS ExeCom</h2>
+      <p class="section-sub">
+        Focused tracks enabling depth across domains and interests.
+      </p>
+    </div>
+    <div class="team" data-reveal>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/nishada.png')"></div>
+        <div>
+          <h4>Nishadha S G</h4>
+          <div class="role">CS SBC Advisor</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/varun.jpg')"></div>
+        <div>
+          <h4>Varun Vinod</h4>
+          <div class="role">Secretary & CS SBC Chair</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/ap.png')"></div>
+        <div>
+          <h4>Anathan</h4>
+          <div class="role">CS SBC Vice-Chair & Membership Development Co-ordinator</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/jasi.png')"></div>
+        <div>
+          <h4>Jasi</h4>
+          <div class="role">Joint Secretary, CS SBC Secretary, Content Curator</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+      <div class="card member tilt">
+        <div class="avatar" style="--img: url('members/gautham.png')"></div>
+        <div>
+          <h4>Gautham Shanker</h4>
+          <div class="role">CS WebMaster & Designer</div>
+        </div>
+        <div class="shine"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- Past cores (compact) -->
+  <section id="past-cores">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Past Executive Committees</h2>
+        <p class="section-sub">
+          A nod to the teams who built the foundation and momentum.
+        </p>
+      </div>
+
+      <div class="split">
+        <div class="card media-card tilt" data-reveal>
+          <div class="media-img" style="
                 background: linear-gradient(
                     135deg,
                     rgba(var(--accent-2), 0.22),
@@ -777,28 +695,25 @@
                   ),
                   url('https://picsum.photos/seed/core-2024/1200/800')
                     center/cover no-repeat;
-              "
-            >
-              <div class="shine"></div>
-            </div>
-            <div class="media-body">
-              <h3 class="card-title">ExeCom 2023–24</h3>
-              <p class="section-sub">
-                Expanded chapters, flagship events, and project teams.
-              </p>
-              <div class="hero-cta">
-                <a class="btn btn-ghost magnetic" href="index.html#yearbook">
-                  Yearbook 2023–24
-                  <span class="shine"></span>
-                </a>
-              </div>
+              ">
+            <div class="shine"></div>
+          </div>
+          <div class="media-body">
+            <h3 class="card-title">ExeCom 2023–24</h3>
+            <p class="section-sub">
+              Expanded chapters, flagship events, and project teams.
+            </p>
+            <div class="hero-cta">
+              <a class="btn btn-ghost magnetic" href="index.html#yearbook">
+                Yearbook 2023–24
+                <span class="shine"></span>
+              </a>
             </div>
           </div>
+        </div>
 
-          <div class="card media-card tilt" data-reveal>
-            <div
-              class="media-img"
-              style="
+        <div class="card media-card tilt" data-reveal>
+          <div class="media-img" style="
                 background: linear-gradient(
                     135deg,
                     rgba(var(--accent-3), 0.22),
@@ -806,34 +721,31 @@
                   ),
                   url('https://picsum.photos/seed/core-2023/1200/800')
                     center/cover no-repeat;
-              "
-            >
-              <div class="shine"></div>
-            </div>
-            <div class="media-body">
-              <h3 class="card-title">ExeCom 2022–23</h3>
-              <p class="section-sub">
-                Relaunch momentum, campus-wide workshops, and RISE series.
-              </p>
-              <div class="hero-cta">
-                <a class="btn btn-ghost magnetic" href="index.html#yearbook">
-                  Explore Archives
-                  <span class="shine"></span>
-                </a>
-              </div>
+              ">
+            <div class="shine"></div>
+          </div>
+          <div class="media-body">
+            <h3 class="card-title">ExeCom 2022–23</h3>
+            <p class="section-sub">
+              Relaunch momentum, campus-wide workshops, and RISE series.
+            </p>
+            <div class="hero-cta">
+              <a class="btn btn-ghost magnetic" href="index.html#yearbook">
+                Explore Archives
+                <span class="shine"></span>
+              </a>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- CTA -->
-    <section id="cta">
-      <div class="container">
-        <div class="card media-card" data-reveal>
-          <div
-            class="media-img tilt"
-            style="
+  <!-- CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="card media-card" data-reveal>
+        <div class="media-img tilt" style="
               background: linear-gradient(
                   135deg,
                   rgba(var(--accent-3), 0.22),
@@ -841,79 +753,62 @@
                 ),
                 url('https://picsum.photos/seed/join-excom/1200/800')
                   center/cover no-repeat;
-            "
-          >
-            <div class="shine"></div>
-          </div>
-          <div class="media-body">
-            <h3 class="card-title">Want to be part of ExeCom?</h3>
-            <p class="section-sub">
-              We run open calls for coordinators and leads. Pitch your interest
-              — help us build the next chapter.
-            </p>
-            <div class="hero-cta">
-              <a class="btn btn-primary magnetic" href="index.html#contact">
-                Express Interest
-                <span class="shine"></span>
-              </a>
-              <a class="btn btn-ghost magnetic" href="events.html">
-                Explore Events
-                <span class="shine"></span>
-              </a>
-            </div>
+            ">
+          <div class="shine"></div>
+        </div>
+        <div class="media-body">
+          <h3 class="card-title">Want to be part of ExeCom?</h3>
+          <p class="section-sub">
+            We run open calls for coordinators and leads. Pitch your interest
+            — help us build the next chapter.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary magnetic" href="index.html#contact">
+              Express Interest
+              <span class="shine"></span>
+            </a>
+            <a class="btn btn-ghost magnetic" href="events.html">
+              Explore Events
+              <span class="shine"></span>
+            </a>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <div class="footer-inner">
-        <div class="credit">
-          © <span id="year"></span> IEEE SB-MCET. Made in-house by the
-          Developers of IEEE SB-MCET.
-        </div>
-        <div class="footer-links">
-          <a class="btn btn-ghost magnetic" href="index.html">Home</a>
-          <a class="btn btn-ghost magnetic" href="#core-2025">Core</a>
-          <a class="btn btn-ghost magnetic" href="#chapters">Chapters</a>
-          <a class="btn btn-ghost magnetic" href="#coordinators">Team</a>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Bottom color switcher -->
-    <div
-      class="switcher"
-      id="switcher"
-      role="group"
-      aria-label="Color switcher"
-    >
-      <button class="swatch theme" id="switchTheme" title="Toggle theme">
-        🌗
-      </button>
-      <button class="swatch ocean" data-preset="ocean" title="Ocean"></button>
-      <button
-        class="swatch violet"
-        data-preset="violet"
-        title="Violet"
-      ></button>
-      <button
-        class="swatch sunset"
-        data-preset="sunset"
-        title="Sunset"
-      ></button>
-      <button
-        class="swatch emerald"
-        data-preset="emerald"
-        title="Emerald"
-      ></button>
-      <button class="swatch amber" data-preset="amber" title="Amber"></button>
     </div>
+  </section>
 
-    <!-- Custom cursor -->
-    <div class="cursor" id="cursor"></div>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="credit">
+        © <span id="year"></span> IEEE SB-MCET. Made in-house by the
+        Developers of IEEE SB-MCET.
+      </div>
+      <div class="footer-links">
+        <a class="btn btn-ghost magnetic" href="index.html">Home</a>
+        <a class="btn btn-ghost magnetic" href="#core-2025">Core</a>
+        <a class="btn btn-ghost magnetic" href="#chapters">Chapters</a>
+        <a class="btn btn-ghost magnetic" href="#coordinators">Team</a>
+      </div>
+    </div>
+  </footer>
 
-    <script src="./script.js"></script>
-  </body>
+  <!-- Bottom color switcher -->
+  <div class="switcher" id="switcher" role="group" aria-label="Color switcher">
+    <button class="swatch theme" id="switchTheme" title="Toggle theme">
+      🌗
+    </button>
+    <button class="swatch ocean" data-preset="ocean" title="Ocean"></button>
+    <button class="swatch violet" data-preset="violet" title="Violet"></button>
+    <button class="swatch sunset" data-preset="sunset" title="Sunset"></button>
+    <button class="swatch emerald" data-preset="emerald" title="Emerald"></button>
+    <button class="swatch amber" data-preset="amber" title="Amber"></button>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <script src="./script.js"></script>
+</body>
+
 </html>

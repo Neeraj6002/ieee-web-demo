@@ -77,55 +77,77 @@
       >
     </div>
 
-    <!-- Header -->
-    <header class="nav" id="nav">
-      <div class="nav-inner">
-        <!-- Left logo -->
-        <a href="#" class="logo logo-left" aria-label="IEEE SB-MCET">
-          <img
-            class="logo-img dark"
-            src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
-            alt="IEEE SB-MCET logo (dark)"
-            width="220"
-            height="56"
-          />
-          <img
-            class="logo-img light"
-            src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
-            alt="IEEE SB-MCET logo (light)"
-            width="220"
-            height="56"
-          />
-        </a>
+<!-- Header -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <!-- Left logo -->
+    <div class="logo logo-left">
+      <a href="#" aria-label="IEEE SB-MCET">
+        <img
+          class="logo-img dark"
+          src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET logo (dark)"
+          width="220"
+          height="56"
+        />
+        <img
+          class="logo-img light"
+          src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET logo (light)"
+          width="220"
+          height="56"
+        />
+      </a>
 
-        <nav class="menu">
-          <a href="about.html">About</a>
-          <a href="events.html">Events</a>
-          <a href="gallery.html">Gallery</a>
-          <a href="index.html#yearbook">Yearbook</a>
-          <a href="execom.html">ExeCom</a>
-          <a href="contact.html">Contact</a>
-        </nav>
 
-        <!-- Right logo -->
-        <a href="#" class="logo logo-right" aria-label="IEEE">
-          <img
-            class="logo-img dark"
-            src="./IEEE Logos/ieee mb white png.png"
-            alt="IEEE MB logo (dark)"
-            width="200"
-            height="56"
-          />
-          <img
-            class="logo-img light"
-            src="./IEEE Logos/ieee mb black png.png"
-            alt="IEEE MB logo (light)"
-            width="200"
-            height="56"
-          />
-        </a>
-      </div>
-    </header>
+    <!-- Navigation links -->
+    <nav class="menu" id="menuLinks">
+      <a href="about.html">About</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#yearbook">Yearbook</a>
+      <a href="execom.html">ExeCom</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Right logo -->
+    <a href="#" class="logo logo-right" aria-label="IEEE">
+      <img
+        class="logo-img dark"
+        src="./IEEE Logos/ieee mb white png.png"
+        alt="IEEE MB logo (dark)"
+        width="200"
+        height="56"
+      />
+      <img
+        class="logo-img light"
+        src="./IEEE Logos/ieee mb black png.png"
+        alt="IEEE MB logo (light)"
+        width="200"
+        height="56"
+      />
+    </a>
+  </div>
+      <!-- Hamburger toggle (below logo) -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        ☰
+      </button>
+    </div>
+
+  <!-- Collapsible utility bar (for mobile) -->
+  <div class="utility-bar mobile-utility" id="mobileUtility">
+    <a href="https://www.ieee.org/">IEEE.org</a>
+    <span class="utility-dot"></span>
+    <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+    <span class="utility-dot"></span>
+    <a href="https://standards.ieee.org/">IEEE Standards</a>
+    <span class="utility-dot"></span>
+    <a href="https://spectrum.ieee.org/">IEEE Spectrum</a>
+    <span class="utility-dot"></span>
+    <a href="https://www.ieee.org/sitemap.html">More IEEE Sites</a>
+  </div>
+</header>
+
 
     <!-- Hero -->
     <section class="hero">
@@ -559,7 +581,7 @@
           <div class="card member tilt">
             <div
               class="avatar"
-              style="--img: url('https://picsum.photos/seed/member2/300/300')"
+              style="--img: url('members/biju.png')"
             ></div>
             <div>
               <h4>Biju G R</h4>
@@ -568,65 +590,49 @@
             <div class="shine"></div>
           </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/member3/300/300')"
-            ></div>
-            <div>
-              <h4>Sameen Sardar S</h4>
-              <div class="role">Chairperson</div>
-            </div>
-            <div class="shine"></div>
+         <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/sameen.jpg')"></div>
+          <div>
+            <h4>Sameen Sardar S</h4>
+            <div class="role">Chairperson</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/member4/300/300')"
-            ></div>
-            <div>
-              <h4>Prasanth Somakumar Nair</h4>
-              <div class="role">Vice-Chair & LINK Rep.</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/prx.jpg')"></div>
+          <div>
+            <h4>Prasanth Somakumar Nair</h4>
+            <div class="role">Vice-Chair & LINK Rep.</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/member5/300/300')"
-            ></div>
-            <div>
-              <h4>Varun Vinod</h4>
-              <div class="role">Secretary & Editor</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/varun.jpg')"></div>
+          <div>
+            <h4>Varun Vinod</h4>
+            <div class="role">Secretary & CS SBC Chair</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/member6/300/300')"
-            ></div>
-            <div>
-              <h4>Arathy G</h4>
-              <div class="role">Treasurer & WIE Rep.</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/arathy.jpg')"></div>
+          <div>
+            <h4>Arathy G</h4>
+            <div class="role">Treasurer</div>
           </div>
+          <div class="shine"></div>
+        </div>
 
-          <div class="card member tilt">
-            <div
-              class="avatar"
-              style="--img: url('https://picsum.photos/seed/member6/300/300')"
-            ></div>
-            <div>
-              <h4>Gokul GR</h4>
-              <div class="role">Webmaster</div>
-            </div>
-            <div class="shine"></div>
+        <div class="card member tilt">
+          <div class="avatar" style="--img: url('members/gr.jpg')"></div>
+          <div>
+            <h4>Gokul GR</h4>
+            <div class="role">Webmaster</div>
           </div>
+          <div class="shine"></div>
         </div>
       </div>
     </section>
