@@ -570,7 +570,7 @@ function applyAccent(preset) {
   setTimeout(finish, 3000);
 })();
 
-
+//nav
   const menuToggle = document.getElementById('menuToggle');
   const menuLinks = document.getElementById('menuLinks');
   const mobileUtility = document.getElementById('mobileUtility');
@@ -580,5 +580,22 @@ function applyAccent(preset) {
     mobileUtility.classList.toggle('show');
     // Optional animation effect on button
     menuToggle.textContent = menuLinks.classList.contains('show') ? '✕' : '☰';
+  });
+
+
+  const menu = document.getElementById("menuLinks");
+  const toggle = document.getElementById("menuToggle");
+  const close = document.getElementById("menuClose");
+
+  toggle.addEventListener("click", () => {
+    menu.classList.add("show");
+    toggle.style.display = "none";
+    close.style.display = "block";
+  });
+
+  close.addEventListener("click", () => {
+    menu.classList.remove("show");
+    toggle.style.display = "block";
+    close.style.display = "none";
   });
 

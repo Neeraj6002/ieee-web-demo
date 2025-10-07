@@ -254,6 +254,10 @@ body {
     display: none;
   }
 }
+.mobile-utility{
+  display: none;
+}
+
 
 /* Buttons (with leak fix) */
 .btn {
