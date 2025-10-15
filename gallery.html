@@ -70,58 +70,75 @@
 
 
     <!-- Header -->
-    <header class="nav" id="nav">
-      <div class="nav-inner">
-        <a href="index.html" class="logo logo-left" aria-label="IEEE SB-MCET">
-          <img
-            class="logo-img dark"
-            src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
-            alt="IEEE SB-MCET logo (dark)"
-            width="220"
-            height="56"
-          />
-          <img
-            class="logo-img light"
-            src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
-            alt="IEEE SB-MCET logo (light)"
-            width="220"
-            height="56"
-          />
-        </a>
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <!-- Left logo -->
+      <a href="#" class="logo logo-left" aria-label="IEEE SB-MCET">
+        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
+        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET logo (light)" width="220" height="56" />
+      </a>
 
-        <nav class="menu">
-          <a href="about.html">About</a>
-          <a href="events.html">Events</a>
-          <a href="gallery.html" class="active">Gallery</a>
-          <a href="index.html#yearbook">Yearbook</a>
-          <a href="execom.html">ExeCom</a>
-          <a href="contact.html">Contact</a>
-        </nav>
+      <nav class="menu">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#yearbook">Yearbook</a>
+        <a href="execom.html">ExeCom</a>
+        <a href="contact.html">Contact</a>
+      </nav>
 
-        <a href="#" class="logo logo-right" aria-label="IEEE">
-          <img
-            class="logo-img dark"
-            src="./IEEE Logos/ieee mb white png.png"
-            alt="MCET logo (dark)"
-            width="200"
-            height="56"
-          />
-          <img
-            class="logo-img light"
-            src="./IEEE Logos/ieee mb black png.png"
-            alt="MCET logo (light)"
-            width="200"
-            height="56"
-          />
-        </a>
+      <!-- Right logo -->
+      <a href="#" class="logo logo-right" aria-label="IEEE">
+        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200"
+          height="56" />
+        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200"
+          height="56" />
+      </a>
+    </div>
+
+    <!-- Mobile dropdown (nav + utility) -->
+    <div class="mobile-menu" id="mobileMenu">
+      <nav class="menu-mobile">
+        <a href="about.html">About <span class="arrow">›</span></a>
+        <a href="events.html">Events <span class="arrow">›</span></a>
+        <a href="gallery.html">Gallery <span class="arrow">›</span></a>
+        <a href="index.html#yearbook">Yearbook <span class="arrow">›</span></a>
+        <a href="execom.html">ExeCom <span class="arrow">›</span></a>
+        <a href="contact.html">Contact <span class="arrow">›</span></a>
+      </nav>
+
+      <div class="mobile-utility">
+        <a href="https://www.ieee.org/">IEEE.org</a>
+        <span>•</span>
+        <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+        <span>•</span>
+        <a href="https://standards.ieee.org/">IEEE Standards</a>
+        <span>•</span>
+        <a href="https://spectrum.ieee.org/">IEEE Spectrum</a>
+        <span>•</span>
+        <a href="https://www.ieee.org/sitemap.html">More IEEE Sites</a>
       </div>
-    </header>
+
+      <!-- Close button -->
+      <button class="menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+    </div>
+
+  </header>
 
     <!-- Hero -->
     <section class="hero">
       <canvas class="hero-canvas" id="space"></canvas>
       <div class="hero-gradient" aria-hidden="true"></div>
 
+          <!-- Hamburger button -->
+    <button class="menu-toggle" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    
       <div class="hero-inner">
         <div>
           <div class="hero-badge" data-reveal>
@@ -239,42 +256,42 @@
             <div class="shine"></div>
             <img
               alt="GFX Workshop crowd shot"
-              src="https://picsum.photos/seed/gal-fl-1/1200/800"
+              src="./gallery/gallery (48).jpeg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="GPT 101 session"
-              src="https://picsum.photos/seed/gal-fl-2/1200/800"
+              src="./gallery/gallery (49).jpeg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="CommConnect networking"
-              src="https://picsum.photos/seed/gal-fl-3/1200/800"
+              src="./gallery/gallery (53).jpeg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="BLS awareness demo"
-              src="https://picsum.photos/seed/gal-fl-4/1200/800"
+              src="./gallery/gallery (7).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Esports scrims stage"
-              src="https://picsum.photos/seed/gal-fl-5/1200/800"
+              src="./gallery/gallery (51).jpeg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Flagship keynote"
-              src="https://picsum.photos/seed/gal-fl-6/1200/800"
+              src="./gallery/gallery (52).jpeg"
             />
           </a>
         </div>
@@ -292,42 +309,42 @@
             <div class="shine"></div>
             <img
               alt="Embedded systems lab"
-              src="https://picsum.photos/seed/gal-ws-1/1200/800"
+              src="./gallery/gallery (1).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Prompt engineering session"
-              src="https://picsum.photos/seed/gal-ws-2/1200/800"
+              src="./gallery/gallery (2).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="DSP hands-on"
-              src="https://picsum.photos/seed/gal-ws-3/1200/800"
+              src="./gallery/gallery (3).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Robotics build day"
-              src="https://picsum.photos/seed/gal-ws-4/1200/800"
+              src="./gallery/gallery (4).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="PCB design basics"
-              src="https://picsum.photos/seed/gal-ws-5/1200/800"
+              src="./gallery/gallery (5).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Team debugging session"
-              src="https://picsum.photos/seed/gal-ws-6/1200/800"
+              src="./gallery/gallery (9).jpg"
             />
           </a>
         </div>
@@ -345,42 +362,42 @@
             <div class="shine"></div>
             <img
               alt="WIE panel"
-              src="https://picsum.photos/seed/gal-ch-1/1200/800"
+              src="./gallery/gallery (50).jpeg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="RAS workshop"
-              src="https://picsum.photos/seed/gal-ch-2/1200/800"
+              src="./gallery/gallery (47).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="CS coding jam"
-              src="https://picsum.photos/seed/gal-ch-3/1200/800"
+              src="./gallery/gallery (45).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="SPS demo"
-              src="https://picsum.photos/seed/gal-ch-4/1200/800"
+              src="./gallery/gallery (40).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Mentorship circle"
-              src="https://picsum.photos/seed/gal-ch-5/1200/800"
+              src="./gallery/gallery (39).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Chapter huddle"
-              src="https://picsum.photos/seed/gal-ch-6/1200/800"
+              src="./gallery/gallery (34).jpg"
             />
           </a>
         </div>
@@ -398,42 +415,42 @@
             <div class="shine"></div>
             <img
               alt="Auditorium wide"
-              src="https://picsum.photos/seed/gal-ca-1/1200/800"
+              src="./gallery/gallery (28).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Team photo"
-              src="https://picsum.photos/seed/gal-ca-2/1200/800"
+              src="./gallery/gallery (22).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Volunteers at work"
-              src="https://picsum.photos/seed/gal-ca-3/1200/800"
+              src="./gallery/gallery (21).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Event registration desk"
-              src="https://picsum.photos/seed/gal-ca-4/1200/800"
+              src="./gallery/gallery (19).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Breakout discussion"
-              src="https://picsum.photos/seed/gal-ca-5/1200/800"
+              src="./gallery/gallery (16).jpg"
             />
           </a>
           <a class="tile tilt">
             <div class="shine"></div>
             <img
               alt="Campus evening shot"
-              src="https://picsum.photos/seed/gal-ca-6/1200/800"
+              src="./gallery/gallery (15).jpg"
             />
           </a>
         </div>

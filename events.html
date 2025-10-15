@@ -69,60 +69,73 @@
 
 
     <!-- Header -->
-    <header class="nav" id="nav">
-      <div class="nav-inner">
-        <!-- Left logo -->
-        <a href="index.html" class="logo logo-left" aria-label="IEEE SB-MCET">
-          <img
-            class="logo-img dark"
-            src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
-            alt="IEEE SB-MCET logo (dark)"
-            width="220"
-            height="56"
-          />
-          <img
-            class="logo-img light"
-            src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
-            alt="IEEE SB-MCET logo (light)"
-            width="220"
-            height="56"
-          />
-        </a>
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <!-- Left logo -->
+      <a href="#" class="logo logo-left" aria-label="IEEE SB-MCET">
+        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
+        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET logo (light)" width="220" height="56" />
+      </a>
 
-        <nav class="menu">
-          <a href="about.html">About</a>
-          <a href="events.html" class="active">Events</a>
-          <a href="gallery.html">Gallery</a>
-          <a href="index.html#yearbook">Yearbook</a>
-          <a href="execom.html">ExeCom</a>
-          <a href="contact.html">Contact</a>
-        </nav>
+      <nav class="menu">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#yearbook">Yearbook</a>
+        <a href="execom.html">ExeCom</a>
+        <a href="contact.html">Contact</a>
+      </nav>
 
-        <!-- Right logo -->
-        <a href="#" class="logo logo-right" aria-label="IEEE">
-          <img
-            class="logo-img dark"
-            src="./IEEE Logos/ieee mb white png.png"
-            alt="IEEE MB logo (dark)"
-            width="200"
-            height="56"
-          />
-          <img
-            class="logo-img light"
-            src="./IEEE Logos/ieee mb black png.png"
-            alt="IEEE MB logo (light)"
-            width="200"
-            height="56"
-          />
-        </a>
+      <!-- Right logo -->
+      <a href="#" class="logo logo-right" aria-label="IEEE">
+        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200"
+          height="56" />
+        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200"
+          height="56" />
+      </a>
+    </div>
+
+    <!-- Mobile dropdown (nav + utility) -->
+    <div class="mobile-menu" id="mobileMenu">
+      <nav class="menu-mobile">
+        <a href="about.html">About <span class="arrow">›</span></a>
+        <a href="events.html">Events <span class="arrow">›</span></a>
+        <a href="gallery.html">Gallery <span class="arrow">›</span></a>
+        <a href="index.html#yearbook">Yearbook <span class="arrow">›</span></a>
+        <a href="execom.html">ExeCom <span class="arrow">›</span></a>
+        <a href="contact.html">Contact <span class="arrow">›</span></a>
+      </nav>
+
+      <div class="mobile-utility">
+        <a href="https://www.ieee.org/">IEEE.org</a>
+        <span>•</span>
+        <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+        <span>•</span>
+        <a href="https://standards.ieee.org/">IEEE Standards</a>
+        <span>•</span>
+        <a href="https://spectrum.ieee.org/">IEEE Spectrum</a>
+        <span>•</span>
+        <a href="https://www.ieee.org/sitemap.html">More IEEE Sites</a>
       </div>
-    </header>
+
+      <!-- Close button -->
+      <button class="menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+    </div>
+
+  </header>
 
     <!-- Hero -->
     <section class="hero">
       <canvas class="hero-canvas" id="space"></canvas>
       <div class="hero-gradient" aria-hidden="true"></div>
-
+    <!-- Hamburger button -->
+    <button class="menu-toggle" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
       <div class="hero-inner">
         <div>
           <div class="hero-badge" data-reveal>

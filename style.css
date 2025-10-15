@@ -123,7 +123,8 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 10px 20px;
-  display: grid;
+  display: flex;
+  justify-content: space-between;
   grid-template-columns: 1fr auto 1fr;
   gap: 12px;
   align-items: center;
@@ -132,9 +133,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+
 }
 .logo-left {
   justify-self: start;
+  
 }
 .logo-right {
   justify-self: end;
@@ -258,6 +261,150 @@ body {
   display: none;
 }
 
+/* Hamburger icon */
+.menu-toggle {
+  position: fixed;
+  top: 68px;
+  right: 20px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  z-index: 101;
+  transition: background 0.3s ease;
+    border-radius: 14px;
+  border: 1px solid var(--stroke);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.02)
+  );
+  backdrop-filter: blur(var(--blur));
+}
+
+.menu-toggle:hover {
+  background: rgba(var(--accent-2), 0.1);
+}
+.menu-toggle .bar {
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile dropdown container */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  position: relative;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(12, 16, 34, 0.96);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+  padding: 10px 20px 30px;
+  animation: slideDown 0.4s ease forwards;
+}
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile nav links */
+.menu-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  padding-top: 80px;
+  padding-left: 40px;
+  padding-right: 30px;
+}
+.menu-mobile a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 17px;
+  opacity: 0.9;
+  transition: color 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  
+}
+.menu-mobile a:hover {
+  color: rgba(var(--accent-2), 1);
+}
+
+/* Mobile utility links */
+.mobile-utility {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 30px;
+  border-top: 1px solid var(--stroke);
+  padding-top: 20px;
+  font-size: 13px;
+}
+.mobile-utility a {
+  color: var(--text-dim);
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+/* Close (X) button */
+.menu-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 36px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.menu-close:hover {
+  transform: scale(1.2);
+}
+
+/* Mobile active state */
+.mobile-menu.show {
+  display: flex;
+}
+.mobile-menu{
+  display: n;
+}
+/* Hide desktop nav/utility in mobile */
+@media (max-width: 840px) {
+  .menu,
+  .utility-bar {
+    display: none !important;
+  }
+  .menu-toggle {
+    display: flex;
+  }
+
+}
+/* Hide mobile menu completely on desktop */
+@media (min-width: 1024px) {
+  .mobile-menu {
+    display: none !important;   /* 👈 hide it entirely */
+  }
+
+}
 
 /* Buttons (with leak fix) */
 .btn {
@@ -629,7 +776,7 @@ section {
         rgba(255, 255, 255, 0.12),
         transparent
       ),
-    var(--img, url("https://picsum.photos/seed/live/200/200")) center/cover
+    var(--img, url("IEEE-SB-MCET-website-master\events\bublboria.jpeg")) center/cover
       no-repeat;
 }
 .live .live-top {
@@ -718,12 +865,12 @@ section {
 .event img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transform: scale(1);
   transition: transform 600ms ease;
 }
 .event:hover img {
-  transform: scale(1.08);
+  transform: scale(2.2);
 }
 .event .overlay {
   position: absolute;

@@ -571,31 +571,30 @@ function applyAccent(preset) {
 })();
 
 //nav
-  const menuToggle = document.getElementById('menuToggle');
-  const menuLinks = document.getElementById('menuLinks');
-  const mobileUtility = document.getElementById('mobileUtility');
 
-  menuToggle.addEventListener('click', () => {
-    menuLinks.classList.toggle('show');
-    mobileUtility.classList.toggle('show');
-    // Optional animation effect on button
-    menuToggle.textContent = menuLinks.classList.contains('show') ? '✕' : '☰';
-  });
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const menuClose = document.getElementById("menuClose");
 
+    // Show mobile menu
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.add("show");
+    });
 
-  const menu = document.getElementById("menuLinks");
-  const toggle = document.getElementById("menuToggle");
-  const close = document.getElementById("menuClose");
+    // Hide mobile menu
+    menuClose.addEventListener("click", () => {
+      mobileMenu.classList.remove("show");
+    });
 
-  toggle.addEventListener("click", () => {
-    menu.classList.add("show");
-    toggle.style.display = "none";
-    close.style.display = "block";
-  });
-
-  close.addEventListener("click", () => {
-    menu.classList.remove("show");
-    toggle.style.display = "block";
-    close.style.display = "none";
+    // Optional: close if clicked outside
+    document.addEventListener("click", (event) => {
+      if (
+        !mobileMenu.contains(event.target) &&
+        !menuToggle.contains(event.target)
+      ) {
+        mobileMenu.classList.remove("show");
+      }
+    });
   });
 
