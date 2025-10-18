@@ -580,11 +580,13 @@ function applyAccent(preset) {
     // Show mobile menu
     menuToggle.addEventListener("click", () => {
       mobileMenu.classList.add("show");
+      document.body.style.overflow = "hidden";
     });
 
     // Hide mobile menu
     menuClose.addEventListener("click", () => {
       mobileMenu.classList.remove("show");
+      document.body.style.overflow = "";
     });
 
     // Optional: close if clicked outside
@@ -594,6 +596,7 @@ function applyAccent(preset) {
         !menuToggle.contains(event.target)
       ) {
         mobileMenu.classList.remove("show");
+        document.body.style.overflow = ""
       }
     });
   });

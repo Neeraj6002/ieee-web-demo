@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Gallery • IEEE SB-MCET</title>
+    <meta
+      name="description"
+      content="IEEE SB-MCET Gallery — events, workshops, chapters, and
+      campus moments."
+    />
+    <meta name="theme-color" content="#0f1020" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+       <!-- Fast logo preloader with progress -->
+<div class="loader-min" id="loader" aria-hidden="true">
+    <div class="loader-card logo-only lg"> 
+      <span class="logo-glow" aria-hidden="true"></span>
+  
+      <!-- Dark theme logo -->
+      <img
+        class="loader-logo dark"
+        src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+        alt="IEEE SB-MCET"
+        width="220"
+        height="56"
+      />
+      <!-- Light theme logo -->
+      <img
+        class="loader-logo light"
+        src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+        alt="IEEE SB-MCET"
+        width="220"
+        height="56"
+      />
+  
+      <div class="min-bar" aria-hidden="true">
+        <span class="min-fill" id="loaderFill" style="width: 0%"></span>
+      </div>
+      <div class="min-legend">
+        <span id="loaderPct">0%</span>
+      </div>
+    </div>
+  </div>
+    <!-- Progress bar -->
+    <div class="progress" id="progress"></div>
+
+    <!-- Utility bar -->
+    <div class="utility-bar">
+      <a href="https://www.ieee.org/" aria-label="IEEE.org">IEEE.org</a>
+      <span class="utility-dot"></span>
+      <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" aria-label="IEEE Xplore">IEEE Xplore Digital Library</a>
+      <span class="utility-dot"></span>
+      <a href="https://standards.ieee.org/" aria-label="IEEE Standards">IEEE Standards</a>
+      <span class="utility-dot"></span>
+      <a href="https://spectrum.ieee.org/" aria-label="IEEE Spectrum">IEEE Spectrum Online</a>
+      <span class="utility-dot"></span>
+      <a href="https://www.ieee.org/sitemap.html" aria-label="More IEEE Sites">More IEEE Sites</a>
+    </div>
+
+
+    <!-- Header -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <!-- Left logo -->
+      <a href="#" class="logo logo-left" aria-label="IEEE SB-MCET">
+        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
+        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET logo (light)" width="220" height="56" />
+      </a>
+
+      <nav class="menu">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#yearbook">Yearbook</a>
+        <a href="execom.html">ExeCom</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <!-- Right logo -->
+      <a href="#" class="logo logo-right" aria-label="IEEE">
+        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200"
+          height="56" />
+        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200"
+          height="56" />
+      </a>
+    </div>
+
+    <!-- Mobile dropdown (nav + utility) -->
+    <div class="mobile-menu" id="mobileMenu">
+      <nav class="menu-mobile">
+        <a href="about.html">About <span class="arrow">›</span></a>
+        <a href="events.html">Events <span class="arrow">›</span></a>
+        <a href="gallery.html">Gallery <span class="arrow">›</span></a>
+        <a href="index.html#yearbook">Yearbook <span class="arrow">›</span></a>
+        <a href="execom.html">ExeCom <span class="arrow">›</span></a>
+        <a href="contact.html">Contact <span class="arrow">›</span></a>
+      </nav>
+
+      <div class="mobile-utility">
+        <a href="https://www.ieee.org/">IEEE.org</a>
+        <span>•</span>
+        <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+        <span>•</span>
+        <a href="https://standards.ieee.org/">IEEE Standards</a>
+        <span>•</span>
+        <a href="https://spectrum.ieee.org/">IEEE Spectrum</a>
+        <span>•</span>
+        <a href="https://www.ieee.org/sitemap.html">More IEEE Sites</a>
+      </div>
+
+      <!-- Close button -->
+      <button class="menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+    </div>
+
+  </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <canvas class="hero-canvas" id="space"></canvas>
+      <div class="hero-gradient" aria-hidden="true"></div>
+
+          <!-- Hamburger button -->
+    <button class="menu-toggle" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    
+      <div class="hero-inner">
+        <div>
+          <div class="hero-badge" data-reveal>
+            <span class="dot"></span>
+            <span>MCET Upadte</span>
+          </div>
+          <h1 class="title" id="heroTitle">
+           The 
+            <span class="gradient">Yearbook </span>
+          </h1>
+          <p class="subtitle">
+            Weekly Tech Digest Brought to you by IEEE SB-MCET
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary magnetic" href="#albums">
+              Explore Yearbook
+              <span aria-hidden="true">⟶</span>
+              <span class="shine"></span>
+            </a>
+            <a class="btn btn-ghost magnetic" href="#highlights">
+              Highlights
+              <span class="shine"></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="card tilt" data-reveal>
+          <div class="shine"></div>
+          <h3 class="card-title">About the gallery</h3>
+          <p class="card-text">
+            Curated selections from hands-on sessions, chapter activities, and
+            flagship events — all in one place.
+          </p>
+          <div class="chips">
+            <span class="chip">Workshops</span>
+            <span class="chip">Chapters</span>
+            <span class="chip">Campus</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Albums -->
+    <section id="albums">
+      <div class="container">
+
+
+        <!-- UPADTES -->
+        <div class="section-head" id="chapters" style="margin-top: 24px">
+          <h3 class="section-title">See What Here</h3>
+        </div>
+<div class="gallery-grid" data-reveal>
+  <a href="https://ieee-sbmcet.netlify.app/yearbook/IEEE%20SB%20YearBook%2023-24.pdf" class="tile tilt m-update y-book">
+    <div class="shine"></div>
+    <img src="./asset/yearbook.png" alt="MCET Update Vol 001" />
+  </a>
+</div>
+</div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div class="credit">
+          © <span id="year"></span> IEEE SB-MCET. Made in-house by the
+          Developers of IEEE SB-MCET.
+        </div>
+        <div class="footer-links">
+          <a class="btn btn-ghost magnetic" href="index.html">Home</a>
+          <a class="btn btn-ghost magnetic" href="#albums">Albums</a>
+          <a class="btn btn-ghost magnetic" href="#workshops">Workshops</a>
+          <a class="btn btn-ghost magnetic" href="#campus">Campus</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bottom color switcher -->
+    <div
+      class="switcher"
+      id="switcher"
+      role="group"
+      aria-label="Color switcher"
+    >
+      <button class="swatch theme" id="switchTheme" title="Toggle theme">
+        🌗
+      </button>
+      <button class="swatch ocean" data-preset="ocean" title="Ocean"></button>
+      <button class="swatch violet" data-preset="violet" title="Violet"></button>
+      <button class="swatch sunset" data-preset="sunset" title="Sunset"></button>
+      <button class="swatch emerald" data-preset="emerald" title="Emerald">
+      </button>
+      <button class="swatch amber" data-preset="amber" title="Amber"></button>
+    </div>
+
+    <!-- Custom cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

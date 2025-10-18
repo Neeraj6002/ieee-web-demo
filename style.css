@@ -312,6 +312,7 @@ body {
   padding: 10px 20px 30px;
   animation: slideDown 0.4s ease forwards;
 }
+
 @keyframes slideDown {
   from {
     transform: translateY(-100%);
@@ -327,8 +328,8 @@ body {
 .menu-mobile {
   display: flex;
   flex-direction: column;
-  gap: 34px;
-  padding-top: 80px;
+  gap: 25px;
+  padding-top: 50px;
   padding-left: 40px;
   padding-right: 30px;
 }
@@ -353,7 +354,7 @@ body {
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 20px;
   border-top: 1px solid var(--stroke);
   padding-top: 20px;
   font-size: 13px;
@@ -367,8 +368,8 @@ body {
 /* Close (X) button */
 .menu-close {
   position: absolute;
-  top: 20px;
-  right: 24px;
+  top: 8px;
+  right: 20px;
   background: none;
   border: none;
   color: var(--text);
@@ -865,12 +866,12 @@ section {
 .event img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   transform: scale(1);
   transition: transform 600ms ease;
 }
 .event:hover img {
-  transform: scale(2.2);
+  transform: scale(1.08);
 }
 .event .overlay {
   position: absolute;
@@ -938,8 +939,12 @@ section {
   overflow: hidden;
   display: block;
   position: relative;
-  cursor: zoom-in;
-  aspect-ratio: 3 / 2;
+
+
+}
+.tile{
+    aspect-ratio: 3 / 2;
+      cursor: zoom-in;
 }
 .gallery-grid .tile img {
   width: 100%;
@@ -1018,7 +1023,7 @@ section {
         rgba(var(--accent-3), 0.22),
         rgba(var(--accent-2), 0.2)
       ),
-    url("https://picsum.photos/seed/volume037/1200/800") center/cover no-repeat;
+    url("./asset/WhatsApp Image 2025-10-14 at 6.36.04 PM.jpeg") center/cover no-repeat;
 }
 .media-body .hero-cta {
   margin-top: 10px;
@@ -2069,3 +2074,10 @@ html.is-loading {
 }
 
 
+.m-update{
+    aspect-ratio: 4 / 5;
+      cursor: zoom-in;
+}
+.y-book{
+  cursor: pointer;
+}
