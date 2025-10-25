@@ -990,6 +990,19 @@ display: flex;
   box-shadow: var(--shadow-2);
   border: 1px solid var(--stroke);
 }
+/* Initially show only 6 images */
+.img-select .tile {
+  display: none;
+}
+
+.img-select .tile:nth-child(-n+6) {
+  display: block;
+}
+
+/* When expanded */
+.img-select.show-all .tile {
+  display: block;
+}
 
 /* Yearbook & Updates - compact media cards */
 .split {
@@ -998,6 +1011,7 @@ display: flex;
   gap: 16px;
 
 }
+
 @media (min-width: 840px) {
   .split {
     grid-template-columns: 1fr 1fr;

@@ -21,36 +21,37 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-       <!-- Fast logo preloader with progress -->
-<div class="loader-min" id="loader" aria-hidden="true">
-    <div class="loader-card logo-only lg"> 
-      <span class="logo-glow" aria-hidden="true"></span>
-  
-      <!-- Dark theme logo -->
-      <img
-        class="loader-logo dark"
-        src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
-        alt="IEEE SB-MCET"
-        width="220"
-        height="56"
-      />
-      <!-- Light theme logo -->
-      <img
-        class="loader-logo light"
-        src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
-        alt="IEEE SB-MCET"
-        width="220"
-        height="56"
-      />
-  
-      <div class="min-bar" aria-hidden="true">
-        <span class="min-fill" id="loaderFill" style="width: 0%"></span>
-      </div>
-      <div class="min-legend">
-        <span id="loaderPct">0%</span>
+    <!-- Fast logo preloader with progress -->
+    <div class="loader-min" id="loader" aria-hidden="true">
+      <div class="loader-card logo-only lg"> 
+        <span class="logo-glow" aria-hidden="true"></span>
+    
+        <!-- Dark theme logo -->
+        <img
+          class="loader-logo dark"
+          src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET"
+          width="220"
+          height="56"
+        />
+        <!-- Light theme logo -->
+        <img
+          class="loader-logo light"
+          src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET"
+          width="220"
+          height="56"
+        />
+    
+        <div class="min-bar" aria-hidden="true">
+          <span class="min-fill" id="loaderFill" style="width: 0%"></span>
+        </div>
+        <div class="min-legend">
+          <span id="loaderPct">0%</span>
+        </div>
       </div>
     </div>
-  </div>
+    
     <!-- Progress bar -->
     <div class="progress" id="progress"></div>
 
@@ -67,75 +68,73 @@
       <a href="https://www.ieee.org/sitemap.html" aria-label="More IEEE Sites">More IEEE Sites</a>
     </div>
 
-
     <!-- Header -->
-  <header class="nav" id="nav">
-    <div class="nav-inner">
-      <!-- Left logo -->
-      <a href="#" class="logo logo-left" aria-label="IEEE SB-MCET">
-        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
-          alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
-        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
-          alt="IEEE SB-MCET logo (light)" width="220" height="56" />
-      </a>
+    <header class="nav" id="nav">
+      <div class="nav-inner">
+        <!-- Left logo -->
+        <a href="index.html" class="logo logo-left" aria-label="IEEE SB-MCET">
+          <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+            alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
+          <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+            alt="IEEE SB-MCET logo (light)" width="220" height="56" />
+        </a>
 
-      <nav class="menu">
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="index.html#yearbook">Yearbook</a>
-        <a href="execom.html">ExeCom</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+        <nav class="menu">
+          <a href="about.html">About</a>
+          <a href="events.html">Events</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="index.html#yearbook">Yearbook</a>
+          <a href="execom.html">ExeCom</a>
+          <a href="contact.html">Contact</a>
+        </nav>
 
-      <!-- Right logo -->
-      <a href="#" class="logo logo-right" aria-label="IEEE">
-        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200"
-          height="56" />
-        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200"
-          height="56" />
-      </a>
-    </div>
-
-    <!-- Mobile dropdown (nav + utility) -->
-    <div class="mobile-menu" id="mobileMenu">
-      <nav class="menu-mobile">
-        <a href="about.html">About <span class="arrow">›</span></a>
-        <a href="events.html">Events <span class="arrow">›</span></a>
-        <a href="gallery.html">Gallery <span class="arrow">›</span></a>
-        <a href="index.html#yearbook">Yearbook <span class="arrow">›</span></a>
-        <a href="execom.html">ExeCom <span class="arrow">›</span></a>
-        <a href="contact.html">Contact <span class="arrow">›</span></a>
-      </nav>
-
-      <div class="mobile-utility">
-        <a href="https://www.ieee.org/">IEEE.org</a>
-        <span>•</span>
-        <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
-        <span>•</span>
-        <a href="https://standards.ieee.org/">IEEE Standards</a>
-        <span>•</span>
-        <a href="https://spectrum.ieee.org/">IEEE Spectrum</a>
-        <span>•</span>
-        <a href="https://www.ieee.org/sitemap.html">More IEEE Sites</a>
+        <!-- Right logo -->
+        <a href="#" class="logo logo-right" aria-label="IEEE">
+          <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200"
+            height="56" />
+          <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200"
+            height="56" />
+        </a>
       </div>
 
-      <!-- Close button -->
-      <button class="menu-close" id="menuClose" aria-label="Close menu">&times;</button>
-    </div>
+      <!-- Mobile dropdown (nav + utility) -->
+      <div class="mobile-menu" id="mobileMenu">
+        <nav class="menu-mobile">
+          <a href="about.html">About <span class="arrow">›</span></a>
+          <a href="events.html">Events <span class="arrow">›</span></a>
+          <a href="gallery.html">Gallery <span class="arrow">›</span></a>
+          <a href="index.html#yearbook">Yearbook <span class="arrow">›</span></a>
+          <a href="execom.html">ExeCom <span class="arrow">›</span></a>
+          <a href="contact.html">Contact <span class="arrow">›</span></a>
+        </nav>
 
-  </header>
+        <div class="mobile-utility">
+          <a href="https://www.ieee.org/">IEEE.org</a>
+          <span>•</span>
+          <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+          <span>•</span>
+          <a href="https://standards.ieee.org/">IEEE Standards</a>
+          <span>•</span>
+          <a href="https://spectrum.ieee.org/">IEEE Spectrum</a>
+          <span>•</span>
+          <a href="https://www.ieee.org/sitemap.html">More IEEE Sites</a>
+        </div>
+
+        <!-- Close button -->
+        <button class="menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+      </div>
+    </header>
 
     <!-- Hero -->
     <section class="hero">
       <canvas class="hero-canvas" id="space"></canvas>
       <div class="hero-gradient" aria-hidden="true"></div>
-    <!-- Hamburger button -->
-    <button class="menu-toggle" aria-label="Open menu">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
+      <!-- Hamburger button -->
+      <button class="menu-toggle" aria-label="Open menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
       <div class="hero-inner">
         <div>
           <div class="hero-badge" data-reveal>
@@ -179,7 +178,7 @@
       </div>
     </section>
 
-    <!-- Featured carousel (reuses home carousel JS) -->
+    <!-- Featured carousel -->
     <section id="featured">
       <div class="container">
         <div class="section-head">
@@ -191,118 +190,98 @@
 
         <div class="carousel" data-reveal>
           <div class="arrows">
-            <button class="icon-btn" id="prevEvt" aria-label="Previous">
-              ◀
-            </button>
+            <button class="icon-btn" id="prevEvt" aria-label="Previous">◀</button>
             <button class="icon-btn" id="nextEvt" aria-label="Next">▶</button>
           </div>
           <div class="track" id="eventTrack">
-            <!-- Base cards (JS will clone for infinite loop) -->
             <article class="card event tilt evt">
               <div class="shine"></div>
               <div class="media">
-                <img
-                  src="./events/event (31).png"
-                  alt="GFX Workshop"
-                />
+                <img src="events/event (37).png" alt="AI vs Cyber Security" />
                 <div class="overlay"></div>
               </div>
               <div class="meta">
-                <span class="tag">GFX Workshop</span>
-                <h4 class="card-title-sm">Motion & Visual Storytelling</h4>
-                <p class="section-sub">
-                  Learn design systems, motion basics, and narrative visuals.
-                </p>
+                <span class="tag">AI vs Cyber Security</span>
+                <h4 class="card-title-sm">AI vs Cyber Security</h4>
+                <p class="section-sub">The Cyber Showdown</p>
               </div>
             </article>
 
             <article class="card event tilt evt">
               <div class="shine"></div>
               <div class="media">
-                <img
-                  src="./events/event (38).png"
-                  alt="GPT 101"
-                />
+                <img src="events/event (38).png" alt="Inside ML" />
                 <div class="overlay"></div>
               </div>
               <div class="meta">
-                <span class="tag">GPT 101</span>
-                <h4 class="card-title-sm">LLMs & Prompt Design</h4>
-                <p class="section-sub">
-                  Foundations of large language models and practical prompts.
-                </p>
+                <span class="tag">Inside ML</span>
+                <h4 class="card-title-sm">Inside ML</h4>
+                <p class="section-sub">Learn the Machine learn</p>
               </div>
             </article>
 
             <article class="card event tilt evt">
               <div class="shine"></div>
               <div class="media">
-                <img
-                  src="./events/event (37).png"
-                  alt="RISE Series"
-                />
+                <img src="events/event (28).png" alt="Intro to GitHub" />
                 <div class="overlay"></div>
               </div>
               <div class="meta">
-                <span class="tag">RISE</span>
-                <h4 class="card-title-sm">Skill-Building Series</h4>
-                <p class="section-sub">
-                  Weekly micro-sessions to level up across domains.
-                </p>
+                <span class="tag">GitHub</span>
+                <h4 class="card-title-sm">Intro to GitHub</h4>
+                <p class="section-sub">Start for an open source journey</p>
               </div>
             </article>
 
             <article class="card event tilt evt">
               <div class="shine"></div>
               <div class="media">
-                <img
-                  src="./events/event (36).png"
-                  alt="BLS Awareness"
-                />
+                <img src="events/event (32).png" alt="Innerspace" />
                 <div class="overlay"></div>
               </div>
               <div class="meta">
-                <span class="tag">BLS</span>
-                <h4 class="card-title-sm">Basic Life Support</h4>
-                <p class="section-sub">
-                  Awareness and response — essential first-responder skills.
-                </p>
+                <span class="tag">Innerspace</span>
+                <h4 class="card-title-sm">Innerspace</h4>
+                <p class="section-sub">Psychology in Workspace</p>
               </div>
             </article>
 
             <article class="card event tilt evt">
               <div class="shine"></div>
               <div class="media">
-                <img
-                  src="./events/event (32).png"
-                  alt="CommConnect"
-                />
+                <img src="events/event (26).png" alt="Mastering Exams" />
                 <div class="overlay"></div>
               </div>
               <div class="meta">
-                <span class="tag">CommConnect</span>
-                <h4 class="card-title-sm">Comms & Networking</h4>
-                <p class="section-sub">
-                  Signals to systems — practical comms for everyone.
-                </p>
+                <span class="tag">Mastering Exams</span>
+                <h4 class="card-title-sm">Mastering Exams</h4>
+                <p class="section-sub">AI Driven productivity solutions</p>
               </div>
             </article>
 
             <article class="card event tilt evt">
               <div class="shine"></div>
               <div class="media">
-                <img
-                  src="./events/event (30).png"
-                  alt="Valorant Scrims"
-                />
+                <img src="events/event (30).png" alt="Inside the Interview" />
                 <div class="overlay"></div>
               </div>
               <div class="meta">
-                <span class="tag">Valorant Scrims</span>
-                <h4 class="card-title-sm">Esports Night</h4>
-                <p class="section-sub">
-                  Team strategy, comms under pressure, and competition.
-                </p>
+                <span class="tag">Inside the Interview</span>
+                <h4 class="card-title-sm">Inside the Interview</h4>
+                <p class="section-sub">Get prepped. Get confident. Get hired.</p>
+              </div>
+            </article>
+
+            <article class="card event tilt evt">
+              <div class="shine"></div>
+              <div class="media">
+                <img src="events/event (29).png" alt="Finacity" />
+                <div class="overlay"></div>
+              </div>
+              <div class="meta">
+                <span class="tag">Finacity</span>
+                <h4 class="card-title-sm">Finacity</h4>
+                <p class="section-sub">The Door to Financial Literacy</p>
               </div>
             </article>
           </div>
@@ -320,7 +299,7 @@
           </p>
         </div>
 
-        <!-- Status cards (integrates with existing live/countdown JS) -->
+        <!-- Status cards -->
         <div class="card" data-reveal>
           <!-- Live Now -->
           <div class="live" id="liveNow" data-status="offline">
@@ -331,16 +310,15 @@
             <div class="live-meta">
               <div class="live-top">
                 <span class="badge" id="liveNowBadge">Live</span>
-                <span class="live-name" id="liveNowName"
-                  >No live events now</span
-                >
+                <span class="live-name" id="liveNowName">No live events now</span>
               </div>
               <div class="live-sub" id="liveNowWhen">—</div>
             </div>
           </div>
 
           <!-- Upcoming with countdown -->
-          <div class="live" id="upCard" data-status="upcoming">
+  <!-- 
+         <div class="live" id="upCard" data-status="upcoming">
             <div
               class="thumb"
               style="--img: url('https://picsum.photos/seed/upcoming-evt/200/200')"
@@ -355,15 +333,17 @@
             <div class="countdown" id="upCountdown">00:00:00</div>
           </div>
         </div>
+ -->
 
-        <!-- Detailed upcoming list -->
-        <div class="split" style="margin-top: 16px">
+       <!-- Detailed upcoming list -->
+       <!--
+         <div class="split" style="margin-top: 16px">
           <div class="card media-card tilt" data-reveal>
             <div
               class="media-img"
               style="background:
                 linear-gradient(135deg, rgba(var(--accent-2),.22), rgba(var(--accent),.18)),
-                url('./events/event\ \(39\).jpeg') center/cover no-repeat;"
+                url('') center/cover no-repeat;"
             >
               <div class="shine"></div>
             </div>
@@ -386,27 +366,24 @@
                   <span class="shine"></span>
                 </a>
               </div>
-            </div>
-          </div>
-
-            </div>
+            </div> 
+-->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Past -->
+    <!-- Past Events -->
     <section id="past">
       <div class="container">
         <div class="section-head">
           <h2 class="section-title">Past Events</h2>
           <p class="section-sub">
-            Explore what we’ve shipped — from campus-wide events to focused
-            workshops.
+            Explore what we've shipped — from campus-wide events to focused workshops.
           </p>
         </div>
 
-        <!-- Simple filters (non-interactive chips for now) -->
+        <!-- Simple filters -->
         <div class="chips" style="margin-bottom: 12px">
           <a class="chip" href="#past">All</a>
           <a class="chip" href="#past">Workshops</a>
@@ -416,496 +393,465 @@
           <a class="chip" href="#past">Comms</a>
         </div>
 
-        <!-- Grid of past event cards (reuse event card style) -->
-<div class="values-grid">
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (1).png" alt="Past Event 1" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 1</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+        <!-- Grid of past event cards -->
+        <div class="values-grid">
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (2).png" alt="Design Workshop" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Design - Like a Pro</h4>
+              <p class="section-sub">Workshop</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (2).png" alt="Past Event 2" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 2</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (3).png" alt="GPT101" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Talk</span>
+              <h4 class="card-title-sm">GPT101</h4>
+              <p class="section-sub">Masters all that you want and more from GPT</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (3).png" alt="Past Event 3" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 3</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (4).png" alt="Empower Her" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Talk</span>
+              <h4 class="card-title-sm">Empower Her</h4>
+              <p class="section-sub">Lady Engineers</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (4).png" alt="Past Event 4" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 4</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (5).png" alt="Comm Connect" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Event</span>
+              <h4 class="card-title-sm">Comm Connect</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (5).png" alt="Past Event 5" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 5</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (6).png" alt="Valorant Scrims" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Gaming</span>
+              <h4 class="card-title-sm">Valorant Scrims</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (6).png" alt="Past Event 6" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 6</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (7).png" alt="IEEE Awareness" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Awareness</span>
+              <h4 class="card-title-sm">IEEE Awareness</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (7).png" alt="Past Event 7" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 7</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (8).png" alt="Enthalpy 2.0" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Event</span>
+              <h4 class="card-title-sm">Enthalpy 2.0</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (8).png" alt="Past Event 8" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 8</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (9).png" alt="Enthalpy 2.0" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Event</span>
+              <h4 class="card-title-sm">Enthalpy 2.0</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (9).png" alt="Past Event 9" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 9</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (10).png" alt="2024 Scholarship" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Scholarship</span>
+              <h4 class="card-title-sm">2024 Scholarship</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-  <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (10).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (12).png" alt="Responsive Web Design" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Responsive Web Design</h4>
+              <p class="section-sub">Workshop</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (11).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (13).png" alt="IEEE Day Quiz" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Quiz</span>
+              <h4 class="card-title-sm">IEEE Day Quiz</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (12).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (14).png" alt="IEEE Membership Development" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Drive</span>
+              <h4 class="card-title-sm">IEEE Membership Development Drive</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (13).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (15).png" alt="Tech Talk" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Talk</span>
+              <h4 class="card-title-sm">Tech Talk</h4>
+              <p class="section-sub">Computer Vision</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (14).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (16).jpg" alt="Training Session" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Training</span>
+              <h4 class="card-title-sm">Training Session</h4>
+              <p class="section-sub">Basic Life Support (BLS)</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (15).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (17).jpg" alt="Internship Program" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Program</span>
+              <h4 class="card-title-sm">Internship Program</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (16).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (18).jpg" alt="Mastering Exams" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Mastering Exams</h4>
+              <p class="section-sub">AI Driven Productivity Solutions</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (17).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (20).jpg" alt="Volunteer Training" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Training</span>
+              <h4 class="card-title-sm">Volunteer Training</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (18).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (21).jpg" alt="Elevate Her" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">WIE</span>
+              <h4 class="card-title-sm">Elevate Her</h4>
+              <p class="section-sub">Break the Bias</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (19).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (22).jpg" alt="LOL Wars" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Fun</span>
+              <h4 class="card-title-sm">LOL Wars</h4>
+              <p class="section-sub">You Laugh, You Lose</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (20).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (24).jpg" alt="RISE" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Event</span>
+              <h4 class="card-title-sm">RISE</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (21).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (25).jpg" alt="Comm Connect 2.0" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Event</span>
+              <h4 class="card-title-sm">Comm Connect 2.0</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (22).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (26).png" alt="Mastering Exams" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Mastering Exams</h4>
+              <p class="section-sub">AI Driven Productivity Solutions</p>
+            </div>
+          </article>
 
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (27).jpg" alt="Hack a Habit" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Hack a Habit</h4>
+              <p class="section-sub">Fix Everyday with Tech</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (24).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (28).png" alt="Intro to GitHub" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Intro to GitHub</h4>
+              <p class="section-sub">IEEE SB-MCET</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (25).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (29).png" alt="Finacity" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Finacity</h4>
+              <p class="section-sub">The Door to Financial Literacy</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (26).jpg" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (30).png" alt="Inside the Interview" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Inside the Interview</h4>
+              <p class="section-sub">Get Prepared. Get Confident. Get Hired.</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (27).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (31).png" alt="HackEthix" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">HackEthix</h4>
+              <p class="section-sub">One Day Workshop on Cyber Security Principles</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (28).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (32).png" alt="Innerspace" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Talk</span>
+              <h4 class="card-title-sm">Innerspace</h4>
+              <p class="section-sub">Psychology in Workspace</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (29).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (33).png" alt="Breakpoint" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Talk</span>
+              <h4 class="card-title-sm">Breakpoint</h4>
+              <p class="section-sub">What After B-Tech</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (30).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (34).png" alt="Standout" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Standout</h4>
+              <p class="section-sub">Resume & LinkedIn Creation Workshop</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (31).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (35).png" alt="AI4HER" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">WIE</span>
+              <h4 class="card-title-sm">AI4HER</h4>
+              <p class="section-sub">AI For Women</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (32).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (36).png" alt="PaperTrial" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">PaperTrial</h4>
+              <p class="section-sub">Coding Ideas Into Words</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (33).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (37).png" alt="AI vs Cyber Security" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Talk</span>
+              <h4 class="card-title-sm">AI vs Cyber Security</h4>
+              <p class="section-sub">The Cyber Showdown</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (34).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (38).png" alt="Inside ML" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">Inside ML</h4>
+              <p class="section-sub">Learn the Machine Learn</p>
+            </div>
+          </article>
 
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (35).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
-
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (36).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
-
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (37).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
-
-    <article class="card event tilt" data-reveal>
-    <div class="shine"></div>
-    <div class="media">
-      <img src="./events/event (38).png" alt="Past Event 10" />
-      <div class="overlay"></div>
-    </div>
-    <div class="meta">
-      <span class="tag">Event</span>
-      <h4 class="card-title-sm">Event 10</h4>
-      <p class="section-sub">IEEE SB-MCET</p>
-    </div>
-  </article>
-
-
-
-</div>
+          <article class="card event tilt" data-reveal>
+            <div class="shine"></div>
+            <div class="media">
+              <img src="./events/event (39).jpeg" alt="BULBORIA" />
+              <div class="overlay"></div>
+            </div>
+            <div class="meta">
+              <span class="tag">Workshop</span>
+              <h4 class="card-title-sm">BULBORIA</h4>
+              <p class="section-sub">One Day Hand-on Workshoop on LED Buld Making</p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
-
 
     <!-- CTA -->
     <section id="cta">
@@ -922,7 +868,7 @@
           <div class="media-body">
             <h3 class="card-title">Want to host a session?</h3>
             <p class="section-sub">
-              Pitch a topic — we’ll help you design, schedule, and ship it to
+              Pitch a topic — we'll help you design, schedule, and ship it to
               the community.
             </p>
             <div class="hero-cta">

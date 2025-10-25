@@ -601,3 +601,20 @@ function applyAccent(preset) {
     });
   });
 
+// gallery show more btn
+// Show More / Show Less functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const showMoreBtn = document.getElementById('showMoreBtn');
+  const galleryGrid = document.querySelector('.gallery-grid');
+  
+  showMoreBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    galleryGrid.classList.toggle('show-all');
+    
+    if (galleryGrid.classList.contains('show-all')) {
+      showMoreBtn.innerHTML = 'View Less <span class="shine"></span>';
+    } else {
+      showMoreBtn.innerHTML = 'View More <span class="shine"></span>';
+    }
+  });
+});
