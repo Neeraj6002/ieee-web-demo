@@ -653,7 +653,7 @@ section {
 }
 .section-sub {
   color: var(--text-dim);
-  max-width: 60ch;
+  max-width: 58ch;
   font-size: 14px;
 }
 .event-p{
