@@ -64,6 +64,7 @@ body {
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
+  
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(
@@ -72,9 +73,11 @@ body {
     rgba(var(--accent), 0.8)
   );
   border-radius: 999px;
+
 }
 ::-webkit-scrollbar-track {
   background: transparent;
+    z-index: 10000;
 }
 
 /* Utility bar */
@@ -792,7 +795,7 @@ display: flex;
         rgba(255, 255, 255, 0.12),
         transparent
       ),
-    var(--img, url("IEEE-SB-MCET-website-master\events\bublboria.jpeg")) center/cover
+    var(--img, url("IEEE-SB-MCET-website-master/events/bublboria.jpeg")) center/cover
       no-repeat;
 }
 .live .live-top {
@@ -1052,7 +1055,7 @@ display: flex;
         rgba(var(--accent-3), 0.22),
         rgba(var(--accent-2), 0.2)
       ),
-    url("./asset/WhatsApp Image 2025-10-14 at 6.36.04 PM.jpeg") center/cover no-repeat;
+    url("./asset/MCET UPDATES.png") center/cover no-repeat;
 }
 .media-body .hero-cta {
   margin-top: 10px;
