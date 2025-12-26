@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sitemap • IEEE SB-MCET</title>
+  <meta name="description" content="Complete sitemap of IEEE SB-MCET website with all pages and sections." />
+  <meta name="theme-color" content="#0f1020" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <!-- Fast logo preloader with progress -->
+  <div class="loader-min" id="loader" aria-hidden="true">
+    <div class="loader-card logo-only lg">
+      <span class="logo-glow" aria-hidden="true"></span>
+
+      <!-- Dark theme logo -->
+      <img class="loader-logo dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET"
+        width="220" height="56" />
+      <!-- Light theme logo -->
+      <img class="loader-logo light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET"
+        width="220" height="56" />
+
+      <div class="min-bar" aria-hidden="true">
+        <span class="min-fill" id="loaderFill" style="width: 0%"></span>
+      </div>
+      <div class="min-legend">
+        <span id="loaderPct">0%</span>
+      </div>
+    </div>
+  </div>
+  <!-- Progress bar -->
+  <div class="progress" id="progress"></div>
+
+  <!-- Utility bar -->
+  <div class="utility-bar">
+    <a href="https://www.ieee.org/" aria-label="IEEE.org">IEEE.org</a>
+    <span class="utility-dot"></span>
+    <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" aria-label="IEEE Xplore">IEEE Xplore Digital Library</a>
+    <span class="utility-dot"></span>
+    <a href="https://standards.ieee.org/" aria-label="IEEE Standards">IEEE Standards</a>
+    <span class="utility-dot"></span>
+    <a href="https://spectrum.ieee.org/" aria-label="IEEE Spectrum">IEEE Spectrum Online</a>
+    <span class="utility-dot"></span>
+    <a href="https://www.ieee.org/sitemap.html" aria-label="More IEEE Sites">More IEEE Sites</a>
+  </div>
+
+  <!-- Header -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <!-- Left logo -->
+      <a href="index.html" class="logo logo-left" aria-label="IEEE SB-MCET">
+        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
+        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET logo (light)" width="220" height="56" />
+      </a>
+
+      <nav class="menu">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#yearbook">Yearbook</a>
+        <a href="execom.html">ExeCom</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <!-- Right logo -->
+      <a href="#" class="logo logo-right" aria-label="IEEE">
+        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200"
+          height="56" />
+        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200"
+          height="56" />
+      </a>
+    </div>
+
+    <!-- Mobile dropdown (nav + utility) -->
+    <div class="mobile-menu" id="mobileMenu">
+      <nav class="menu-mobile">
+        <a href="about.html">About <span class="arrow">›</span></a>
+        <a href="events.html">Events <span class="arrow">›</span></a>
+        <a href="gallery.html">Gallery <span class="arrow">›</span></a>
+        <a href="index.html#yearbook">Yearbook <span class="arrow">›</span></a>
+        <a href="execom.html">ExeCom <span class="arrow">›</span></a>
+        <a href="contact.html">Contact <span class="arrow">›</span></a>
+      </nav>
+
+      <div class="mobile-utility">
+        <a href="https://www.ieee.org/">IEEE.org</a>
+        <span>•</span>
+        <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+        <span>•</span>
+        <a href="https://standards.ieee.org/">IEEE Standards</a>
+        <span>•</span>
+        <a href="https://spectrum.ieee.org/">IEEE Spectrum</a>
+        <span>•</span>
+        <a href="https://www.ieee.org/sitemap.html">More IEEE Sites</a>
+      </div>
+
+      <!-- Close button -->
+      <button class="menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <canvas class="hero-canvas" id="space"></canvas>
+    <div class="hero-gradient" aria-hidden="true"></div>
+    <!-- Hamburger button -->
+    <button class="menu-toggle" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge" data-reveal>
+          <span class="dot"></span>
+          <span>Navigation</span>
+        </div>
+        <h1 class="title" id="heroTitle">
+          Website <span class="gradient">Sitemap</span>
+        </h1>
+        <p class="subtitle">
+          Explore all pages and sections of IEEE SB-MCET website.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sitemap Section -->
+  <section class="sitemap-section">
+    <div class="container">
+      <div class="sitemap-grid" data-reveal>
+        
+        <!-- Main Pages -->
+        <div class="sitemap-column">
+          <h3 class="sitemap-category">
+            <i class="fas fa-home"></i> Main Pages
+          </h3>
+          <ul class="sitemap-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Community -->
+        <div class="sitemap-column">
+          <h3 class="sitemap-category">
+            <i class="fas fa-users"></i> Community
+          </h3>
+          <ul class="sitemap-list">
+            <li><a href="execom.html">Executive Committee</a></li>
+            <li><a href="execom.html#advisors">Advisory & Faculty</a></li>
+            <li><a href="execom.html#core-2025">Core Committee 2024–25</a></li>
+            <li><a href="execom.html#leads">Team Leads</a></li>
+            <li><a href="execom.html#coordinators">Team Coordinators</a></li>
+            <li><a href="execom.html#chapters">Chapters & Societies</a></li>
+            <li><a href="index.html#yearbook">Yearbook</a></li>
+          </ul>
+        </div>
+
+        <!-- Updates & Resources -->
+        <div class="sitemap-column">
+          <h3 class="sitemap-category">
+            <i class="fas fa-newspaper"></i> Updates & Resources
+          </h3>
+          <ul class="sitemap-list">
+            <li><a href="mcetupdate.html">Latest Updates</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal & Info -->
+        <div class="sitemap-column">
+          <h3 class="sitemap-category">
+            <i class="fas fa-file-alt"></i> Legal & Information
+          </h3>
+          <ul class="sitemap-list">
+            <li><a href="policies.html">Privacy Policy</a></li>
+            <li><a href="policies.html">Terms of Service</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+          </ul>
+        </div>
+
+        <!-- External Resources -->
+        <div class="sitemap-column">
+          <h3 class="sitemap-category">
+            <i class="fas fa-external-link-alt"></i> External Resources
+          </h3>
+          <ul class="sitemap-list">
+            <li><a href="https://www.ieee.org/" target="_blank">IEEE.org</a></li>
+            <li><a href="https://ieeexplore.ieee.org/" target="_blank">IEEE Xplore Digital Library</a></li>
+            <li><a href="https://standards.ieee.org/" target="_blank">IEEE Standards</a></li>
+            <li><a href="https://spectrum.ieee.org/" target="_blank">IEEE Spectrum Online</a></li>
+          </ul>
+        </div>
+
+        <!-- Social Media -->
+        <div class="sitemap-column">
+          <h3 class="sitemap-category">
+            <i class="fas fa-share-alt"></i> Follow Us
+          </h3>
+          <ul class="sitemap-list">
+            <li><a href="https://www.linkedin.com/company/ieee-sb-mcet/" target="_blank">LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/ieee_sb_mcet/" target="_blank">Instagram</a></li>
+            <li><a href="https://www.youtube.com/@ieeesbmcet" target="_blank">YouTube</a></li>
+            <li><a href="https://wa.me/919876543210" target="_blank">WhatsApp</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Quick Links Card -->
+      <div class="sitemap-quick-links" data-reveal>
+        <h2 class="quick-links-title">Quick Navigation</h2>
+        <p class="quick-links-subtitle">Jump to frequently visited sections</p>
+        <div class="quick-links-grid">
+          <a href="index.html" class="quick-link-card">
+            <i class="fas fa-star"></i>
+            <span>Homepage</span>
+          </a>
+          <a href="events.html" class="quick-link-card">
+            <i class="fas fa-calendar"></i>
+            <span>Upcoming Events</span>
+          </a>
+          <a href="execom.html" class="quick-link-card">
+            <i class="fas fa-id-badge"></i>
+            <span>Meet the Team</span>
+          </a>
+          <a href="gallery.html" class="quick-link-card">
+            <i class="fas fa-images"></i>
+            <span>Photo Gallery</span>
+          </a>
+          <a href="contact.html" class="quick-link-card">
+            <i class="fas fa-envelope"></i>
+            <span>Get in Touch</span>
+          </a>
+          <a href="about.html" class="quick-link-card">
+            <i class="fas fa-info-circle"></i>
+            <span>Learn More</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="modern-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET" width="160" height="40" />
+          <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET" width="160" height="40" />
+        </div>
+        <p class="footer-tagline">Empowering innovation and excellence through technology and collaboration.</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/company/ieee-sb-mcet/" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://www.instagram.com/ieee_sb_mcet/" class="social-icon" aria-label="Instagram" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.youtube.com/@ieeesbmcet" class="social-icon" aria-label="YouTube" title="YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="https://wa.me/919876543210" class="social-icon" aria-label="WhatsApp" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links-grid">
+        <div class="footer-column">
+          <h4 class="footer-title">Explore</h4>
+          <ul class="footer-link-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4 class="footer-title">Community</h4>
+          <ul class="footer-link-list">
+            <li><a href="execom.html">ExeCom</a></li>
+            <li><a href="index.html#yearbook">Yearbook</a></li>
+            <li><a href="mcetupdate.html">Updates</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4 class="footer-title">IEEE</h4>
+          <ul class="footer-link-list">
+            <li><a href="https://www.ieee.org/" target="_blank">IEEE.org</a></li>
+            <li><a href="https://ieeexplore.ieee.org/" target="_blank">IEEE Xplore</a></li>
+            <li><a href="https://standards.ieee.org/" target="_blank">Standards</a></li>
+            <li><a href="https://spectrum.ieee.org/" target="_blank">Spectrum</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-newsletter">
+        <h4 class="footer-title">Stay Updated</h4>
+        <p class="footer-sub">Get the latest news and updates from IEEE SB-MCET.</p>
+        <form class="newsletter-form" name="newsletter" netlify netlify-honeypot="bot-field" onsubmit="handleNewsletterSubmit(event)">
+          <input type="hidden" name="bot-field" />
+          <input type="email" name="email" placeholder="your@email.com" class="newsletter-input" required />
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="footer-divider"></div>
+
+    <!-- Bottom Section: Copyright & Info -->
+    <div class="footer-bottom">
+      <div class="footer-credit">
+        <p>&copy; <span id="year"></span> IEEE SB-MCET. Developed by <a href="https://grafyo.in" target="_blank" class="grafyo-link">Team Grafyo</a> and <strong>IEEE SB-MCET</strong>.</p>
+      </div>
+      <div class="footer-policies">
+        <a href="policies.html">Privacy Policy</a>
+        <span class="divider">•</span>
+        <a href="policies.html">Terms of Service</a>
+        <span class="divider">•</span>
+        <a href="sitemap.html">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bottom color switcher -->
+  <div class="switcher" id="switcher" role="group" aria-label="Color switcher">
+    <button class="swatch theme" id="switchTheme" title="Toggle theme">
+      🌗
+    </button>
+    <button class="swatch ocean" data-preset="ocean" title="Ocean"></button>
+    <button class="swatch violet" data-preset="violet" title="Violet"></button>
+    <button class="swatch sunset" data-preset="sunset" title="Sunset"></button>
+    <button class="swatch emerald" data-preset="emerald" title="Emerald"></button>
+    <button class="swatch amber" data-preset="amber" title="Amber"></button>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <script src="./script.js"></script>
+</body>
+
+</html>

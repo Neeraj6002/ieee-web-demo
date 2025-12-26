@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Policies • IEEE SB-MCET</title>
+  <meta name="description" content="Privacy Policy and Terms of Service for IEEE SB-MCET." />
+  <meta name="theme-color" content="#0f1020" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <!-- Fast logo preloader with progress -->
+  <div class="loader-min" id="loader" aria-hidden="true">
+    <div class="loader-card logo-only lg">
+      <span class="logo-glow" aria-hidden="true"></span>
+
+      <!-- Dark theme logo -->
+      <img class="loader-logo dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET"
+        width="220" height="56" />
+      <!-- Light theme logo -->
+      <img class="loader-logo light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET"
+        width="220" height="56" />
+
+      <div class="min-bar" aria-hidden="true">
+        <span class="min-fill" id="loaderFill" style="width: 0%"></span>
+      </div>
+      <div class="min-legend">
+        <span id="loaderPct">0%</span>
+      </div>
+    </div>
+  </div>
+  <!-- Progress bar -->
+  <div class="progress" id="progress"></div>
+
+  <!-- Utility bar -->
+  <div class="utility-bar">
+    <a href="https://www.ieee.org/" aria-label="IEEE.org">IEEE.org</a>
+    <span class="utility-dot"></span>
+    <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" aria-label="IEEE Xplore">IEEE Xplore Digital Library</a>
+    <span class="utility-dot"></span>
+    <a href="https://standards.ieee.org/" aria-label="IEEE Standards">IEEE Standards</a>
+    <span class="utility-dot"></span>
+    <a href="https://spectrum.ieee.org/" aria-label="IEEE Spectrum">IEEE Spectrum Online</a>
+    <span class="utility-dot"></span>
+    <a href="https://www.ieee.org/sitemap.html" aria-label="More IEEE Sites">More IEEE Sites</a>
+  </div>
+
+  <!-- Header -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <!-- Left logo -->
+      <a href="index.html" class="logo logo-left" aria-label="IEEE SB-MCET">
+        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png"
+          alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
+        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png"
+          alt="IEEE SB-MCET logo (light)" width="220" height="56" />
+      </a>
+
+      <nav class="menu">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#yearbook">Yearbook</a>
+        <a href="execom.html">ExeCom</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <!-- Right logo -->
+      <a href="#" class="logo logo-right" aria-label="IEEE">
+        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200"
+          height="56" />
+        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200"
+          height="56" />
+      </a>
+    </div>
+
+    <!-- Mobile dropdown (nav + utility) -->
+    <div class="mobile-menu" id="mobileMenu">
+      <nav class="menu-mobile">
+        <a href="about.html">About <span class="arrow">›</span></a>
+        <a href="events.html">Events <span class="arrow">›</span></a>
+        <a href="gallery.html">Gallery <span class="arrow">›</span></a>
+        <a href="index.html#yearbook">Yearbook <span class="arrow">›</span></a>
+        <a href="execom.html">ExeCom <span class="arrow">›</span></a>
+        <a href="contact.html">Contact <span class="arrow">›</span></a>
+      </nav>
+
+      <div class="mobile-utility">
+        <a href="https://www.ieee.org/">IEEE.org</a>
+        <span>•</span>
+        <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+        <span>•</span>
+        <a href="https://standards.ieee.org/">IEEE Standards</a>
+        <span>•</span>
+        <a href="https://spectrum.ieee.org/">IEEE Spectrum</a>
+        <span>•</span>
+        <a href="https://www.ieee.org/sitemap.html">More IEEE Sites</a>
+      </div>
+
+      <!-- Close button -->
+      <button class="menu-close" id="menuClose" aria-label="Close menu">&times;</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <canvas class="hero-canvas" id="space"></canvas>
+    <div class="hero-gradient" aria-hidden="true"></div>
+    <!-- Hamburger button -->
+    <button class="menu-toggle" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge" data-reveal>
+          <span class="dot"></span>
+          <span>Legal</span>
+        </div>
+        <h1 class="title" id="heroTitle">
+          Our <span class="gradient">Policies</span>
+        </h1>
+        <p class="subtitle">
+          Privacy Policy and Terms of Service for IEEE SB-MCET.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Policies Section -->
+  <section class="policies-section">
+    <div class="container">
+      <!-- Tab Navigation -->
+      <div class="policies-tabs" data-reveal>
+        <button class="tab-btn active" data-tab="privacy">Privacy Policy</button>
+        <button class="tab-btn" data-tab="terms">Terms of Service</button>
+      </div>
+
+      <!-- Privacy Policy Tab -->
+      <div class="tab-content active" id="privacy" data-reveal>
+        <div class="policies-card">
+          <h2 class="policies-title">Privacy Policy</h2>
+          <p class="policies-updated">Last updated: October 2025</p>
+
+          <div class="policies-body">
+            <h3>1. Introduction</h3>
+            <p>
+              IEEE Student Branch - MCET ("we," "us," "our," or "IEEE SB-MCET") is committed to protecting your privacy. 
+              This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our 
+              website and use our services.
+            </p>
+
+            <h3>2. Information We Collect</h3>
+            <p>We may collect information about you in a variety of ways. The information we may collect on the site includes:</p>
+            <ul>
+              <li><strong>Personal Data:</strong> Name, email address, phone number, and other contact information you voluntarily provide.</li>
+              <li><strong>Device Information:</strong> Browser type, IP address, operating system, and pages visited.</li>
+              <li><strong>Usage Data:</strong> How you interact with our website, including clicks, scroll depth, and time spent.</li>
+              <li><strong>Cookies:</strong> Small files stored on your device to enhance your browsing experience.</li>
+            </ul>
+
+            <h3>3. Use of Your Information</h3>
+            <p>Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. 
+            Specifically, we may use information collected about you via the Site to:</p>
+            <ul>
+              <li>Send periodic emails regarding your newsletter subscription or inquiries.</li>
+              <li>Improve our website and services.</li>
+              <li>Analyze usage patterns and trends.</li>
+              <li>Respond to your inquiries and support requests.</li>
+              <li>Comply with legal obligations.</li>
+            </ul>
+
+            <h3>4. Disclosure of Your Information</h3>
+            <p>We may disclose your information when required by law or when we have a good-faith belief that disclosure 
+            is necessary to protect our rights, your safety, or the safety of others.</p>
+
+            <h3>5. Security of Your Information</h3>
+            <p>We use administrative, technical, and physical security measures to protect your personal information. 
+            However, no method of transmission over the Internet or electronic storage is 100% secure.</p>
+
+            <h3>6. Contact Us</h3>
+            <p>If you have questions or comments about this Privacy Policy, please contact us at:</p>
+            <p>
+              <strong>IEEE Student Branch - MCET</strong><br>
+              Email: <a href="mailto:contact@ieeesbmcet.com">contact@ieeesbmcet.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terms of Service Tab -->
+      <div class="tab-content" id="terms" data-reveal>
+        <div class="policies-card">
+          <h2 class="policies-title">Terms of Service</h2>
+          <p class="policies-updated">Last updated: October 2025</p>
+
+          <div class="policies-body">
+            <h3>1. Agreement to Terms</h3>
+            <p>
+              By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. 
+              If you do not agree to abide by the above, please do not use this service.
+            </p>
+
+            <h3>2. Use License</h3>
+            <p>Permission is granted to temporarily download one copy of the materials (information or software) on our website 
+            for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and 
+            under this license you may not:</p>
+            <ul>
+              <li>Modify or copy the materials.</li>
+              <li>Use the materials for any commercial purpose or for any public display.</li>
+              <li>Attempt to decompile or reverse engineer any software contained on the website.</li>
+              <li>Remove any copyright or other proprietary notations from the materials.</li>
+              <li>Transfer the materials to another person or "mirror" the materials on any other server.</li>
+              <li>Engage in any unauthorized use of the website.</li>
+            </ul>
+
+            <h3>3. Disclaimer</h3>
+            <p>
+              The materials on our website are provided on an 'as is' basis. IEEE SB-MCET makes no warranties, expressed or implied, 
+              and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions 
+              of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+            </p>
+
+            <h3>4. Limitations</h3>
+            <p>
+              In no event shall IEEE SB-MCET or its suppliers be liable for any damages (including, without limitation, damages for loss 
+              of data or profit, or due to business interruption) arising out of the use or inability to use the materials on the website, 
+              even if we or an authorized representative has been notified orally or in writing of the possibility of such damage.
+            </p>
+
+            <h3>5. Accuracy of Materials</h3>
+            <p>
+              The materials appearing on our website could include technical, typographical, or photographic errors. IEEE SB-MCET does not 
+              warrant that any of the materials on our website are accurate, complete, or current. We may make changes to the materials 
+              contained on our website at any time without notice.
+            </p>
+
+            <h3>6. Links</h3>
+            <p>
+              IEEE SB-MCET has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked 
+              site. The inclusion of any link does not imply endorsement by IEEE SB-MCET of the site. Use of any such linked website is at 
+              the user's own risk.
+            </p>
+
+            <h3>7. Modifications</h3>
+            <p>
+              IEEE SB-MCET may revise these terms of service for our website at any time without notice. By using this website, you are 
+              agreeing to be bound by the then current version of these terms of service.
+            </p>
+
+            <h3>8. Governing Law</h3>
+            <p>
+              These terms and conditions are governed by and construed in accordance with the laws of India, and you irrevocably submit 
+              to the exclusive jurisdiction of the courts in that location.
+            </p>
+
+            <h3>9. Contact Us</h3>
+            <p>If you have any questions about these Terms of Service, please contact us at:</p>
+            <p>
+              <strong>IEEE Student Branch - MCET</strong><br>
+              Email: <a href="mailto:contact@ieeesbmcet.com">contact@ieeesbmcet.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="modern-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET" width="160" height="40" />
+          <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET" width="160" height="40" />
+        </div>
+        <p class="footer-tagline">Empowering innovation and excellence through technology and collaboration.</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/company/ieee-sb-mcet/" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://www.instagram.com/ieee_sb_mcet/" class="social-icon" aria-label="Instagram" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.youtube.com/@ieeesbmcet" class="social-icon" aria-label="YouTube" title="YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="https://wa.me/919876543210" class="social-icon" aria-label="WhatsApp" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links-grid">
+        <div class="footer-column">
+          <h4 class="footer-title">Explore</h4>
+          <ul class="footer-link-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4 class="footer-title">Community</h4>
+          <ul class="footer-link-list">
+            <li><a href="execom.html">ExeCom</a></li>
+            <li><a href="index.html#yearbook">Yearbook</a></li>
+            <li><a href="mcetupdate.html">Updates</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4 class="footer-title">IEEE</h4>
+          <ul class="footer-link-list">
+            <li><a href="https://www.ieee.org/" target="_blank">IEEE.org</a></li>
+            <li><a href="https://ieeexplore.ieee.org/" target="_blank">IEEE Xplore</a></li>
+            <li><a href="https://standards.ieee.org/" target="_blank">Standards</a></li>
+            <li><a href="https://spectrum.ieee.org/" target="_blank">Spectrum</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-newsletter">
+        <h4 class="footer-title">Stay Updated</h4>
+        <p class="footer-sub">Get the latest news and updates from IEEE SB-MCET.</p>
+        <form class="newsletter-form" name="newsletter" netlify netlify-honeypot="bot-field" onsubmit="handleNewsletterSubmit(event)">
+          <input type="hidden" name="bot-field" />
+          <input type="email" name="email" placeholder="your@email.com" class="newsletter-input" required />
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="footer-divider"></div>
+
+    <!-- Bottom Section: Copyright & Info -->
+    <div class="footer-bottom">
+      <div class="footer-credit">
+        <p>&copy; <span id="year"></span> IEEE SB-MCET. Developed by <a href="https://grafyo.in" target="_blank" class="grafyo-link">Team Grafyo</a> and <strong>IEEE SB-MCET</strong>.</p>
+      </div>
+      <div class="footer-policies">
+        <a href="policies.html">Privacy Policy</a>
+        <span class="divider">•</span>
+        <a href="policies.html">Terms of Service</a>
+        <span class="divider">•</span>
+        <a href="sitemap.html">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bottom color switcher -->
+  <div class="switcher" id="switcher" role="group" aria-label="Color switcher">
+    <button class="swatch theme" id="switchTheme" title="Toggle theme">
+      🌗
+    </button>
+    <button class="swatch ocean" data-preset="ocean" title="Ocean"></button>
+    <button class="swatch violet" data-preset="violet" title="Violet"></button>
+    <button class="swatch sunset" data-preset="sunset" title="Sunset"></button>
+    <button class="swatch emerald" data-preset="emerald" title="Emerald"></button>
+    <button class="swatch amber" data-preset="amber" title="Amber"></button>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <script src="./script.js"></script>
+  <script>
+    // Tab switching functionality
+    document.querySelectorAll('.tab-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const tabName = this.getAttribute('data-tab');
+        
+        // Remove active class from all tabs and content
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding content
+        this.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+      });
+    });
+  </script>
+</body>
+
+</html>

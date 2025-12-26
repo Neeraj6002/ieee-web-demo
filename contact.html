@@ -13,6 +13,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 
@@ -182,22 +183,23 @@
           <div class="shine"></div>
         </div>
 
-        <form class="card form" data-reveal onsubmit="return false;">
+        <form class="card form" name="contact-page" data-reveal netlify netlify-honeypot="bot-field" onsubmit="handleContactSubmit(event)">
+          <input type="hidden" name="bot-field" />
           <div class="input">
             <label for="name">Your Name</label>
-            <input id="name" name="name" placeholder="John Doe" />
+            <input id="name" name="name" placeholder="John Doe" required />
           </div>
           <div class="input">
             <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@mcet.edu" />
+            <input id="email" name="email" type="email" placeholder="you@mcet.edu" required />
           </div>
           <div class="input">
             <label for="subject">Subject</label>
-            <input id="subject" name="subject" placeholder="e.g., Event proposal, Collaboration, Query" />
+            <input id="subject" name="subject" placeholder="e.g., Event proposal, Collaboration, Query" required />
           </div>
           <div class="input">
             <label for="msg">Message</label>
-            <textarea id="msg" name="message" placeholder="Tell us how we can help..."></textarea>
+            <textarea id="msg" name="message" placeholder="Tell us how we can help..." required></textarea>
           </div>
           <div class="form-actions">
             <button class="btn btn-primary magnetic" type="submit">
@@ -493,17 +495,83 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <div class="credit">
-        © <span id="year"></span> IEEE SB-MCET. Made in-house by the
-        Developers of IEEE SB-MCET.
+  <footer class="modern-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET" width="160" height="40" />
+          <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET" width="160" height="40" />
+        </div>
+        <p class="footer-tagline">Empowering innovation and excellence through technology and collaboration.</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/company/ieee-sb-mcet/" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://www.instagram.com/ieee_sb_mcet/" class="social-icon" aria-label="Instagram" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.youtube.com/@ieeesbmcet" class="social-icon" aria-label="YouTube" title="YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="https://wa.me/919876543210" class="social-icon" aria-label="WhatsApp" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
       </div>
-      <div class="footer-links">
-        <a class="btn btn-ghost magnetic" href="index.html">Home</a>
-        <a class="btn btn-ghost magnetic" href="#reach">Reach Us</a>
-        <a class="btn btn-ghost magnetic" href="#committee">ExeCom</a>
-        <a class="btn btn-ghost magnetic" href="#faqs">FAQs</a>
+
+      <div class="footer-links-grid">
+        <div class="footer-column">
+          <h4 class="footer-title">Explore</h4>
+          <ul class="footer-link-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4 class="footer-title">Community</h4>
+          <ul class="footer-link-list">
+            <li><a href="execom.html">ExeCom</a></li>
+            <li><a href="index.html#yearbook">Yearbook</a></li>
+            <li><a href="mcetupdate.html">Updates</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4 class="footer-title">IEEE</h4>
+          <ul class="footer-link-list">
+            <li><a href="https://www.ieee.org/" target="_blank">IEEE.org</a></li>
+            <li><a href="https://ieeexplore.ieee.org/" target="_blank">IEEE Xplore</a></li>
+            <li><a href="https://standards.ieee.org/" target="_blank">Standards</a></li>
+            <li><a href="https://spectrum.ieee.org/" target="_blank">Spectrum</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-newsletter">
+        <h4 class="footer-title">Stay Updated</h4>
+        <p class="footer-sub">Get the latest news and updates from IEEE SB-MCET.</p>
+        <form class="newsletter-form" name="newsletter" netlify netlify-honeypot="bot-field" onsubmit="handleNewsletterSubmit(event)">
+          <input type="hidden" name="bot-field" />
+          <input type="email" name="email" placeholder="your@email.com" class="newsletter-input" required />
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <div class="footer-bottom">
+      <div class="footer-credit">
+        <p>&copy; <span id="year"></span> IEEE SB-MCET. Developed by <a href="https://grafyo.in" target="_blank" class="grafyo-link">Team Grafyo</a> and <strong>IEEE SB-MCET</strong>.</p>
+      </div>
+      <div class="footer-policies">
+        <a href="policies.html">Privacy Policy</a>
+        <span class="divider">•</span>
+        <a href="policies.html">Terms of Service</a>
+        <span class="divider">•</span>
+        <a href="sitemap.html">Sitemap</a>
       </div>
     </div>
   </footer>

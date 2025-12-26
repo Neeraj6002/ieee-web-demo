@@ -190,6 +190,7 @@ initTilts(document);
   const prev = $("#prevEvt");
   const next = $("#nextEvt");
   let baseWidth = 0;
+  let normalizing = false;
 
   (function prepare() {
     const baseItems = $$(".evt", track);
@@ -205,11 +206,20 @@ initTilts(document);
   })();
 
   function normalizeScroll() {
-    if (!baseWidth) return;
-    if (track.scrollLeft < baseWidth * 0.5) {
-      track.scrollLeft += baseWidth;
-    } else if (track.scrollLeft > baseWidth * 1.5) {
-      track.scrollLeft -= baseWidth;
+    if (!baseWidth || normalizing) return;
+    
+    let targetScroll = track.scrollLeft;
+    
+    if (track.scrollLeft < baseWidth * 0.4) {
+      targetScroll = track.scrollLeft + baseWidth;
+    } else if (track.scrollLeft > baseWidth * 1.6) {
+      targetScroll = track.scrollLeft - baseWidth;
+    }
+    
+    if (targetScroll !== track.scrollLeft) {
+      normalizing = true;
+      track.scrollLeft = targetScroll;
+      normalizing = false;
     }
   }
 
@@ -229,8 +239,18 @@ initTilts(document);
     const onPointerMove = (e) => {
       if (!active) return;
       const dx = e.clientX - startX;
-      track.scrollLeft = startScroll - dx;
-      normalizeScroll();
+      let newScroll = startScroll - dx;
+      
+      // Seamlessly handle infinite scroll during drag
+      if (newScroll < baseWidth * 0.2) {
+        startScroll += baseWidth;
+        newScroll = startScroll - dx;
+      } else if (newScroll > baseWidth * 1.8) {
+        startScroll -= baseWidth;
+        newScroll = startScroll - dx;
+      }
+      
+      track.scrollLeft = newScroll;
     };
     const onPointerUp = (e) => {
       active = false;
@@ -246,11 +266,10 @@ initTilts(document);
     const cardW =
       track.querySelector(".card")?.getBoundingClientRect().width || 280;
     track.scrollLeft += dir * (cardW + 16);
-    normalizeScroll();
+    requestAnimationFrame(normalizeScroll);
   }
   prev && prev.addEventListener("click", () => scrollByAmount(-1));
   next && next.addEventListener("click", () => scrollByAmount(1));
-  track.addEventListener("scroll", normalizeScroll, { passive: true });
 })();
 
 // Gallery lightbox (supports both grid and masonry)
@@ -511,6 +530,76 @@ function applyAccent(preset) {
   root.style.setProperty("--accent-2", p[0]);
   root.style.setProperty("--accent", p[1]);
   root.style.setProperty("--accent-3", p[2]);
+}
+
+/* Active Nav Highlighting */
+(function highlightActiveNav() {
+  const menuLinks = document.querySelectorAll('.menu a');
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  
+  menuLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    const pageName = href.split('/').pop().split('#')[0];
+    const currentPageName = currentPage.split('/').pop();
+    
+    if (pageName === currentPageName || (currentPageName === '' && pageName === 'index.html')) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+/* Netlify Forms Handler */
+async function handleContactSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  
+  try {
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(form)).toString()
+    });
+    
+    if (response.ok) {
+      form.reset();
+      window.history.back();
+    } else {
+      alert("Error submitting form. Please try again.");
+    }
+  } catch (error) {
+    console.error("Form submission error:", error);
+    alert("Error submitting form. Please try again.");
+  }
+}
+
+async function handleNewsletterSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const button = form.querySelector('.newsletter-btn');
+  
+  try {
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(form)).toString()
+    });
+    
+    if (response.ok) {
+      // Replace button with success message
+      const successMessage = document.createElement('div');
+      successMessage.className = 'newsletter-success';
+      successMessage.textContent = '✓ Subscribed';
+      button.replaceWith(successMessage);
+      
+      // Reset form
+      form.reset();
+    } else {
+      alert("Error subscribing. Please try again.");
+    }
+  } catch (error) {
+    console.error("Newsletter subscription error:", error);
+    alert("Error subscribing. Please try again.");
+  }
 }   
 /* Fast logo preloader with progress */
 (function fastLogoPreloader() {
