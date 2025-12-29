@@ -1826,7 +1826,19 @@ display: flex;
     display: none !important;
   }
 }
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .gallery-grid {
+    /* Change from 3 columns to 1 or 2 depending on your preference */
+    grid-template-columns: repeat(1, minmax(0, 1fr)); 
+    gap: 12px; /* Slightly smaller gap for mobile screens */
+  }
 
+  .tile {
+    /* Optional: Change aspect ratio for mobile to make them taller if desired */
+    aspect-ratio: 4 / 3; 
+  }
+}
 /* ============================= */
 /* About page extras and fixes   */
 /* ============================= */
