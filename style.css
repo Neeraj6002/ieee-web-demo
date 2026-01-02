@@ -761,6 +761,117 @@ display: flex;
     flex-direction: column;
   }
 }
+/* Mobile event card interaction styles */
+/* Add this to the end of your style.css file */
+
+@media (max-width: 840px) {
+  /* Make cards tappable */
+  .card.event {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 200ms ease;
+  }
+  
+  /* Ensure meta starts hidden on mobile */
+  .event .meta {
+    transform: translateY(100%);
+    transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  /* Overlay transition for mobile */
+  .event .overlay {
+    background: linear-gradient(to top, rgba(6, 10, 24, 0.3), transparent 50%);
+    transition: background 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  /* Override hover effects on mobile - keep meta hidden */
+  .event:hover .meta {
+    transform: translateY(100%);
+  }
+  
+  .event:hover .overlay {
+    background: linear-gradient(to top, rgba(6, 10, 24, 0.3), transparent 50%);
+  }
+  
+  .event:hover img {
+    transform: scale(1);
+  }
+  
+  .event:hover {
+    transform: translateY(0);
+    box-shadow: 0 20px 50px rgba(78, 141, 255, 0.3);
+  }
+  
+  /* Active state for tap feedback */
+  .event:active {
+    transform: scale(0.98);
+  }
+  
+  /* When meta is visible (tapped) */
+  .event.meta-visible .meta {
+    transform: translateY(0);
+  }
+  
+  .event.meta-visible .overlay {
+    background: linear-gradient(to top, rgba(6, 10, 24, 0.95), rgba(6, 10, 24, 0.7) 60%, rgba(6, 10, 24, 0.4));
+  }
+  
+  /* Show close (X) icon only when meta is visible */
+  .event.meta-visible::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(var(--accent), 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(var(--accent), 0.5);
+    z-index: 3;
+    pointer-events: none;
+    animation: fadeInIcon 300ms ease;
+  }
+  
+  .event.meta-visible::after {
+    content: '✕';
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(var(--accent), 1);
+    z-index: 4;
+    pointer-events: none;
+    animation: fadeInIcon 300ms ease;
+  }
+  
+  @keyframes fadeInIcon {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* Ensure desktop hover behavior is not affected */
+@media (min-width: 841px) {
+  .event::before,
+  .event::after {
+    display: none !important;
+  }
+}
 /* Live/Upcoming blocks */
 .live {
   display: grid;

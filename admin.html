@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEEE SB MCET | Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    :root {
+        --bg-dark: #0a0b10;
+        --sidebar-bg: #12131a;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --accent-blue: #3b82f6;
+        --text-main: #ffffff;
+        --text-dim: #94a3b8;
+        --input-bg: rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', -apple-system, sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        min-height: 100vh;
+    }
+
+    /* Layout */
+    .dashboard-layout {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: var(--sidebar-bg);
+        border-bottom: 1px solid var(--card-border);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 1rem; }
+    .mini-logo { width: 40px; height: 40px; }
+    .header-titles h1 { font-size: 1.2rem; }
+    .header-titles p { font-size: 0.8rem; color: var(--text-dim); }
+
+    .main-container {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 260px;
+        background: var(--sidebar-bg);
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-right: 1px solid var(--card-border);
+    }
+
+    .nav-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    
+    .nav-item {
+        background: transparent;
+        border: none;
+        color: var(--text-dim);
+        padding: 0.8rem 1rem;
+        text-align: left;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .nav-item.active {
+        background: rgba(59, 130, 246, 0.15);
+        color: var(--accent-blue);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .nav-item:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Content Area */
+    .content-area {
+        flex: 1;
+        padding: 2rem;
+        overflow-y: auto;
+    }
+
+    .glass-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .inner-card {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    /* Form Elements */
+    .form-group { margin-bottom: 1.2rem; }
+    
+    label {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        margin-bottom: 0.5rem;
+    }
+
+    input[type="text"], input[type="url"], input[type="number"], textarea, select {
+        width: 100%;
+        background: var(--input-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 6px;
+        padding: 0.75rem;
+        color: white;
+        outline: none;
+    }
+
+    input:focus, textarea:focus {
+        border-color: var(--accent-blue);
+    }
+
+    /* Buttons */
+    .btn-primary, .btn-save {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .btn-reset, .btn-primary-outline {
+        background: transparent;
+        color: white;
+        border: 1px solid var(--card-border);
+        padding: 0.6rem 1.2rem;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .actions { display: flex; gap: 10px; margin-top: 1rem; }
+
+    /* Tables */
+    .data-table {
+        width: 100%;
+        margin-top: 2rem;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+    }
+
+    .data-table th {
+        text-align: left;
+        color: var(--text-dim);
+        padding: 1rem;
+        border-bottom: 1px solid var(--card-border);
+    }
+
+    .data-table td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--card-border);
+    }
+
+    /* Gallery Grid Example */
+   /* Gallery Section Styles */
+.form-inline-row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.form-inline-row .form-item {
+    flex: 1;
+    min-width: 200px;
+}
+
+.gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 columns as seen in screenshot */
+        gap: 15px;
+        margin-top: 2rem;
+    }
+
+    .gallery-card {
+        background: #12131a;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.05);
+        transition: transform 0.2s;
+    }
+
+    .gallery-card img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+    }
+
+    .gallery-card-info {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    .gallery-card-title {
+        color: #94a3b8;
+        margin-bottom: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* THE FLOATING EDIT MODAL (From your screenshot) */
+    .edit-modal-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .edit-modal-content {
+        background: #1a1b23;
+        width: 500px;
+        padding: 2rem;
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .modal-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-image-preview {
+        width: 100%;
+        height: 150px;
+        background: #000;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+.btn-edit {
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 0.85rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-delete {
+    color: #ef4444;
+    text-decoration: none;
+    font-size: 0.85rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Custom File Input to match screenshot */
+.custom-file-upload {
+    background: var(--input-bg);
+    border: 1px solid var(--card-border);
+    padding: 8px;
+    border-radius: 6px;
+    width: 100%;
+    display: block;
+    color: var(--text-dim);
+}
+
+/* ExeCom Specific Styles */
+.execom-section-item {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.execom-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.execom-section-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.execom-section-subtitle {
+    color: var(--text-dimmer);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.execom-members-table {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.execom-members-table th {
+    text-align: left;
+    padding: 0.75rem;
+    color: var(--text-dimmer);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.execom-members-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.badge-order {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--accent-blue);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+</style>
+</head>
+
+<body>
+
+    <!-- Login Page -->
+    <div id="login-page" class="auth-container">
+        <div class="login-card">
+            <h1>IEEE SB MCET Admin</h1>
+            <p>Sign in to manage website content</p>
+            <button id="google-login-btn" class="btn-primary">Sign in with Google</button>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard-layout" style="display: none;">
+        <!-- Top Navigation Bar -->
+        <header class="top-nav">
+            <div class="header-left">
+                <img src="logo.png" alt="IEEE SB MCET Logo" class="mini-logo">
+                <div class="header-titles">
+                    <h1>Admin Panel</h1>
+                    <p>Manage events, gallery, quick links and ExeCom content.</p>
+                </div>
+            </div>
+            <button id="sign-out-btn" class="btn-signout">Sign out</button>
+        </header>
+
+        <!-- Main Container -->
+        <div class="main-container">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <nav class="nav-links">
+                    <button class="nav-item active" data-section="quick-links">Quick Links</button>
+                    <button class="nav-item" data-section="events">Events</button>
+                    <button class="nav-item" data-section="event-highlights">Event Highlights</button>
+                    <button class="nav-item" data-section="gallery">Gallery</button>
+                    <button class="nav-item" data-section="execom">ExeCom</button>
+                    <button class="nav-item" data-section="home-execom">Home ExeCom</button>
+                </nav>
+                <div class="sidebar-footer">
+                    <p id="user-email">loading...</p>
+                    <small>Changes sync instantly across the website.</small>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content-area">
+
+                <!-- Quick Links Section -->
+                <section id="quick-links-section" class="admin-section">
+                    <div class="glass-card">
+                        <h2 class="section-title">Quick Links</h2>
+                        <p class="section-desc">Control the Coming Soon and Live blocks on the home page and events
+                            page.</p>
+
+                        <!-- Coming Soon Block -->
+                        <div class="inner-card">
+                            <h3>Coming Soon</h3>
+                            <p class="subtitle-text">Displayed in Home → Quick Links</p>
+
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" placeholder="CLICK TO CTRL" value="CLICK TO CTRL">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Subtitle</label>
+                                <textarea rows="3" placeholder="on jan 4th 2026">on jan 4th 2026</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Badge</label>
+                                <input type="text" placeholder="Event" value="Event">
+                            </div>
+
+                            <div class="form-group">
+                                <label>CTA Label</label>
+                                <input type="text" placeholder="View details" value="View details">
+                            </div>
+
+                            <div class="form-group">
+                                <label>CTA URL</label>
+                                <input type="url" placeholder="https://" value="https://">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select>
+                                    <option value="active">Active</option>
+                                    <option value="offline">Offline</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" class="file-input">
+                            </div>
+
+                            <div class="actions">
+                                <button class="btn-save">Save</button>
+                                <button class="btn-reset">Reset</button>
+                            </div>
+                        </div>
+
+                        <!-- Live Now Block -->
+                        <div class="inner-card">
+                            <h3>Live Now</h3>
+                            <p class="subtitle-text">Shown when an event is currently live.</p>
+
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" placeholder="Code vs Concrete" value="Code vs Concrete">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Subtitle</label>
+                                <textarea rows="3"
+                                    placeholder="Code Crashes, Concrete Cracks - But Who Crumbles First?">Code Crashes, Concrete Cracks - But Who Crumbles First?</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Badge</label>
+                                <input type="text" placeholder="Coming soon" value="Coming soon">
+                            </div>
+
+                            <div class="form-group">
+                                <label>CTA Label</label>
+                                <input type="text" placeholder="Join now" value="Join now">
+                            </div>
+
+                            <div class="form-group">
+                                <label>CTA URL</label>
+                                <input type="url" placeholder="https://" value="https://">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select>
+                                    <option value="live">Live</option>
+                                    <option value="offline" selected>Offline</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input type="file" class="file-input">
+                            </div>
+
+                            <div class="actions">
+                                <button class="btn-save">Save</button>
+                                <button class="btn-reset">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- Events Section -->
+                <section id="events-section" class="admin-section">
+                    <div class="glass-card">
+                        <div class="section-header-flex">
+                            <div>
+                                <h2 class="section-title">Events</h2>
+                                <p class="section-desc">Add a title, short summary, and mark featured events for the
+                                    home slider.</p>
+                            </div>
+                            <button class="btn-primary-outline" id="new-event-btn">New event</button>
+                        </div>
+
+                        <div class="form-grid-styled">
+                            <div class="form-item">
+                                <label>Title</label>
+                                <input type="text" id="event-title">
+                            </div>
+                            <div class="form-item">
+                                <label>Summary</label>
+                                <textarea id="event-summary"></textarea>
+                            </div>
+                            <div class="form-item">
+                                <label>Featured</label>
+                                <select id="event-featured">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-item">
+                                <label>Cover image</label>
+                                <input type="file" id="event-image" class="file-input">
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button class="btn-save" id="save-event-btn">Save event</button>
+                            <button class="btn-reset" id="clear-event-btn">Clear</button>
+                        </div>
+
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Summary</th>
+                                    <th>Featured</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="events-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Event Highlights Section -->
+                <section id="event-highlights-section" class="admin-section" style="display: none;">
+                    <div class="glass-card">
+                        <h2 class="section-title">Event Highlights</h2>
+                        <p class="section-desc">Manage event highlight cards shown on the events page.</p>
+                        <p style="color: var(--text-dim); margin-top: 2rem;">Event Highlights management coming soon...
+                        </p>
+                    </div>
+                </section>
+    <!-- Gallery Section -->
+            <section id="gallery-section" class="admin-section" style="display: none;">
+    <div class="glass-card">
+        <h2 class="section-title">Gallery</h2>
+        <p class="section-desc">Upload highlights and order them for the gallery grid.</p>
+
+       <div class="form-inline-row" style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+    <div style="flex: 2; min-width: 200px;">
+        <label>Title</label>
+        <input type="text" id="gallery-title" placeholder="Innovation Summit">
+    </div>
+    <div style="flex: 1; min-width: 120px;">
+        <label>Category</label>
+        <input type="text" id="gallery-category" placeholder="Workshops">
+    </div>
+    <div style="flex: 1; min-width: 80px;">
+        <label>Order</label>
+        <input type="number" id="gallery-order" value="1">
+    </div>
+    <div style="flex: 2; min-width: 200px;">
+        <label>Upload Image</label>
+        <input type="file" id="gallery-image" class="custom-file-upload" accept="image/*">
+    </div>
+    <div style="flex: 1; min-width: 120px; align-self: flex-end;">
+        <button class="btn-save" id="gallery-save-btn" style="width: 100%;">Save Item</button>
+    </div>
+</div>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <img src="https://via.placeholder.com/300x200" alt="workshop">
+                <div class="gallery-card-info">
+                    <div class="gallery-card-title">gh workshops</div>
+                    <button class="btn-delete">Delete</button>
+                </div>
+            </div>
+            </div>
+    </div>
+
+    <div id="edit-modal" class="edit-modal-overlay" style="display: none;">
+        <div class="edit-modal-content">
+            <div class="modal-header">
+                <h3>Image Title</h3>
+                <small style="color: var(--text-dim)">workshops/chapters/flagship/campus/all</small>
+            </div>
+            
+            <div class="modal-image-preview">
+                <img src="logo.png" style="height: 50px;" alt="Preview">
+            </div>
+
+            <div class="form-group">
+                <label>Update Title</label>
+                <input type="text" value="Innovation Summit">
+            </div>
+
+            <div class="actions" style="justify-content: flex-end;">
+                <button class="btn-reset" onclick="document.getElementById('edit-modal').style.display='none'">Cancel</button>
+                <button class="btn-save">Save Item</button>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ExeCom Section -->
+<!-- ExeCom Section -->
+<section id="execom-section" class="admin-section" style="display: none;">
+    <div class="glass-card">
+        <h2 class="section-title">ExeCom Page</h2>
+        <p class="section-desc">Update the sections and members shown on execom.html.</p>
+
+        <!-- Section Management -->
+        <div class="inner-card">
+            <h3>Add Section</h3>
+            <p class="subtitle-text">Create a new section group for organizing members.</p>
+
+            <div class="form-group">
+                <label>Section Name</label>
+                <select id="execom-section-name">
+                    <option value="">-- Select Section --</option>
+                    <option value="Advisory & Faculty">Advisory & Faculty</option>
+                    <option value="Core Committee">Core Committee</option>
+                    <option value="Team Leads">Team Leads</option>
+                    <option value="Team Coordinators">Team Coordinators</option>
+                    <option value="WIE-AG ExeCom">WIE-AG ExeCom</option>
+                    <option value="PES ExeCom">PES ExeCom</option>
+                    <option value="CS ExeCom">CS ExeCom</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="execom-section-year" placeholder="Name">
+            </div>
+
+                        <div class="form-group">
+                <label>position</label>
+                <input type="text" id="execom-section-year" placeholder="position">
+            </div>
+
+            <div class="form-group">
+                <label>Section Image</label>
+                <input type="file" id="execom-section-image" class="custom-file-upload" accept="image/*">
+            </div>
+
+            <div class="actions">
+                <button class="btn-save" id="save-section-btn">Save section</button>
+                <button class="btn-reset" id="clear-section-btn">Clear</button>
+            </div>
+        </div>
+
+        <!-- Member Management -->
+
+        <!-- Sections List -->
+        <div id="execom-sections-list">
+            <!-- Sections will be loaded here dynamically -->
+        </div>
+    </div>
+</section>
+
+                <!-- Home ExeCom Section -->
+                <section id="home-execom-section" class="admin-section" style="display: none;">
+                    <div class="glass-card">
+                        <h2 class="section-title">Home ExeCom</h2>
+                        <p class="section-desc">Select which ExeCom members appear on the homepage.</p>
+                        <p style="color: var(--text-dim); margin-top: 2rem;">Home ExeCom selection coming soon...</p>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+    <script>
+        // Section switching functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.admin-section');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Remove active class from all nav items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+
+                    // Add active class to clicked item
+                    item.classList.add('active');
+
+                    // Hide all sections
+                    sections.forEach(section => section.style.display = 'none');
+
+                    // Show the selected section
+                    const sectionId = item.getAttribute('data-section') + '-section';
+                    const targetSection = document.getElementById(sectionId);
+                    if (targetSection) {
+                        targetSection.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
