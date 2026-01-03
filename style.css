@@ -955,6 +955,7 @@ display: flex;
 .carousel {
   position: relative;
   overflow: visible;
+
 }
 .track {
   display: grid;

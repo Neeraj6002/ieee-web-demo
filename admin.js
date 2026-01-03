@@ -1,6 +1,6 @@
 // ============================================
 // FIREBASE CONFIGURATION - COMPLETE ADMIN PANEL
-// Quick Links + Events + Gallery + ExeCom Management
+// Quick Links + Events + Event Highlights + Gallery + ExeCom Management
 // ============================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -66,6 +66,7 @@ const state = {
   editingGalleryId: null,
   editingSectionId: null,
   events: [],
+  eventHighlights: [],
   gallery: [],
   execomSections: [],
   quickLinks: {
@@ -184,6 +185,7 @@ class AuthManager {
     // Load all data
     QuickLinksManager.loadAll();
     EventManager.loadAll();
+    EventHighlightsManager.loadAll();
     GalleryManager.loadAll();
     ExecomManager.loadAll();
   }
@@ -413,16 +415,25 @@ class QuickLinksManager {
 // EVENT MANAGER
 // ============================================
 class EventManager {
+  // Define society configurations
+  static societies = {
+    'CS': { color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.2)', label: 'CS' },
+    'PES': { color: '#10b981', bg: 'rgba(16, 185, 129, 0.2)', label: 'PES' },
+    'WIE': { color: '#ec4899', bg: 'rgba(236, 72, 153, 0.2)', label: 'WIE' },
+    'EMBS': { color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.2)', label: 'EMBS' },
+    'Event': { color: '#94a3b8', bg: 'rgba(100, 116, 139, 0.2)', label: 'General' }
+  };
+
   static async loadAll() {
     try {
       const q = query(collection(db, 'events'), orderBy('createdAt', 'desc'));
       const snapshot = await getDocs(q);
-      
+
       state.events = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
-      
+
       this.renderTable();
       console.log(`✅ Loaded ${state.events.length} events`);
     } catch (error) {
@@ -434,7 +445,7 @@ class EventManager {
   static renderTable() {
     const tbody = document.getElementById('events-table-body');
     if (!tbody) return;
-    
+
     if (state.events.length === 0) {
       tbody.innerHTML = `
         <tr>
@@ -447,30 +458,34 @@ class EventManager {
       return;
     }
 
-    tbody.innerHTML = state.events.map(event => `
-      <tr>
-        <td>
-          ${event.imageUrl ? `
-            <img src="${event.imageUrl}" 
-                 alt="${event.title}" 
-                 style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 10px; vertical-align: middle;">
-          ` : ''}
-          <span>${this.escapeHtml(event.title)}</span>
-        </td>
-        <td>${this.truncate(event.summary, 80)}</td>
-        <td>
-          <span style="padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; 
-                       background: ${event.featured ? 'rgba(59, 130, 246, 0.2)' : 'rgba(100, 116, 139, 0.2)'};
-                       color: ${event.featured ? '#3b82f6' : '#94a3b8'};">
-            ${event.featured ? '⭐ Featured' : 'Standard'}
-          </span>
-        </td>
-        <td style="white-space: nowrap;">
-          <button class="btn-edit" onclick="window.editEvent('${event.id}')">Edit</button>
-          <button class="btn-delete" onclick="window.deleteEvent('${event.id}', '${event.imageUrl || ''}')">Delete</button>
-        </td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = state.events.map(event => {
+      const society = this.societies[event.society] || this.societies['Event'];
+      
+      return `
+        <tr>
+          <td>
+            ${event.imageUrl ? `
+              <img src="${event.imageUrl}" 
+                   alt="${event.title}" 
+                   style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 10px; vertical-align: middle;">
+            ` : ''}
+            <span>${this.escapeHtml(event.title)}</span>
+          </td>
+          <td>${this.truncate(event.summary, 80)}</td>
+          <td>
+            <span style="padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; 
+                         background: ${society.bg};
+                         color: ${society.color};">
+              ${society.label}
+            </span>
+          </td>
+          <td style="white-space: nowrap;">
+            <button class="btn-edit" onclick="window.editEvent('${event.id}')">Edit</button>
+            <button class="btn-delete" onclick="window.deleteEvent('${event.id}', '${event.imageUrl || ''}')">Delete</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
   }
 
   static async save() {
@@ -481,10 +496,10 @@ class EventManager {
 
       const title = document.getElementById('event-title').value.trim();
       const summary = document.getElementById('event-summary').value.trim();
-      const featured = document.getElementById('event-featured').value === 'yes';
+      const society = document.getElementById('event-society').value.trim();
       const imageFile = document.getElementById('event-image').files[0];
 
-      if (!title || !summary) {
+      if (!title || !summary || !society) {
         NotificationManager.show('Please fill in all required fields', 'warning');
         saveBtn.disabled = false;
         saveBtn.textContent = 'Save Event';
@@ -499,14 +514,14 @@ class EventManager {
       const eventData = {
         title,
         summary,
-        featured,
+        society,
         imageUrl,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
 
       await addDoc(collection(db, 'events'), eventData);
-      
+
       NotificationManager.show('Event saved successfully!', 'success');
       this.clearForm();
       this.loadAll();
@@ -524,14 +539,14 @@ class EventManager {
     if (!confirm('Delete this event? This action cannot be undone.')) {
       return;
     }
-    
+
     try {
       if (imageUrl) {
         await ImageManager.delete(imageUrl);
       }
-      
+
       await deleteDoc(doc(db, 'events', eventId));
-      
+
       NotificationManager.show('Event deleted successfully!', 'success');
       this.loadAll();
     } catch (error) {
@@ -543,15 +558,147 @@ class EventManager {
   static clearForm() {
     document.getElementById('event-title').value = '';
     document.getElementById('event-summary').value = '';
-    document.getElementById('event-featured').value = 'no';
+    document.getElementById('event-society').value = '';
     document.getElementById('event-image').value = '';
   }
 
   static truncate(text, maxLength) {
     if (!text) return '';
-    return text.length > maxLength 
+    return text.length > maxLength
       ? this.escapeHtml(text.substring(0, maxLength)) + '...'
       : this.escapeHtml(text);
+  }
+
+  static escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+}
+// ============================================
+// EVENT HIGHLIGHTS MANAGER
+// ============================================
+class EventHighlightsManager {
+  static async loadAll() {
+    try {
+      const q = query(collection(db, 'event-highlights'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+      
+      state.eventHighlights = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      this.renderGrid();
+      console.log(`✅ Loaded ${state.eventHighlights.length} event highlights`);
+    } catch (error) {
+      console.error('Load event highlights error:', error);
+      NotificationManager.show('Failed to load event highlights', 'error');
+    }
+  }
+
+  static renderGrid() {
+    const grid = document.getElementById('highlights-grid');
+    if (!grid) return;
+    
+    if (state.eventHighlights.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+          <p>No event highlights yet. Create your first highlight!</p>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = state.eventHighlights.map(item => `
+      <div class="gallery-card">
+        <img src="${item.imageUrl}" alt="${item.title || 'Event highlight'}" />
+        <div class="gallery-card-info">
+          <div class="gallery-card-title">${this.escapeHtml(item.title || 'Untitled')}</div>
+          <small style="color: #64748b; display: block; margin-bottom: 4px;">${this.escapeHtml(item.description || '').substring(0, 60)}${item.description?.length > 60 ? '...' : ''}</small>
+          ${item.badge ? `<span style="font-size: 0.7rem; color: #3b82f6; background: rgba(59, 130, 246, 0.1); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 8px;">${this.escapeHtml(item.badge)}</span>` : ''}
+          <button class="btn-delete" onclick="window.deleteHighlight('${item.id}', '${item.imageUrl}')">Delete</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  static async save() {
+    try {
+      const saveBtn = document.getElementById('save-highlight-btn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      const title = document.getElementById('highlight-title').value.trim();
+      const description = document.getElementById('highlight-description').value.trim();
+      const badge = document.getElementById('highlight-badge').value.trim();
+      const imageFile = document.getElementById('highlight-image').files[0];
+
+      if (!title || !description) {
+        NotificationManager.show('Please fill in title and description', 'warning');
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Highlight';
+        return;
+      }
+
+      if (!imageFile) {
+        NotificationManager.show('Please select an image', 'warning');
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Highlight';
+        return;
+      }
+
+      const imageUrl = await ImageManager.upload(imageFile, 'event-highlights-images');
+
+      const highlightData = {
+        title,
+        description,
+        badge: badge || null,
+        imageUrl,
+        createdAt: new Date().toISOString()
+      };
+
+      await addDoc(collection(db, 'event-highlights'), highlightData);
+      
+      NotificationManager.show('Event highlight saved successfully!', 'success');
+      this.clearForm();
+      this.loadAll();
+    } catch (error) {
+      console.error('Save event highlight error:', error);
+      NotificationManager.show(`Failed to save: ${error.message}`, 'error');
+    } finally {
+      const saveBtn = document.getElementById('save-highlight-btn');
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save Highlight';
+    }
+  }
+
+  static async delete(highlightId, imageUrl) {
+    if (!confirm('Delete this highlight? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      if (imageUrl) {
+        await ImageManager.delete(imageUrl);
+      }
+      
+      await deleteDoc(doc(db, 'event-highlights', highlightId));
+      
+      NotificationManager.show('Highlight deleted successfully!', 'success');
+      this.loadAll();
+    } catch (error) {
+      console.error('Delete highlight error:', error);
+      NotificationManager.show(`Failed to delete: ${error.message}`, 'error');
+    }
+  }
+
+  static clearForm() {
+    document.getElementById('highlight-title').value = '';
+    document.getElementById('highlight-description').value = '';
+    document.getElementById('highlight-badge').value = '';
+    document.getElementById('highlight-image').value = '';
   }
 
   static escapeHtml(text) {
@@ -583,9 +730,14 @@ class GalleryManager {
     }
   }
 
-  static renderGrid() {
-    const grid = document.querySelector('.gallery-grid');
-    if (!grid) return;
+static renderGrid() {
+    const grid = document.querySelector('#gallery-section .gallery-grid'); 
+    if (!grid) {
+      console.error('Gallery grid element not found');
+      return;
+    }
+    
+    console.log('Rendering gallery grid with items:', state.gallery);
     
     if (state.gallery.length === 0) {
       grid.innerHTML = `
@@ -595,18 +747,32 @@ class GalleryManager {
         </div>
       `;
       return;
-    }
+    } 
 
-    grid.innerHTML = state.gallery.map(item => `
-      <div class="gallery-card">
-        <img src="${item.imageUrl}" alt="${item.title || 'Gallery image'}" />
-        <div class="gallery-card-info">
-          <div class="gallery-card-title">${this.escapeHtml(item.title || 'Untitled')}</div>
-          <small style="color: #64748b; display: block; margin-bottom: 8px;">${this.escapeHtml(item.category || 'all')}</small>
-          <button class="btn-delete" onclick="window.deleteGalleryImage('${item.id}', '${item.imageUrl}')">Delete</button>
+    grid.innerHTML = state.gallery.map(item => {
+      console.log('Rendering gallery item:', item);
+      
+      return `
+        <div class="gallery-card">
+          <img 
+            src="${item.imageUrl}" 
+            alt="${this.escapeHtml(item.title || 'Gallery image')}"
+            onerror="console.error('Image failed to load:', '${item.imageUrl}'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            onload="console.log('Image loaded successfully');"
+          />
+          <div style="display: none; align-items: center; justify-content: center; height: 200px; background: #f1f5f9; color: #64748b; font-size: 14px; text-align: center; padding: 20px; flex-direction: column;">
+            <div>⚠️ Image failed to load</div>
+            <small style="font-size: 11px; word-break: break-all; margin-top: 8px; max-width: 100%;">${item.imageUrl?.substring(0, 80) || 'No URL'}...</small>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">${this.escapeHtml(item.title || 'Untitled')}</div>
+            <small style="color: #64748b; display: block; margin-bottom: 8px;">Category: ${this.escapeHtml(item.category || 'all')}</small>
+            <small style="color: #64748b; display: block; margin-bottom: 8px;">Order: ${item.order || 1}</small>
+            <button class="btn-delete" onclick="window.deleteGalleryImage('${item.id}', '${item.imageUrl.replace(/'/g, "\\'")}')">Delete</button>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   static async save() {
@@ -686,6 +852,8 @@ class GalleryManager {
   }
 }
 
+// Make delete function available globally (if needed for inline onclick)
+window.deleteGalleryImage = (id, url) => GalleryManager.delete(id, url);
 // ============================================
 // EXECOM MANAGER
 // ============================================
@@ -770,27 +938,25 @@ class ExecomManager {
 
   static async save() {
     try {
-      const saveBtn = document.getElementById('save-section-btn');
-      saveBtn.disabled = true;
-      saveBtn.textContent = 'Saving...';
+      const saveBtn = document.getElementById('save-member-btn'); // ✅ Fixed ID
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving...';
+      }
 
-      const sectionName = document.getElementById('execom-section-name').value;
-      const inputs = document.querySelectorAll('#execom-section input[type="text"]');
-      const name = inputs[0]?.value.trim();
-      const position = inputs[1]?.value.trim();
-      const imageFile = document.getElementById('execom-section-image').files[0];
+      const sectionName = document.getElementById('execom-section-name')?.value?.trim();
+      const name = document.getElementById('execom-member-name')?.value?.trim();
+      const position = document.getElementById('execom-member-position')?.value?.trim();
+      const imageFile = document.getElementById('execom-member-image')?.files[0]; // ✅ Fixed ID
 
+      // Validation
       if (!sectionName) {
         NotificationManager.show('Please select a section', 'warning');
-        saveBtn.disabled = false;
-        saveBtn.textContent = 'Save section';
         return;
       }
 
       if (!name || !position) {
         NotificationManager.show('Please fill in name and position', 'warning');
-        saveBtn.disabled = false;
-        saveBtn.textContent = 'Save section';
         return;
       }
 
@@ -811,14 +977,16 @@ class ExecomManager {
       
       NotificationManager.show('ExeCom member added successfully!', 'success');
       this.clearForm();
-      this.loadAll();
+      await this.loadAll();
     } catch (error) {
       console.error('Save ExeCom error:', error);
       NotificationManager.show(`Failed to save: ${error.message}`, 'error');
     } finally {
-      const saveBtn = document.getElementById('save-section-btn');
-      saveBtn.disabled = false;
-      saveBtn.textContent = 'Save section';
+      const saveBtn = document.getElementById('save-member-btn'); // ✅ Fixed ID
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Member';
+      }
     }
   }
 
@@ -844,9 +1012,9 @@ class ExecomManager {
 
   static clearForm() {
     document.getElementById('execom-section-name').value = '';
-    const inputs = document.querySelectorAll('#execom-section input[type="text"]');
-    inputs.forEach(input => input.value = '');
-    document.getElementById('execom-section-image').value = '';
+    document.getElementById('execom-member-name').value = '';
+    document.getElementById('execom-member-position').value = '';
+    document.getElementById('execom-member-image').value = ''; // ✅ Fixed ID
   }
 
   static escapeHtml(text) {
@@ -856,6 +1024,22 @@ class ExecomManager {
   }
 }
 
+// Make sure to initialize the event listeners
+document.addEventListener('DOMContentLoaded', () => {
+  const saveMemberBtn = document.getElementById('save-member-btn');
+  const clearMemberBtn = document.getElementById('clear-member-btn');
+  
+  if (saveMemberBtn) {
+    saveMemberBtn.addEventListener('click', () => ExecomManager.save());
+  }
+  
+  if (clearMemberBtn) {
+    clearMemberBtn.addEventListener('click', () => ExecomManager.clearForm());
+  }
+  
+  // Make delete function globally accessible
+  window.deleteExecomMember = (id, imageUrl) => ExecomManager.delete(id, imageUrl);
+});
 // ============================================
 // ADD NOTIFICATION STYLES
 // ============================================
@@ -927,6 +1111,17 @@ function initializeEventListeners() {
     eventClearBtn.onclick = () => EventManager.clearForm();
   }
 
+  // Event Highlights
+  const highlightSaveBtn = document.getElementById('save-highlight-btn');
+  const highlightClearBtn = document.getElementById('clear-highlight-btn');
+  
+  if (highlightSaveBtn) {
+    highlightSaveBtn.onclick = () => EventHighlightsManager.save();
+  }
+  if (highlightClearBtn) {
+    highlightClearBtn.onclick = () => EventHighlightsManager.clearForm();
+  }
+
   // Gallery
   const gallerySaveBtn = document.getElementById('gallery-save-btn');
   
@@ -951,12 +1146,14 @@ function initializeEventListeners() {
 // ============================================
 window.QuickLinksManager = QuickLinksManager;
 window.EventManager = EventManager;
+window.EventHighlightsManager = EventHighlightsManager;
 window.GalleryManager = GalleryManager;
 window.ExecomManager = ExecomManager;
 
 // Global functions for onclick handlers
 window.editEvent = (id) => EventManager.edit(id);
 window.deleteEvent = (id, url) => EventManager.delete(id, url);
+window.deleteHighlight = (id, url) => EventHighlightsManager.delete(id, url);
 window.deleteGalleryImage = (id, url) => GalleryManager.delete(id, url);
 window.deleteExecomMember = (id, url) => ExecomManager.delete(id, url);
 
@@ -965,7 +1162,7 @@ window.deleteExecomMember = (id, url) => ExecomManager.delete(id, url);
 // ============================================
 console.log('🚀 IEEE Admin Panel - Complete Management System');
 console.log('✅ Firebase Services: Auth, Firestore, Storage');
-console.log('📦 Features: Quick Links, Events, Gallery, ExeCom');
+console.log('📦 Features: Quick Links, Events, Event Highlights, Gallery, ExeCom');
 
 // Initialize auth and event listeners
 AuthManager.initialize();
