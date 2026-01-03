@@ -275,34 +275,52 @@ initTilts(document);
 // Gallery lightbox (supports both grid and masonry)
 
 (function galleryLightbox() {
-  // Define helper functions if they don't exist
-  const $ = (selector, parent = document) => parent.querySelector(selector);
-  const $$ = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
 
-  const lightbox = $("#lightbox");
-  const lightboxImg = $("#lightboxImg");
-  if (!lightbox || !lightboxImg) return;
+  if (!lightbox || !lightboxImg) {
+    console.warn("Lightbox elements not found");
+    return;
+  }
 
-  const tiles = [
-    ...$$(".gallery-grid .tile"),
-    ...$$(".masonry .tile"),
-  ];
-  
-  tiles.forEach((tile) => {
-    tile.addEventListener("click", () => {
-      const img = $("img", tile);
-      if (!img) return;
-      lightboxImg.src = img.src;
-      lightbox.classList.add("open");
-    });
+  // Use event delegation on document (safest) – works even for dynamically added images
+  document.addEventListener("click", (e) => {
+    // Find the closest image inside a gallery tile
+    const img = e.target.closest(".gallery-grid img, .gallery-item img, .tile img, img[data-lightbox]");
+    if (!img || !img.src || !img.closest('.gallery-grid, .masonry-grid')) return;
+
+    e.preventDefault();
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt || "Gallery image";
+    lightbox.classList.add("open");
+
+    // Optional: preload larger version if you have data-src
+    if (img.dataset.src) {
+      lightboxImg.src = img.dataset.src;
+    }
   });
-  
+
+  // Close when clicking overlay (not on image)
   lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox || e.target === lightboxImg) {
+    if (e.target === lightbox || e.target === lightbox.querySelector(".lightbox-close")) {
       lightbox.classList.remove("open");
+      setTimeout(() => {
+        lightboxImg.src = "";
+      }, 300); // clear after transition
+    }
+  });
+
+  // Optional: Close with Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains("open")) {
+      lightbox.classList.remove("open");
+      setTimeout(() => {
+        lightboxImg.src = "";
+      }, 300);
     }
   });
 })();
+
 
 // Custom cursor
 const cursor = $("#cursor");
