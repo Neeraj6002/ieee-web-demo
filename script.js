@@ -273,7 +273,12 @@ initTilts(document);
 })();
 
 // Gallery lightbox (supports both grid and masonry)
+
 (function galleryLightbox() {
+  // Define helper functions if they don't exist
+  const $ = (selector, parent = document) => parent.querySelector(selector);
+  const $$ = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
+
   const lightbox = $("#lightbox");
   const lightboxImg = $("#lightboxImg");
   if (!lightbox || !lightboxImg) return;
@@ -282,6 +287,7 @@ initTilts(document);
     ...$$(".gallery-grid .tile"),
     ...$$(".masonry .tile"),
   ];
+  
   tiles.forEach((tile) => {
     tile.addEventListener("click", () => {
       const img = $("img", tile);
@@ -290,6 +296,7 @@ initTilts(document);
       lightbox.classList.add("open");
     });
   });
+  
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox || e.target === lightboxImg) {
       lightbox.classList.remove("open");
@@ -708,4 +715,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-//.............................
