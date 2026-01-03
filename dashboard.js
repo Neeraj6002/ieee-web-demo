@@ -579,16 +579,16 @@ const ExeCom = {
 // PAGE INITIALIZERS
 // ============================================
 const PageInit = {
-  async index() {
+  /* async index() {
     console.log('🚀 Loading Index Page...');
     await Promise.all([
       QuickLinks.load(),
       Events.loadForIndex(),
       Gallery.load(false),
-      ExeCom.loadForIndex()
+      ExeCom.loadExecom()
     ]);
     console.log('✅ Index page loaded');
-  },
+  }, */
 
   async events() {
     console.log('🚀 Loading Events Page...');
@@ -650,4 +650,81 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', detectAndInit);
 } else {
   detectAndInit();
+}
+
+//...........
+async function loadExecom() {
+  try {
+    // Load only Core Committee members for homepage
+    const q = query(
+      collection(db, 'execom-sections'),
+      where('sectionName', '==', 'Core Committee'),
+      limit(6)
+    );
+    
+    const snapshot = await getDocs(q);
+    const members = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    // If no Core Committee members, load any 6 members
+    if (members.length === 0) {
+      const allMembersQuery = query(
+        collection(db, 'execom-sections'),
+        limit(6)
+      );
+      const allSnapshot = await getDocs(allMembersQuery);
+      const allMembers = allSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      renderExecom(allMembers);
+    } else {
+      renderExecom(members);
+    }
+
+    console.log(`✅ Loaded ${members.length} ExeCom members`);
+  } catch (error) {
+    console.error('Error loading ExeCom:', error);
+    renderExecomError();
+  }
+}
+
+function renderExecom(members) {
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+
+  if (members.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+        <p>No team members yet. Check back soon!</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = members.map(member => `
+    <div class="card member tilt">
+      <div class="avatar" style="--img: url('${member.imageUrl || 'https://via.placeholder.com/150'}')"></div>
+      <div>
+        <h4>${escapeHtml(member.name)}</h4>
+        <div class="role">${escapeHtml(member.position)}</div>
+      </div>
+      <div class="shine"></div>
+    </div>
+  `).join('');
+}
+
+function renderExecomError() {
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+      <p>Failed to load team members. Please refresh the page.</p>
+    </div>
+  `;
 }

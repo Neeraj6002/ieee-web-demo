@@ -952,25 +952,36 @@ display: flex;
 }
 
 /* Events carousel - infinite drag (no snap) */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  margin-top: 60px; /* Space for the buttons above */
+}
+
+/* 2. The Arrows Box */
+.carousel-container .arrows {
+  position: absolute;
+  top: -50px;       /* Move them above the cards */
+  right: 0;         /* Align to the right */
+  display: flex;    /* Keep buttons side-by-side */
+  flex-direction: row; 
+  gap: 10px;
+  z-index: 10;
+}
 .carousel {
   position: relative;
-  overflow: visible;
-
+  overflow: hidden; /* This now only hides the cards, not the buttons */
+  width: 100%;
 }
 .track {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(260px, 1fr);
+  display: flex; /* FIX: Changed from grid to flex for smoother horizontal sliding */
   gap: 16px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 6px;
-  scrollbar-width: none;
+  width: max-content; /* Allows track to be as wide as its children */
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
-  scroll-behavior: auto;
-  -webkit-overflow-scrolling: touch;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* For smooth button navigation */
+  will-change: transform;
 }
 .track.dragging {
   cursor: grabbing;
@@ -984,14 +995,11 @@ display: flex;
   -webkit-user-select: none;
 }
 .card.event {
-  padding: 0;
+  flex: 0 0 320px; /* FIX: Ensures each card is exactly 320px and doesn't shrink */
   height: 340px;
-  display: grid;
-  grid-template-rows: 1fr;
-  perspective: 700px;
-  transition: transform 300ms ease, box-shadow 300ms ease;
   position: relative;
   overflow: hidden;
+  border-radius: var(--radius-xl);
 }
 .card.event:hover {
   transform: translateY(-4px);
@@ -1042,9 +1050,10 @@ display: flex;
     gap: 4px;
     
   }
-.card.event{
-  height: 200px;
-}
+.card.event {
+    flex: 0 0 240px; /* Slightly smaller cards on mobile */
+    height: 280px;
+  }
 .track {
     grid-auto-columns: minmax(200px, 1fr);
 }
@@ -1076,18 +1085,21 @@ display: flex;
   gap: 10px;
 }
 .icon-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
-  border: 1px solid var(--stroke);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.02)
-  );
-  display: grid;
-  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  display: flex;      /* Center the arrow inside */
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 .icon-btn:disabled {
   opacity: 0.5;
@@ -1125,26 +1137,33 @@ display: flex;
 .gallery-grid .tile:hover img {
   transform: scale(1.06);
 }
-.lightbox {
+#lightbox {
   position: fixed;
   inset: 0;
-  z-index: 200;
-  background: rgba(6, 10, 24, 0.85);
-  display: none;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 9999;
 }
-.lightbox.open {
-  display: flex;
+#lightbox.open {
+  opacity: 1;
+  visibility: visible;
 }
-.lightbox img {
-  max-width: min(1200px, 92vw);
-  max-height: 86vh;
-  border-radius: 14px;
-  box-shadow: var(--shadow-2);
-  border: 1px solid var(--stroke);
+
+#lightboxImg {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
 }
+#cursor {
+  pointer-events: none;
+}
+
 /* Initially show only 6 images */
 .img-select .tile {
   display: none;
