@@ -278,19 +278,19 @@
         <h2 class="section-title">Our Latest Events</h2>
       </div>
 
-      <div class="carousel" data-reveal>
-        <div class="arrows">
-          <button class="icon-btn" id="prevEvt" aria-label="Previous">◀</button>
-          <button class="icon-btn" id="nextEvt" aria-label="Next">▶</button>
-        </div>
-        <div class="track" id="eventTrack">
-          <!-- Loading placeholder -->
-          <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
-            <p>Loading events...</p>
-          </div>
-        </div>
+<div class="carousel-container">
+  <div class="arrows">
+    <button class="icon-btn" id="nextEvt" aria-label="Next">◀</button>
+    <button class="icon-btn" id="prevEvt" aria-label="Previous">▶</button>
+    
+  </div>
+
+  <div class="carousel" data-reveal>
+    <div class="track" id="eventTrack">
       </div>
+  </div>
+</div>
+
     </div>
   </section>
 
@@ -920,63 +920,93 @@ function initializeCarousel() {
   const prevBtn = document.getElementById('prevEvt');
   const nextBtn = document.getElementById('nextEvt');
   
-  if (!track || !prevBtn || !nextBtn) return;
-
-  const cards = track.querySelectorAll('.evt');
-  if (cards.length === 0) return;
-
-  // Clone cards for infinite scroll effect
-  const firstClone = [];
-  const lastClone = [];
+  console.log('Track:', track);
+  console.log('PrevBtn:', prevBtn);
+  console.log('NextBtn:', nextBtn);
   
+  if (!track || !prevBtn || !nextBtn) {
+    console.error('Missing elements!');
+    return;
+  }
+
+  const cards = Array.from(track.querySelectorAll('.evt'));
+  if (cards.length === 0) {
+    console.error('No cards found!');
+    return;
+  }
+
+  console.log('Found', cards.length, 'cards');
+
+  // Clone cards for infinite scroll
   cards.forEach(card => {
-    const clone1 = card.cloneNode(true);
-    const clone2 = card.cloneNode(true);
-    firstClone.push(clone1);
-    lastClone.push(clone2);
+    const cloneAfter = card.cloneNode(true);
+    const cloneBefore = card.cloneNode(true);
+    track.appendChild(cloneAfter);
+    track.insertBefore(cloneBefore, track.firstChild);
   });
 
-  // Append clones
-  firstClone.forEach(clone => track.appendChild(clone));
-  lastClone.forEach(clone => track.insertBefore(clone, track.firstChild));
-
-  let currentIndex = cards.length; // Start at the first real card
-  const cardWidth = 320; // Approximate card width + gap
+  const allCards = track.querySelectorAll('.evt');
+  let currentIndex = cards.length;
+  let isTransitioning = false;
+  
+  function getCardWidth() {
+    const card = allCards[0];
+    const style = getComputedStyle(track);
+    const gap = parseInt(style.gap || style.columnGap || '20');
+    return card.offsetWidth + gap;
+  }
   
   function updateCarousel(smooth = true) {
+    const cardWidth = getCardWidth();
     const offset = -currentIndex * cardWidth;
     track.style.transition = smooth ? 'transform 0.5s ease' : 'none';
     track.style.transform = `translateX(${offset}px)`;
   }
 
-  prevBtn.onclick = () => {
-    currentIndex--;
-    updateCarousel();
+  function handleTransitionEnd() {
+    isTransitioning = false;
     
-    // Reset if at clone
-    if (currentIndex < 0) {
-      setTimeout(() => {
-        currentIndex = cards.length - 1;
-        updateCarousel(false);
-      }, 500);
+    if (currentIndex <= 0) {
+      currentIndex = cards.length;
+      updateCarousel(false);
+    } else if (currentIndex >= cards.length * 2) {
+      currentIndex = cards.length;
+      updateCarousel(false);
     }
-  };
+  }
 
-  nextBtn.onclick = () => {
+  track.addEventListener('transitionend', handleTransitionEnd);
+
+  // Use addEventListener instead of onclick
+  prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Prev clicked, current index:', currentIndex);
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex--;
+    updateCarousel(true);
+  });
+
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Next clicked, current index:', currentIndex);
+    if (isTransitioning) return;
+    isTransitioning = true;
     currentIndex++;
-    updateCarousel();
-    
-    // Reset if at clone
-    if (currentIndex >= cards.length * 2) {
-      setTimeout(() => {
-        currentIndex = cards.length;
-        updateCarousel(false);
-      }, 500);
-    }
-  };
+    updateCarousel(true);
+  });
 
   // Initial position
   updateCarousel(false);
+  
+  window.addEventListener('resize', () => updateCarousel(false));
+}
+
+// Make sure to call it when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeCarousel);
+} else {
+  initializeCarousel();
 }
 
 // ============================================
