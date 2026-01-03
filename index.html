@@ -551,8 +551,454 @@
   <div class="cursor" id="cursor"></div>
 
   <!-- Load Firebase integration first -->
-  <script type="module" src="dashboard.js">
+  <script type="module" >
+    // ============================================
+// INDEX PAGE FIREBASE INTEGRATION
+// Dynamically load Events, Gallery, and ExeCom from Firebase
+// ============================================
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getFirestore, 
+  collection, 
+  getDocs, 
+  query, 
+  orderBy,
+  limit,
+  doc,
+  getDoc,
+  where
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// ============================================
+// FIREBASE INITIALIZATION
+// ============================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBDTXfo3tp-go9Ik5P0pMPl4wQWC-ZPtqo",
+  authDomain: "ieee-sb-mcet-35fd1.firebaseapp.com",
+  projectId: "ieee-sb-mcet-35fd1",
+  storageBucket: "ieee-sb-mcet-35fd1.firebasestorage.app",
+  messagingSenderId: "293340494704",
+  appId: "1:293340494704:web:8898a2fa50be3130792db5",
+  measurementId: "G-FJKGYYHNC7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+console.log('✅ Firebase initialized for Index page');
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function truncate(text, maxLength) {
+  if (!text) return '';
+  return text.length > maxLength 
+    ? escapeHtml(text.substring(0, maxLength)) + '...'
+    : escapeHtml(text);
+}
+
+// ============================================
+// LOAD QUICK LINKS (Coming Soon & Live Now)
+// ============================================
+async function loadQuickLinks() {
+  try {
+    // Load Coming Soon
+    const comingSoonDoc = await getDoc(doc(db, 'quick-links', 'coming-soon'));
+    if (comingSoonDoc.exists()) {
+      const data = comingSoonDoc.data();
+      updateUpcomingCard(data);
+    }
+
+    // Load Live Now
+    const liveNowDoc = await getDoc(doc(db, 'quick-links', 'live-now'));
+    if (liveNowDoc.exists()) {
+      const data = liveNowDoc.data();
+      updateLiveNowCard(data);
+    }
+
+    console.log('✅ Loaded Quick Links');
+  } catch (error) {
+    console.error('Error loading quick links:', error);
+  }
+}
+
+function updateUpcomingCard(data) {
+  const upCard = document.getElementById('upCard');
+  const upBadge = document.getElementById('upBadge');
+  const upName = document.getElementById('upName');
+  const upWhen = document.getElementById('upWhen');
+
+  if (upCard && data.status === 'active') {
+    upCard.style.display = 'flex';
+    upCard.dataset.status = 'upcoming';
+    
+    if (data.imageUrl) {
+      const thumb = upCard.querySelector('.thumb');
+      if (thumb) thumb.style.setProperty('--img', `url('${data.imageUrl}')`);
+    }
+    
+    if (upBadge) upBadge.textContent = data.badge || 'Upcoming';
+    if (upName) upName.textContent = data.title || 'Event';
+    if (upWhen) upWhen.textContent = data.subtitle || '';
+
+    // Add click handler if CTA URL exists
+    if (data.ctaUrl) {
+      upCard.style.cursor = 'pointer';
+      upCard.onclick = () => window.open(data.ctaUrl, '_blank');
+    }
+  } else if (upCard) {
+    upCard.style.display = 'none';
+  }
+}
+
+function updateLiveNowCard(data) {
+  const liveCard = document.getElementById('liveNow');
+  const liveBadge = document.getElementById('liveNowBadge');
+  const liveName = document.getElementById('liveNowName');
+  const liveWhen = document.getElementById('liveNowWhen');
+
+  if (liveCard && data.status === 'live') {
+    liveCard.style.display = 'flex';
+    liveCard.dataset.status = 'live';
+    
+    if (data.imageUrl) {
+      const thumb = liveCard.querySelector('.thumb');
+      if (thumb) thumb.style.setProperty('--img', `url('${data.imageUrl}')`);
+    }
+    
+    if (liveBadge) liveBadge.textContent = data.badge || 'Live';
+    if (liveName) liveName.textContent = data.title || 'Live Event';
+    if (liveWhen) liveWhen.textContent = data.subtitle || '';
+
+    // Add click handler if CTA URL exists
+    if (data.ctaUrl) {
+      liveCard.style.cursor = 'pointer';
+      liveCard.onclick = () => window.open(data.ctaUrl, '_blank');
+    }
+  } else if (liveCard) {
+    liveCard.style.display = 'none';
+  }
+}
+
+// ============================================
+// LOAD EVENTS
+// ============================================
+async function loadEvents() {
+  try {
+    const q = query(
+      collection(db, 'events'),
+      orderBy('createdAt', 'desc'),
+      limit(12) // Load up to 12 events for the carousel
+    );
+    
+    const snapshot = await getDocs(q);
+    const events = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    renderEvents(events);
+    console.log(`✅ Loaded ${events.length} events`);
+  } catch (error) {
+    console.error('Error loading events:', error);
+    renderEventsError();
+  }
+}
+
+function renderEvents(events) {
+  const track = document.getElementById('eventTrack');
+  if (!track) return;
+
+  if (events.length === 0) {
+    track.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+        <p>No events yet. Check back soon!</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Create event cards (will be triplicated for infinite scroll in main script)
+  track.innerHTML = events.map(event => `
+    <article class="card event tilt evt">
+      <div class="shine"></div>
+      <div class="media">
+        ${event.imageUrl ? `<img src="${event.imageUrl}" alt="${escapeHtml(event.title)}" />` : '<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%;"></div>'}
+        <div class="overlay"></div>
+      </div>
+      <div class="meta">
+        <span class="tag">${event.featured ? '⭐ Featured' : 'Event'}</span>
+        <h4 class="card-title-sm">${escapeHtml(event.title)}</h4>
+        <p class="section-sub">${truncate(event.summary, 60)}</p>
+      </div>
+    </article>
+  `).join('');
+
+  // Reinitialize carousel after loading events
+  initializeCarousel();
+}
+
+function renderEventsError() {
+  const track = document.getElementById('eventTrack');
+  if (!track) return;
+  
+  track.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+      <p>Failed to load events. Please refresh the page.</p>
+    </div>
+  `;
+}
+
+// ============================================
+// LOAD GALLERY
+// ============================================
+async function loadGallery() {
+  try {
+    const q = query(
+      collection(db, 'gallery'),
+      orderBy('order', 'asc'),
+      limit(6) // Show only 6 images on homepage
+    );
+    
+    const snapshot = await getDocs(q);
+    const gallery = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    renderGallery(gallery);
+    console.log(`✅ Loaded ${gallery.length} gallery images`);
+  } catch (error) {
+    console.error('Error loading gallery:', error);
+    renderGalleryError();
+  }
+}
+
+function renderGallery(items) {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+
+  if (items.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+        <p>No gallery images yet. Check back soon!</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = items.map(item => `
+    <a class="tile tilt" onclick="openLightbox('${item.imageUrl}')">
+      <div class="shine"></div>
+      <img alt="${escapeHtml(item.title || 'Gallery image')}" src="${item.imageUrl}" loading="lazy" />
+    </a>
+  `).join('');
+}
+
+function renderGalleryError() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+      <p>Failed to load gallery. Please refresh the page.</p>
+    </div>
+  `;
+}
+
+// Lightbox functionality
+window.openLightbox = function(imageUrl) {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  
+  if (lightbox && lightboxImg) {
+    lightboxImg.src = imageUrl;
+    lightbox.style.display = 'flex';
+    
+    // Close on click
+    lightbox.onclick = () => {
+      lightbox.style.display = 'none';
+    };
+  }
+};
+
+// ============================================
+// LOAD EXECOM MEMBERS
+// ============================================
+async function loadExecom() {
+  try {
+    // Load only Core Committee members for homepage
+    const q = query(
+      collection(db, 'execom-sections'),
+      where('sectionName', '==', 'Core Committee'),
+      limit(6)
+    );
+    
+    const snapshot = await getDocs(q);
+    const members = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    // If no Core Committee members, load any 6 members
+    if (members.length === 0) {
+      const allMembersQuery = query(
+        collection(db, 'execom-sections'),
+        limit(6)
+      );
+      const allSnapshot = await getDocs(allMembersQuery);
+      const allMembers = allSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      renderExecom(allMembers);
+    } else {
+      renderExecom(members);
+    }
+
+    console.log(`✅ Loaded ${members.length} ExeCom members`);
+  } catch (error) {
+    console.error('Error loading ExeCom:', error);
+    renderExecomError();
+  }
+}
+
+function renderExecom(members) {
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+
+  if (members.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+        <p>No team members yet. Check back soon!</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = members.map(member => `
+    <div class="card member tilt">
+      <div class="avatar" style="--img: url('${member.imageUrl || 'https://via.placeholder.com/150'}')"></div>
+      <div>
+        <h4>${escapeHtml(member.name)}</h4>
+        <div class="role">${escapeHtml(member.position)}</div>
+      </div>
+      <div class="shine"></div>
+    </div>
+  `).join('');
+}
+
+function renderExecomError() {
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+      <p>Failed to load team members. Please refresh the page.</p>
+    </div>
+  `;
+}
+
+// ============================================
+// CAROUSEL INITIALIZATION
+// ============================================
+function initializeCarousel() {
+  const track = document.getElementById('eventTrack');
+  const prevBtn = document.getElementById('prevEvt');
+  const nextBtn = document.getElementById('nextEvt');
+  
+  if (!track || !prevBtn || !nextBtn) return;
+
+  const cards = track.querySelectorAll('.evt');
+  if (cards.length === 0) return;
+
+  // Clone cards for infinite scroll effect
+  const firstClone = [];
+  const lastClone = [];
+  
+  cards.forEach(card => {
+    const clone1 = card.cloneNode(true);
+    const clone2 = card.cloneNode(true);
+    firstClone.push(clone1);
+    lastClone.push(clone2);
+  });
+
+  // Append clones
+  firstClone.forEach(clone => track.appendChild(clone));
+  lastClone.forEach(clone => track.insertBefore(clone, track.firstChild));
+
+  let currentIndex = cards.length; // Start at the first real card
+  const cardWidth = 320; // Approximate card width + gap
+  
+  function updateCarousel(smooth = true) {
+    const offset = -currentIndex * cardWidth;
+    track.style.transition = smooth ? 'transform 0.5s ease' : 'none';
+    track.style.transform = `translateX(${offset}px)`;
+  }
+
+  prevBtn.onclick = () => {
+    currentIndex--;
+    updateCarousel();
+    
+    // Reset if at clone
+    if (currentIndex < 0) {
+      setTimeout(() => {
+        currentIndex = cards.length - 1;
+        updateCarousel(false);
+      }, 500);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    currentIndex++;
+    updateCarousel();
+    
+    // Reset if at clone
+    if (currentIndex >= cards.length * 2) {
+      setTimeout(() => {
+        currentIndex = cards.length;
+        updateCarousel(false);
+      }, 500);
+    }
+  };
+
+  // Initial position
+  updateCarousel(false);
+}
+
+// ============================================
+// INITIALIZE ON LOAD
+// ============================================
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('🚀 Loading Firebase content for index page...');
+  
+  try {
+    // Load all sections in parallel
+    await Promise.all([
+      loadQuickLinks(),
+      loadEvents(),
+      loadGallery(),
+      loadExecom()
+    ]);
+    
+    console.log('✅ All content loaded successfully');
+  } catch (error) {
+    console.error('❌ Error loading content:', error);
+  }
+});
   </script>
   <!-- Then load main script -->
   <script type="module" src="script.js"></script>

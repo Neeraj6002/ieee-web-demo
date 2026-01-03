@@ -442,30 +442,58 @@ const ExeCom = {
     "CS ExeCom": "cs-execom"
   },
 
-  async loadForIndex() {
-    try {
-      const q = query(
+ async loadForIndex() {
+  try {
+    // First try to load Core Committee members
+    const coreQuery = query(
+      collection(db, 'execom-sections'),
+      where('sectionName', '==', 'Core Committee'),
+      limit(6)
+    );
+    
+    let snapshot = await getDocs(coreQuery);
+    let members = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Fallback: if no Core Committee members, load any 6 members
+    if (members.length === 0) {
+      console.log('⚠️ No Core Committee members found, loading any members...');
+      const fallbackQuery = query(
         collection(db, 'execom-sections'),
-        where('sectionName', '==', 'Core Committee'),
         limit(6)
       );
-      
-      let snapshot = await getDocs(q);
-      let members = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      snapshot = await getDocs(fallbackQuery);
+      members = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
 
-      if (members.length === 0) {
-        const allQuery = query(collection(db, 'execom-sections'), limit(6));
-        snapshot = await getDocs(allQuery);
-        members = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      }
-
+    // Render the members or show empty state
+    if (members.length > 0) {
       this.renderGrid(members, 'teamGrid');
       console.log(`✅ Loaded ${members.length} ExeCom members for index`);
-    } catch (error) {
-      console.error('Error loading ExeCom:', error);
-      Utils.renderErrorState(document.getElementById('teamGrid'), 'Failed to load team members. Please refresh the page.');
+    } else {
+      console.log('⚠️ No ExeCom members found');
+      const teamGrid = document.getElementById('teamGrid');
+      if (teamGrid) {
+        teamGrid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+            <p>No team members available at the moment.</p>
+          </div>
+        `;
+      }
     }
-  },
+  } catch (error) {
+    console.error('❌ Error loading ExeCom:', error);
+    const teamGrid = document.getElementById('teamGrid');
+    if (teamGrid) {
+      teamGrid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+          <p>Failed to load team members. Please refresh the page.</p>
+        </div>
+      `;
+    }
+  }
+},
 
   async loadFull() {
     try {
