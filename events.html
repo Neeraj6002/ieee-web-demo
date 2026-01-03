@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Events • IEEE SB-MCET</title>
-  <meta name="description" content="Events at IEEE SB-MCET: featured, upcoming and past events with workshops, talks, hackathons and more." />
-  <meta name="theme-color" content="#0f1020" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="./style.css" />
+  <meta name="description" content="Events at IEEE SB-MCET: featured, upcoming and past events with workshops, talks, hackathons and more.">
+  <meta name="theme-color" content="#0f1020">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <!-- Fast logo preloader with progress -->
+  <!-- Loader -->
   <div class="loader-min" id="loader" aria-hidden="true">
     <div class="loader-card logo-only lg"> 
       <span class="logo-glow" aria-hidden="true"></span>
-      <img class="loader-logo dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET" width="220" height="56" />
-      <img class="loader-logo light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET" width="220" height="56" />
+      <img class="loader-logo dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET" width="220" height="56">
+      <img class="loader-logo light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET" width="220" height="56">
       <div class="min-bar" aria-hidden="true">
         <span class="min-fill" id="loaderFill" style="width: 0%"></span>
       </div>
@@ -48,8 +48,8 @@
   <header class="nav" id="nav">
     <div class="nav-inner">
       <a href="index.html" class="logo logo-left" aria-label="IEEE SB-MCET">
-        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET logo (dark)" width="220" height="56" />
-        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET logo (light)" width="220" height="56" />
+        <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET logo (dark)" width="220" height="56">
+        <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET logo (light)" width="220" height="56">
       </a>
 
       <nav class="menu">
@@ -62,8 +62,8 @@
       </nav>
 
       <a href="#" class="logo logo-right" aria-label="IEEE">
-        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200" height="56" />
-        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200" height="56" />
+        <img class="logo-img dark" src="./IEEE Logos/ieee mb white png.png" alt="IEEE MB logo (dark)" width="200" height="56">
+        <img class="logo-img light" src="./IEEE Logos/ieee mb black png.png" alt="IEEE MB logo (light)" width="200" height="56">
       </a>
     </div>
 
@@ -148,7 +148,7 @@
   </section>
 
   <!-- Featured carousel -->
-  <section id="featured">
+ <!--  <section id="featured">
     <div class="container">
       <div class="section-head">
         <h2 class="section-title">Featured Highlights</h2>
@@ -163,14 +163,14 @@
           <button class="icon-btn" id="nextEvt" aria-label="Next">▶</button>
         </div>
         <div class="track" id="eventTrack">
-          <!-- Events will be loaded dynamically from Firebase -->
           <div style="padding: 40px; text-align: center; color: #94a3b8;">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">⏳</div>
             <p>Loading featured events...</p>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Upcoming -->
   <section id="upcoming">
@@ -196,45 +196,21 @@
         </div>
 
         <div class="live" id="upCard" data-status="upcoming">
-          <div class="thumb" style="--img: url('https://picsum.photos/seed/upcoming-evt/200/200')"></div>
+          <div class="thumb" style="--img: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'200\' height=\'200\' fill=\'%23334155\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'system-ui\' font-size=\'14\' fill=\'%2394a3b8\'%3EUpcoming%3C/text%3E%3C/svg%3E')"></div>
           <div class="live-meta">
             <div class="live-top">
               <span class="badge" id="upBadge">Upcoming</span>
-              <span class="live-name" id="upName">GFX Workshop</span>
+              <span class="live-name" id="upName">Loading...</span>
             </div>
-            <div class="live-sub" id="upWhen">In 2 days • 4:00 PM</div>
+            <div class="live-sub" id="upWhen">—</div>
           </div>
           <div class="countdown" id="upCountdown">00:00:00</div>
         </div>
       </div>
 
       <!-- Detailed upcoming list -->
-      <div class="split" style="margin-top: 16px">
-        <div class="card media-card tilt" data-reveal>
-          <div class="media-img" style="background: linear-gradient(135deg, rgba(var(--accent-2),.22), rgba(var(--accent),.18)), url('') center/cover no-repeat;">
-            <div class="shine"></div>
-          </div>
-          <div class="media-body">
-            <h3 class="card-title">Intro to Embedded Systems</h3>
-            <p class="section-sub">
-              Tue, 19 Aug • 3:00–5:30 PM • ECE Lab 2 • Limited seats
-            </p>
-            <div class="chips">
-              <span class="chip">Embedded</span>
-              <span class="chip">Hands-on</span>
-            </div>
-            <div class="hero-cta">
-              <a class="btn btn-primary magnetic" href="#">
-                Register
-                <span class="shine"></span>
-              </a>
-              <a class="btn btn-ghost magnetic" href="#">
-                Details
-                <span class="shine"></span>
-              </a>
-            </div>
-          </div> 
-        </div>
+      <div class="split" style="margin-top: 16px" id="upcomingEventsList">
+        <!-- Upcoming events will be loaded here -->
       </div>
     </div>
   </section>
@@ -249,20 +225,20 @@
         </p>
       </div>
 
-      <!-- Simple filters -->
+      <!-- Filters -->
       <div class="chips" style="margin-bottom: 12px">
-        <a class="chip" href="#past">All</a>
-        <a class="chip" href="#past">Workshops</a>
-        <a class="chip" href="#past">Talks</a>
-        <a class="chip" href="#past">WIE</a>
-        <a class="chip" href="#past">AI/ML</a>
-        <a class="chip" href="#past">Comms</a>
+        <a class="chip active" href="#past" data-filter="all">All</a>
+        <a class="chip" href="#past" data-filter="workshops">Workshops</a>
+        <a class="chip" href="#past" data-filter="talks">Talks</a>
+        <a class="chip" href="#past" data-filter="wie">WIE</a>
+        <a class="chip" href="#past" data-filter="aiml">AI/ML</a>
+        <a class="chip" href="#past" data-filter="comms">Comms</a>
       </div>
 
       <!-- Grid of past event cards -->
-      <div class="values-grid">
-        <!-- Events will be loaded dynamically from Firebase -->
+      <div class="values-grid" id="pastEventsGrid">
         <div style="grid-column: 1/-1; padding: 40px; text-align: center; color: #94a3b8;">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">⏳</div>
           <p>Loading past events...</p>
         </div>
       </div>
@@ -301,8 +277,8 @@
     <div class="footer-container">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET" width="160" height="40" />
-          <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET" width="160" height="40" />
+          <img class="logo-img dark" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo White.png" alt="IEEE SB-MCET" width="160" height="40">
+          <img class="logo-img light" src="./IEEE Logos/IEEE SB MCET LOGOS/SB Logo Black.png" alt="IEEE SB-MCET" width="160" height="40">
         </div>
         <p class="footer-tagline">Empowering innovation and excellence through technology and collaboration.</p>
         <div class="social-links">
@@ -355,8 +331,8 @@
         <h4 class="footer-title">Stay Updated</h4>
         <p class="footer-sub">Get the latest news and updates from IEEE SB-MCET.</p>
         <form class="newsletter-form" name="newsletter" netlify netlify-honeypot="bot-field" onsubmit="handleNewsletterSubmit(event)">
-          <input type="hidden" name="bot-field" />
-          <input type="email" name="email" placeholder="your@email.com" class="newsletter-input" required />
+          <input type="hidden" name="bot-field">
+          <input type="email" name="email" placeholder="your@email.com" class="newsletter-input" required>
           <button type="submit" class="newsletter-btn">Subscribe</button>
         </form>
       </div>
@@ -378,7 +354,7 @@
     </div>
   </footer>
 
-  <!-- Bottom color switcher -->
+  <!-- Color switcher -->
   <div class="switcher" id="switcher" role="group" aria-label="Color switcher">
     <button class="swatch theme" id="switchTheme" title="Toggle theme">🌗</button>
     <button class="swatch ocean" data-preset="ocean" title="Ocean"></button>
@@ -391,125 +367,12 @@
   <!-- Custom cursor -->
   <div class="cursor" id="cursor"></div>
 
-  <!-- Your existing script.js -->
+  <!-- Main script -->
   <script src="./script.js"></script>
   
-  <!-- Firebase Events Loader - Add this module script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  <!-- Firebase Events Loader -->
+  <script type="module" src="dashboard.js">
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBDTXfo3tp-go9Ik5P0pMPl4wQWC-ZPtqo",
-      authDomain: "ieee-sb-mcet-35fd1.firebaseapp.com",
-      projectId: "ieee-sb-mcet-35fd1",
-      storageBucket: "ieee-sb-mcet-35fd1.firebasestorage.app",
-      messagingSenderId: "293340494704",
-      appId: "1:293340494704:web:8898a2fa50be3130792db5"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    function escapeHtml(text) {
-      if (!text) return '';
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
-    function truncate(text, maxLength) {
-      if (!text) return '';
-      return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-    }
-
-    async function loadFeaturedEvents() {
-      try {
-        const q = query(collection(db, 'events'), where('featured', '==', true), orderBy('createdAt', 'desc'));
-        const snapshot = await getDocs(q);
-        const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        
-        const track = document.getElementById('eventTrack');
-        if (!track) return;
-        
-        if (events.length === 0) {
-          track.innerHTML = '<div style="padding: 40px; text-align: center; color: #94a3b8;"><p>No featured events yet.</p></div>';
-          return;
-        }
-        
-        track.innerHTML = events.map(event => `
-          <article class="card event tilt evt">
-            <div class="shine"></div>
-            <div class="media">
-              <img src="${event.imageUrl || 'https://via.placeholder.com/400x300?text=No+Image'}" 
-                   alt="${escapeHtml(event.title)}" 
-                   onerror="this.src='https://via.placeholder.com/400x300?text=Image+Error'" />
-              <div class="overlay"></div>
-            </div>
-            <div class="meta">
-              <span class="tag">${escapeHtml(event.title)}</span>
-              <h4 class="card-title-sm">${escapeHtml(event.title)}</h4>
-              <p class="section-sub">${escapeHtml(truncate(event.summary, 60))}</p>
-            </div>
-          </article>
-        `).join('');
-        
-        if (typeof window.initTilts === 'function') window.initTilts(track);
-      } catch (error) {
-        console.error('Error loading featured events:', error);
-      }
-    }
-
-    async function loadPastEvents() {
-      try {
-        const q = query(collection(db, 'events'), orderBy('createdAt', 'desc'));
-        const snapshot = await getDocs(q);
-        const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        
-        const grid = document.querySelector('#past .values-grid');
-        if (!grid) return;
-        
-        if (events.length === 0) {
-          grid.innerHTML = '<div style="grid-column: 1/-1; padding: 40px; text-align: center; color: #94a3b8;"><p>No past events yet.</p></div>';
-          return;
-        }
-        
-        grid.innerHTML = events.map(event => `
-          <article class="card event tilt" data-reveal>
-            <div class="shine"></div>
-            <div class="media">
-              <img src="${event.imageUrl || 'https://via.placeholder.com/400x300?text=No+Image'}" 
-                   alt="${escapeHtml(event.title)}"
-                   onerror="this.src='https://via.placeholder.com/400x300?text=Image+Error'" />
-              <div class="overlay"></div>
-            </div>
-            <div class="meta">
-              <span class="tag">${escapeHtml(event.title)}</span>
-              <h4 class="card-title-sm">${escapeHtml(event.title)}</h4>
-              <p class="section-sub">${escapeHtml(truncate(event.summary, 80))}</p>
-            </div>
-          </article>
-        `).join('');
-        
-        if (typeof window.initTilts === 'function') window.initTilts(grid);
-        
-        const revealEls = grid.querySelectorAll('[data-reveal]');
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add('visible');
-              io.unobserve(e.target);
-            }
-          });
-        }, { threshold: 0.2 });
-        revealEls.forEach((el) => io.observe(el));
-      } catch (error) {
-        console.error('Error loading past events:', error);
-      }
-    }
-
-    loadFeaturedEvents();
-    loadPastEvents();
   </script>
 </body>
 </html>

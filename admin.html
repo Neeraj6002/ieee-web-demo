@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IEEE SB MCET | Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css">
     <style>
     :root {
         --bg-dark: #0a0b10;
@@ -15,6 +13,7 @@
         --accent-blue: #3b82f6;
         --text-main: #ffffff;
         --text-dim: #94a3b8;
+        --text-dimmer: #64748b;
         --input-bg: rgba(0, 0, 0, 0.2);
     }
 
@@ -31,7 +30,39 @@
         min-height: 100vh;
     }
 
-    /* Layout */
+    /* Login Page */
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0a0b10 0%, #1a1b26 100%);
+        padding: 1rem;
+    }
+
+    .login-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .login-card h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .login-card p {
+        color: var(--text-dim);
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+    }
+
+    /* Dashboard Layout */
     .dashboard-layout {
         display: flex;
         flex-direction: column;
@@ -42,44 +73,123 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 2rem;
+        padding: 1rem;
         background: var(--sidebar-bg);
         border-bottom: 1px solid var(--card-border);
+        gap: 1rem;
+        flex-wrap: wrap;
     }
 
-    .header-left { display: flex; align-items: center; gap: 1rem; }
-    .mini-logo { width: 40px; height: 40px; }
-    .header-titles h1 { font-size: 1.2rem; }
-    .header-titles p { font-size: 0.8rem; color: var(--text-dim); }
+    .header-left { 
+        display: flex; 
+        align-items: center; 
+        gap: 0.75rem;
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .mini-logo { 
+        width: 36px; 
+        height: 36px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    .header-titles h1 { 
+        font-size: 1.1rem;
+        line-height: 1.2;
+    }
+
+    .header-titles p { 
+        font-size: 0.75rem; 
+        color: var(--text-dim);
+        display: none;
+    }
+
+    .menu-toggle {
+        display: none;
+        background: transparent;
+        border: 1px solid var(--card-border);
+        color: var(--text-main);
+        padding: 0.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-signout {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    .btn-signout:hover {
+        background: rgba(239, 68, 68, 0.2);
+    }
 
     .main-container {
         display: flex;
         flex: 1;
         overflow: hidden;
+        position: relative;
     }
 
     /* Sidebar */
     .sidebar {
         width: 260px;
         background: var(--sidebar-bg);
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         border-right: 1px solid var(--card-border);
+        overflow-y: auto;
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
     }
 
-    .nav-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    .nav-links { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 0.5rem; 
+    }
     
     .nav-item {
         background: transparent;
         border: none;
         color: var(--text-dim);
-        padding: 0.8rem 1rem;
+        padding: 0.75rem 1rem;
         text-align: left;
         border-radius: 8px;
         cursor: pointer;
-        transition: 0.3s;
+        transition: all 0.3s;
+        font-size: 0.9rem;
     }
 
     .nav-item.active {
@@ -92,55 +202,162 @@
         background: rgba(255, 255, 255, 0.05);
     }
 
+    .sidebar-footer {
+        padding: 1rem;
+        border-top: 1px solid var(--card-border);
+        margin-top: 1rem;
+    }
+
+    .sidebar-footer p {
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        margin-bottom: 0.5rem;
+        word-break: break-all;
+    }
+
+    .sidebar-footer small {
+        font-size: 0.7rem;
+        color: var(--text-dimmer);
+    }
+
     /* Content Area */
     .content-area {
         flex: 1;
-        padding: 2rem;
+        padding: 1.5rem;
         overflow-y: auto;
+        background: var(--bg-dark);
+        width: 100%;
+    }
+
+    .admin-section {
+        display: none;
     }
 
     .glass-card {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
         border-radius: 16px;
-        padding: 2rem;
+        padding: 1.5rem;
         backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .section-desc {
+        color: var(--text-dim);
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .section-header-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        gap: 1rem;
+        flex-wrap: wrap;
     }
 
     .inner-card {
         background: rgba(0, 0, 0, 0.2);
         border: 1px solid var(--card-border);
         border-radius: 12px;
-        padding: 1.5rem;
+        padding: 1.25rem;
         margin-top: 1.5rem;
     }
 
-    /* Form Elements */
-    .form-group { margin-bottom: 1.2rem; }
-    
-    label {
-        display: block;
-        font-size: 0.85rem;
-        color: var(--text-dim);
+    .inner-card h3 {
+        font-size: 1rem;
         margin-bottom: 0.5rem;
     }
 
-    input[type="text"], input[type="url"], input[type="number"], textarea, select {
+    .subtitle-text {
+        color: var(--text-dimmer);
+        font-size: 0.8rem;
+        margin-bottom: 1.25rem;
+    }
+
+    /* Form Elements */
+    .form-group { 
+        margin-bottom: 1rem; 
+    }
+    
+    label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        margin-bottom: 0.4rem;
+        font-weight: 500;
+    }
+
+    input[type="text"], 
+    input[type="url"], 
+    input[type="number"], 
+    input[type="email"],
+    input[type="password"],
+    textarea, 
+    select {
         width: 100%;
         background: var(--input-bg);
         border: 1px solid var(--card-border);
         border-radius: 6px;
-        padding: 0.75rem;
+        padding: 0.7rem;
         color: white;
         outline: none;
+        font-size: 0.9rem;
+        transition: border-color 0.3s;
     }
 
-    input:focus, textarea:focus {
+    input:focus, 
+    textarea:focus, 
+    select:focus {
         border-color: var(--accent-blue);
     }
 
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .file-input, 
+    .custom-file-upload {
+        background: var(--input-bg);
+        border: 1px solid var(--card-border);
+        padding: 0.7rem;
+        border-radius: 6px;
+        width: 100%;
+        color: var(--text-dim);
+        cursor: pointer;
+        font-size: 0.85rem;
+    }
+
     /* Buttons */
-    .btn-primary, .btn-save {
+    .btn-primary {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        background: #1d4ed8;
+    }
+
+    .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .btn-save {
         background: #2563eb;
         color: white;
         border: none;
@@ -148,59 +365,146 @@
         border-radius: 6px;
         cursor: pointer;
         font-weight: 500;
+        transition: all 0.3s;
+        font-size: 0.85rem;
     }
 
-    .btn-reset, .btn-primary-outline {
+    .btn-save:hover:not(:disabled) {
+        background: #1d4ed8;
+    }
+
+    .btn-save:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .btn-reset, 
+    .btn-primary-outline {
         background: transparent;
         color: white;
         border: 1px solid var(--card-border);
         padding: 0.6rem 1.2rem;
         border-radius: 6px;
         cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.85rem;
     }
 
-    .actions { display: flex; gap: 10px; margin-top: 1rem; }
+    .btn-reset:hover, 
+    .btn-primary-outline:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-edit {
+        color: #3b82f6;
+        text-decoration: none;
+        font-size: 0.8rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        transition: all 0.3s;
+    }
+
+    .btn-edit:hover {
+        color: #60a5fa;
+    }
+
+    .btn-delete {
+        color: #ef4444;
+        text-decoration: none;
+        font-size: 0.8rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        transition: all 0.3s;
+    }
+
+    .btn-delete:hover {
+        color: #f87171;
+    }
+
+    .actions { 
+        display: flex; 
+        gap: 10px; 
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .actions button {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    /* Form Grid */
+    .form-grid-styled {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-inline-row {
+        display: flex;
+        gap: 15px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }
+
+    .form-inline-row .form-item {
+        flex: 1;
+        min-width: 200px;
+    }
 
     /* Tables */
+    .table-wrapper {
+        overflow-x: auto;
+        margin-top: 2rem;
+    }
+
     .data-table {
         width: 100%;
-        margin-top: 2rem;
         border-collapse: collapse;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        min-width: 600px;
     }
 
     .data-table th {
         text-align: left;
         color: var(--text-dim);
-        padding: 1rem;
+        padding: 0.75rem;
         border-bottom: 1px solid var(--card-border);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.7rem;
     }
 
     .data-table td {
-        padding: 1rem;
-        border-bottom: 1px solid var(--card-border);
+        padding: 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Gallery Grid Example */
-   /* Gallery Section Styles */
-.form-inline-row {
-    display: flex;
-    gap: 15px;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-}
+    .data-table tbody tr {
+        transition: background 0.3s;
+    }
 
-.form-inline-row .form-item {
-    flex: 1;
-    min-width: 200px;
-}
+    .data-table tbody tr:hover {
+        background: rgba(255, 255, 255, 0.02);
+    }
 
-.gallery-grid {
+    /* Gallery Grid */
+    .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr); /* 4 columns as seen in screenshot */
-        gap: 15px;
-        margin-top: 2rem;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
     }
 
     .gallery-card {
@@ -208,153 +512,282 @@
         border-radius: 12px;
         overflow: hidden;
         border: 1px solid rgba(255,255,255,0.05);
-        transition: transform 0.2s;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .gallery-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
 
     .gallery-card img {
         width: 100%;
-        height: 140px;
+        height: 160px;
         object-fit: cover;
+        display: block;
     }
 
     .gallery-card-info {
-        padding: 10px;
+        padding: 1rem;
         font-size: 0.8rem;
     }
 
     .gallery-card-title {
-        color: #94a3b8;
+        color: #ffffff;
         margin-bottom: 8px;
+        font-weight: 500;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    /* THE FLOATING EDIT MODAL (From your screenshot) */
-    .edit-modal-overlay {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(4px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .edit-modal-content {
-        background: #1a1b23;
-        width: 500px;
-        padding: 2rem;
-        border-radius: 20px;
+    /* ExeCom Specific Styles */
+    .execom-section-item {
+        background: rgba(0, 0, 0, 0.3);
         border: 1px solid var(--card-border);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-
-    .modal-header {
+        border-radius: 12px;
+        padding: 1.25rem;
         margin-bottom: 1.5rem;
     }
 
-    .modal-image-preview {
-        width: 100%;
-        height: 150px;
-        background: #000;
-        border-radius: 10px;
-        margin-bottom: 1rem;
+    .execom-section-header {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: center;
-        overflow: hidden;
+        margin-bottom: 1rem;
+        gap: 1rem;
+        flex-wrap: wrap;
     }
-.btn-edit {
-    color: #3b82f6;
-    text-decoration: none;
-    font-size: 0.85rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
 
-.btn-delete {
-    color: #ef4444;
-    text-decoration: none;
-    font-size: 0.85rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
+    .execom-section-header h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
 
-/* Custom File Input to match screenshot */
-.custom-file-upload {
-    background: var(--input-bg);
-    border: 1px solid var(--card-border);
-    padding: 8px;
-    border-radius: 6px;
-    width: 100%;
-    display: block;
-    color: var(--text-dim);
-}
+    .execom-members-table {
+        width: 100%;
+        margin-top: 1rem;
+        overflow-x: auto;
+    }
 
-/* ExeCom Specific Styles */
-.execom-section-item {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-}
+    .execom-members-table th {
+        text-align: left;
+        padding: 0.75rem;
+        color: var(--text-dimmer);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--card-border);
+    }
 
-.execom-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
+    .execom-members-table td {
+        padding: 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
 
-.execom-section-header h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
+    /* Badges */
+    .badge-order {
+        background: rgba(59, 130, 246, 0.2);
+        color: var(--accent-blue);
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
 
-.execom-section-subtitle {
-    color: var(--text-dimmer);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
 
-.execom-members-table {
-    width: 100%;
-    margin-top: 1rem;
-}
+    ::-webkit-scrollbar-track {
+        background: var(--sidebar-bg);
+    }
 
-.execom-members-table th {
-    text-align: left;
-    padding: 0.75rem;
-    color: var(--text-dimmer);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--card-border);
-}
+    ::-webkit-scrollbar-thumb {
+        background: var(--card-border);
+        border-radius: 4px;
+    }
 
-.execom-members-table td {
-    padding: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
 
-.badge-order {
-    background: rgba(59, 130, 246, 0.2);
-    color: var(--accent-blue);
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-</style>
+    /* Responsive Breakpoints */
+    
+    /* Tablets (768px and up) */
+    @media (min-width: 768px) {
+        .login-card {
+            padding: 2.5rem;
+        }
+
+        .login-card h1 {
+            font-size: 1.8rem;
+        }
+
+        .top-nav {
+            padding: 1rem 1.5rem;
+        }
+
+        .header-titles p {
+            display: block;
+        }
+
+        .content-area {
+            padding: 2rem;
+        }
+
+        .glass-card {
+            padding: 2rem;
+        }
+
+        .form-grid-styled {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+        }
+    }
+
+    /* Desktop (1024px and up) */
+    @media (min-width: 1024px) {
+        .top-nav {
+            padding: 1rem 2rem;
+        }
+
+        .mini-logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .header-titles h1 {
+            font-size: 1.2rem;
+        }
+
+        .header-titles p {
+            font-size: 0.8rem;
+        }
+
+        .sidebar {
+            padding: 2rem 1rem;
+        }
+
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+
+        .gallery-card img {
+            height: 180px;
+        }
+    }
+
+    /* Mobile specific (below 768px) */
+    @media (max-width: 767px) {
+        .menu-toggle {
+            display: flex;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar.mobile-hidden {
+            transform: translateX(-100%);
+        }
+
+        .content-area {
+            padding: 1rem;
+        }
+
+        .glass-card {
+            padding: 1.25rem;
+        }
+
+        .inner-card {
+            padding: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+        }
+
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .gallery-card img {
+            height: 140px;
+        }
+
+        .data-table {
+            font-size: 0.75rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.5rem;
+        }
+
+        .btn-signout {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        .actions {
+            flex-direction: column;
+        }
+
+        .actions button {
+            width: 100%;
+        }
+    }
+
+    /* Extra small devices (below 480px) */
+    @media (max-width: 479px) {
+        .login-card h1 {
+            font-size: 1.3rem;
+        }
+
+        .header-titles h1 {
+            font-size: 0.95rem;
+        }
+
+        .mini-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+        }
+
+        .gallery-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-inline-row {
+            flex-direction: column;
+        }
+
+        .form-inline-row .form-item {
+            width: 100%;
+        }
+    }
+    </style>
 </head>
 
 <body>
-
     <!-- Login Page -->
     <div id="login-page" class="auth-container">
         <div class="login-card">
@@ -368,6 +801,7 @@
     <div id="dashboard" class="dashboard-layout" style="display: none;">
         <!-- Top Navigation Bar -->
         <header class="top-nav">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
             <div class="header-left">
                 <img src="logo.png" alt="IEEE SB MCET Logo" class="mini-logo">
                 <div class="header-titles">
@@ -380,15 +814,18 @@
 
         <!-- Main Container -->
         <div class="main-container">
+            <!-- Sidebar Overlay -->
+            <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
             <!-- Sidebar Navigation -->
-            <aside class="sidebar">
+            <aside class="sidebar mobile-hidden" id="sidebar">
                 <nav class="nav-links">
                     <button class="nav-item active" data-section="quick-links">Quick Links</button>
                     <button class="nav-item" data-section="events">Events</button>
                     <button class="nav-item" data-section="event-highlights">Event Highlights</button>
                     <button class="nav-item" data-section="gallery">Gallery</button>
                     <button class="nav-item" data-section="execom">ExeCom</button>
-                    <button class="nav-item" data-section="home-execom">Home ExeCom</button>
+                   
                 </nav>
                 <div class="sidebar-footer">
                     <p id="user-email">loading...</p>
@@ -398,13 +835,11 @@
 
             <!-- Content Area -->
             <main class="content-area">
-
                 <!-- Quick Links Section -->
                 <section id="quick-links-section" class="admin-section">
                     <div class="glass-card">
                         <h2 class="section-title">Quick Links</h2>
-                        <p class="section-desc">Control the Coming Soon and Live blocks on the home page and events
-                            page.</p>
+                        <p class="section-desc">Control the Coming Soon and Live blocks on the home page and events page.</p>
 
                         <!-- Coming Soon Block -->
                         <div class="inner-card">
@@ -413,32 +848,32 @@
 
                             <div class="form-group">
                                 <label>Title</label>
-                                <input type="text" placeholder="CLICK TO CTRL" value="CLICK TO CTRL">
+                                <input type="text" id="cs-title" placeholder="CLICK TO CTRL">
                             </div>
 
                             <div class="form-group">
                                 <label>Subtitle</label>
-                                <textarea rows="3" placeholder="on jan 4th 2026">on jan 4th 2026</textarea>
+                                <textarea id="cs-subtitle" rows="3" placeholder="on jan 4th 2026"></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Badge</label>
-                                <input type="text" placeholder="Event" value="Event">
+                                <input type="text" id="cs-badge" placeholder="Event">
                             </div>
 
                             <div class="form-group">
                                 <label>CTA Label</label>
-                                <input type="text" placeholder="View details" value="View details">
+                                <input type="text" id="cs-cta-label" placeholder="View details">
                             </div>
 
                             <div class="form-group">
                                 <label>CTA URL</label>
-                                <input type="url" placeholder="https://" value="https://">
+                                <input type="url" id="cs-cta-url" placeholder="https://">
                             </div>
 
                             <div class="form-group">
                                 <label>Status</label>
-                                <select>
+                                <select id="cs-status">
                                     <option value="active">Active</option>
                                     <option value="offline">Offline</option>
                                 </select>
@@ -446,12 +881,12 @@
 
                             <div class="form-group">
                                 <label>Image</label>
-                                <input type="file" class="file-input">
+                                <input type="file" id="cs-image" class="file-input" accept="image/*">
                             </div>
 
                             <div class="actions">
-                                <button class="btn-save">Save</button>
-                                <button class="btn-reset">Reset</button>
+                                <button class="btn-save" id="save-cs-btn">Save</button>
+                                <button class="btn-reset" id="reset-cs-btn">Reset</button>
                             </div>
                         </div>
 
@@ -462,51 +897,49 @@
 
                             <div class="form-group">
                                 <label>Title</label>
-                                <input type="text" placeholder="Code vs Concrete" value="Code vs Concrete">
+                                <input type="text" id="ln-title" placeholder="Code vs Concrete">
                             </div>
 
                             <div class="form-group">
                                 <label>Subtitle</label>
-                                <textarea rows="3"
-                                    placeholder="Code Crashes, Concrete Cracks - But Who Crumbles First?">Code Crashes, Concrete Cracks - But Who Crumbles First?</textarea>
+                                <textarea id="ln-subtitle" rows="3" placeholder="Code Crashes, Concrete Cracks - But Who Crumbles First?"></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Badge</label>
-                                <input type="text" placeholder="Coming soon" value="Coming soon">
+                                <input type="text" id="ln-badge" placeholder="Live">
                             </div>
 
                             <div class="form-group">
                                 <label>CTA Label</label>
-                                <input type="text" placeholder="Join now" value="Join now">
+                                <input type="text" id="ln-cta-label" placeholder="Join now">
                             </div>
 
                             <div class="form-group">
                                 <label>CTA URL</label>
-                                <input type="url" placeholder="https://" value="https://">
+                                <input type="url" id="ln-cta-url" placeholder="https://">
                             </div>
 
                             <div class="form-group">
                                 <label>Status</label>
-                                <select>
+                                <select id="ln-status">
                                     <option value="live">Live</option>
-                                    <option value="offline" selected>Offline</option>
+                                    <option value="offline">Offline</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Image</label>
-                                <input type="file" class="file-input">
+                                <input type="file" id="ln-image" class="file-input" accept="image/*">
                             </div>
 
                             <div class="actions">
-                                <button class="btn-save">Save</button>
-                                <button class="btn-reset">Reset</button>
+                                <button class="btn-save" id="save-ln-btn">Save</button>
+                                <button class="btn-reset" id="reset-ln-btn">Reset</button>
                             </div>
                         </div>
                     </div>
                 </section>
-
 
                 <!-- Events Section -->
                 <section id="events-section" class="admin-section">
@@ -514,8 +947,7 @@
                         <div class="section-header-flex">
                             <div>
                                 <h2 class="section-title">Events</h2>
-                                <p class="section-desc">Add a title, short summary, and mark featured events for the
-                                    home slider.</p>
+                                <p class="section-desc">Add a title, short summary, and mark featured events for the home slider.</p>
                             </div>
                             <button class="btn-primary-outline" id="new-event-btn">New event</button>
                         </div>
@@ -523,22 +955,26 @@
                         <div class="form-grid-styled">
                             <div class="form-item">
                                 <label>Title</label>
-                                <input type="text" id="event-title">
+                                <input type="text" id="event-title" placeholder="Innovation Summit 2024">
                             </div>
                             <div class="form-item">
                                 <label>Summary</label>
-                                <textarea id="event-summary"></textarea>
+                                <textarea id="event-summary" placeholder="Brief description of the event..."></textarea>
                             </div>
                             <div class="form-item">
                                 <label>Featured</label>
-                                <select id="event-featured">
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
+                                <select id="event-society">
+                                    <option value="Event">Event</option>
+                                    <option value="CS">CS</option>
+                                    <option value="PES">PES</option>
+                                    <option value="WIE">WIE</option>
+                                    <option value="EMBS">EMBS</option>
+                                 
                                 </select>
                             </div>
                             <div class="form-item">
                                 <label>Cover image</label>
-                                <input type="file" id="event-image" class="file-input">
+                                <input type="file" id="event-image" class="file-input" accept="image/*">
                             </div>
                         </div>
 
@@ -547,155 +983,165 @@
                             <button class="btn-reset" id="clear-event-btn">Clear</button>
                         </div>
 
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Summary</th>
-                                    <th>Featured</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="events-table-body">
-                            </tbody>
-                        </table>
+                        <div class="table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Summary</th>
+                                        <th>Featured</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="events-table-body">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; padding: 40px; color: #64748b;">
+                                            <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+                                            <p>Loading events...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
 
                 <!-- Event Highlights Section -->
-                <section id="event-highlights-section" class="admin-section" style="display: none;">
+                <section id="event-highlights-section" class="admin-section">
                     <div class="glass-card">
-                        <h2 class="section-title">Event Highlights</h2>
-                        <p class="section-desc">Manage event highlight cards shown on the events page.</p>
-                        <p style="color: var(--text-dim); margin-top: 2rem;">Event Highlights management coming soon...
-                        </p>
+                        <div class="section-header-flex">
+                            <div>
+                                <h2 class="section-title">Event Highlights</h2>
+                                <p class="section-desc">Manage event highlight cards shown on the events page.</p>
+                            </div>
+                            <button class="btn-primary-outline" id="new-highlight-btn">New Highlight</button>
+                        </div>
+
+                        <div class="form-grid-styled">
+                            <div class="form-item">
+                                <label>Title</label>
+                                <input type="text" id="highlight-title" placeholder="Innovation Summit 2024">
+                            </div>
+                            <div class="form-item">
+                                <label>Description</label>
+                                <textarea id="highlight-description" rows="3" placeholder="A brief description of the event highlight"></textarea>
+                            </div>
+                            <div class="form-item">
+                                <label>Badge Text (Optional)</label>
+                                <input type="text" id="highlight-badge" placeholder="Best Event 2024">
+                            </div>
+                            <div class="form-item">
+                                <label>Cover Image</label>
+                                <input type="file" id="highlight-image" class="custom-file-upload" accept="image/*">
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button class="btn-save" id="save-highlight-btn">Save Highlight</button>
+                            <button class="btn-reset" id="clear-highlight-btn">Clear</button>
+                        </div>
+
+                        <div  class="gallery-grid" id="highlights-grid"> 
+                            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+                                <p>Loading highlights...</p>
+                            </div>
+                        </div >
                     </div>
                 </section>
-    <!-- Gallery Section -->
-            <section id="gallery-section" class="admin-section" style="display: none;">
-    <div class="glass-card">
-        <h2 class="section-title">Gallery</h2>
-        <p class="section-desc">Upload highlights and order them for the gallery grid.</p>
 
-       <div class="form-inline-row" style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-    <div style="flex: 2; min-width: 200px;">
-        <label>Title</label>
-        <input type="text" id="gallery-title" placeholder="Innovation Summit">
-    </div>
-    <div style="flex: 1; min-width: 120px;">
-        <label>Category</label>
-        <input type="text" id="gallery-category" placeholder="Workshops">
-    </div>
-    <div style="flex: 1; min-width: 80px;">
-        <label>Order</label>
-        <input type="number" id="gallery-order" value="1">
-    </div>
-    <div style="flex: 2; min-width: 200px;">
-        <label>Upload Image</label>
-        <input type="file" id="gallery-image" class="custom-file-upload" accept="image/*">
-    </div>
-    <div style="flex: 1; min-width: 120px; align-self: flex-end;">
-        <button class="btn-save" id="gallery-save-btn" style="width: 100%;">Save Item</button>
-    </div>
-</div>
-        <div class="gallery-grid">
-            <div class="gallery-card">
-                <img src="https://via.placeholder.com/300x200" alt="workshop">
-                <div class="gallery-card-info">
-                    <div class="gallery-card-title">gh workshops</div>
-                    <button class="btn-delete">Delete</button>
-                </div>
-            </div>
-            </div>
-    </div>
-
-    <div id="edit-modal" class="edit-modal-overlay" style="display: none;">
-        <div class="edit-modal-content">
-            <div class="modal-header">
-                <h3>Image Title</h3>
-                <small style="color: var(--text-dim)">workshops/chapters/flagship/campus/all</small>
-            </div>
-            
-            <div class="modal-image-preview">
-                <img src="logo.png" style="height: 50px;" alt="Preview">
-            </div>
-
-            <div class="form-group">
-                <label>Update Title</label>
-                <input type="text" value="Innovation Summit">
-            </div>
-
-            <div class="actions" style="justify-content: flex-end;">
-                <button class="btn-reset" onclick="document.getElementById('edit-modal').style.display='none'">Cancel</button>
-                <button class="btn-save">Save Item</button>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ExeCom Section -->
-<!-- ExeCom Section -->
-<section id="execom-section" class="admin-section" style="display: none;">
-    <div class="glass-card">
-        <h2 class="section-title">ExeCom Page</h2>
-        <p class="section-desc">Update the sections and members shown on execom.html.</p>
-
-        <!-- Section Management -->
-        <div class="inner-card">
-            <h3>Add Section</h3>
-            <p class="subtitle-text">Create a new section group for organizing members.</p>
-
-            <div class="form-group">
-                <label>Section Name</label>
-                <select id="execom-section-name">
-                    <option value="">-- Select Section --</option>
-                    <option value="Advisory & Faculty">Advisory & Faculty</option>
-                    <option value="Core Committee">Core Committee</option>
-                    <option value="Team Leads">Team Leads</option>
-                    <option value="Team Coordinators">Team Coordinators</option>
-                    <option value="WIE-AG ExeCom">WIE-AG ExeCom</option>
-                    <option value="PES ExeCom">PES ExeCom</option>
-                    <option value="CS ExeCom">CS ExeCom</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" id="execom-section-year" placeholder="Name">
-            </div>
-
-                        <div class="form-group">
-                <label>position</label>
-                <input type="text" id="execom-section-year" placeholder="position">
-            </div>
-
-            <div class="form-group">
-                <label>Section Image</label>
-                <input type="file" id="execom-section-image" class="custom-file-upload" accept="image/*">
-            </div>
-
-            <div class="actions">
-                <button class="btn-save" id="save-section-btn">Save section</button>
-                <button class="btn-reset" id="clear-section-btn">Clear</button>
-            </div>
-        </div>
-
-        <!-- Member Management -->
-
-        <!-- Sections List -->
-        <div id="execom-sections-list">
-            <!-- Sections will be loaded here dynamically -->
-        </div>
-    </div>
-</section>
-
-                <!-- Home ExeCom Section -->
-                <section id="home-execom-section" class="admin-section" style="display: none;">
+                <!-- Gallery Section -->
+                <section id="gallery-section" class="admin-section">
                     <div class="glass-card">
-                        <h2 class="section-title">Home ExeCom</h2>
-                        <p class="section-desc">Select which ExeCom members appear on the homepage.</p>
-                        <p style="color: var(--text-dim); margin-top: 2rem;">Home ExeCom selection coming soon...</p>
+                        <h2 class="section-title">Gallery</h2>
+                        <p class="section-desc">Upload highlights and order them for the gallery grid.</p>
+
+                        <div class="form-grid-styled">
+                            <div class="form-item">
+                                <label>Title</label>
+                                <input type="text" id="gallery-title" placeholder="Innovation Summit">
+                            </div>
+                            <div class="form-item">
+                                <label>Category</label>
+                                <input type="text" id="gallery-category" placeholder="Workshops">
+                            </div>
+                            <div class="form-item">
+                                <label>Order</label>
+                                <input type="number" id="gallery-order" value="1" min="1">
+                            </div>
+                            <div class="form-item">
+                                <label>Upload Image</label>
+                                <input type="file" id="gallery-image" class="custom-file-upload" accept="image/*">
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button class="btn-save" id="gallery-save-btn">Save Item</button>
+                        </div>
+
+                        <div class="gallery-grid" id="gallery-grid">
+                            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+                                <p>Loading gallery...</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
+
+                <!-- ExeCom Section -->
+                <section id="execom-section" class="admin-section">
+                    <div class="glass-card">
+                        <h2 class="section-title">ExeCom Page</h2>
+                        <p class="section-desc">Update the sections and members shown on execom.html.</p>
+
+                        <!-- Section Management -->
+                        <div class="inner-card">
+                            <h3>Add Member</h3>
+                            <p class="subtitle-text">Add a new member to an ExeCom section.</p>
+
+                            <div class="form-group">
+                                <label>Section Name</label>
+                                <select id="execom-section-name">
+                                    <option value="">-- Select Section --</option>
+                                    <option value="Advisory & Faculty">Advisory & Faculty</option>
+                                    <option value="Core Committee">Core Committee</option>
+                                    <option value="Team Leads">Team Leads</option>
+                                    <option value="Team Coordinators">Team Coordinators</option>
+                                    <option value="WIE-AG ExeCom">WIE-AG ExeCom</option>
+                                    <option value="PES ExeCom">PES ExeCom</option>
+                                    <option value="CS ExeCom">CS ExeCom</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="execom-member-name" placeholder="Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Position</label>
+                                <input type="text" id="execom-member-position" placeholder="Position">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Member Image</label>
+                                <input type="file" id="execom-member-image" class="custom-file-upload" accept="image/*">
+                            </div>
+
+                            <div class="actions">
+                                <button class="btn-save" id="save-member-btn">Save Member</button>
+                                <button class="btn-reset" id="clear-member-btn">Clear</button>
+                            </div>
+                        </div>
+
+                        <!-- Sections List -->
+                        <div id="execom-sections-list">
+                            <!-- Sections will be loaded here dynamically -->
+                        </div>
+                    </div>
+                </section>
+
+
 
             </main>
         </div>
@@ -703,11 +1149,24 @@
 
     <script type="module" src="admin.js"></script>
     <script>
-        // Section switching functionality
+        // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
             const navItems = document.querySelectorAll('.nav-item');
             const sections = document.querySelectorAll('.admin-section');
 
+            // Toggle mobile menu
+            function toggleMobileMenu() {
+                sidebar.classList.toggle('mobile-hidden');
+                sidebarOverlay.classList.toggle('active');
+            }
+
+            menuToggle.addEventListener('click', toggleMobileMenu);
+            sidebarOverlay.addEventListener('click', toggleMobileMenu);
+
+            // Section switching functionality
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     // Remove active class from all nav items
@@ -725,10 +1184,40 @@
                     if (targetSection) {
                         targetSection.style.display = 'block';
                     }
+
+                    // Close mobile menu after selection
+                    if (window.innerWidth < 768) {
+                        toggleMobileMenu();
+                    }
                 });
             });
+
+            // Show first section by default
+            const firstSection = document.getElementById('quick-links-section');
+            if (firstSection) {
+                firstSection.style.display = 'block';
+            }
+
+            // Close mobile menu on window resize to desktop
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) {
+                    sidebar.classList.remove('mobile-hidden');
+                    sidebarOverlay.classList.remove('active');
+                } else {
+                    // On mobile, ensure sidebar is hidden by default
+                    if (!sidebar.classList.contains('mobile-hidden')) {
+                        sidebar.classList.add('mobile-hidden');
+                    }
+                }
+            });
+
+            // Initialize: hide sidebar on mobile, show on desktop
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('mobile-hidden');
+            } else {
+                sidebar.classList.remove('mobile-hidden');
+            }
         });
     </script>
 </body>
-
 </html>
