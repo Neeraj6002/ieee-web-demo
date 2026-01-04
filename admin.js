@@ -494,7 +494,7 @@ class EventManager {
     try {
       const saveBtn = document.getElementById('save-event-btn');
       saveBtn.disabled = true;
-      saveBtn.textContent = 'Saving...';
+      saveBtn.textContent = state.editingEventId ? 'Updating...' : 'Saving...';
 
       const title = document.getElementById('event-title').value.trim();
       const summary = document.getElementById('event-summary').value.trim();
@@ -504,27 +504,54 @@ class EventManager {
       if (!title || !summary || !society) {
         NotificationManager.show('Please fill in all required fields', 'warning');
         saveBtn.disabled = false;
-        saveBtn.textContent = 'Save Event';
+        saveBtn.textContent = state.editingEventId ? 'Update Event' : 'Save Event';
         return;
       }
 
       let imageUrl = null;
-      if (imageFile) {
-        imageUrl = await ImageManager.upload(imageFile, 'event-images');
+      
+      if (state.editingEventId) {
+        // Editing existing event
+        const existingEvent = state.events.find(e => e.id === state.editingEventId);
+        imageUrl = existingEvent?.imageUrl || null;
+        
+        if (imageFile) {
+          // Delete old image if new one is uploaded
+          if (imageUrl) {
+            await ImageManager.delete(imageUrl);
+          }
+          imageUrl = await ImageManager.upload(imageFile, 'event-images');
+        }
+
+        const eventData = {
+          title,
+          summary,
+          society,
+          imageUrl,
+          updatedAt: new Date().toISOString()
+        };
+
+        await updateDoc(doc(db, 'events', state.editingEventId), eventData);
+        NotificationManager.show('Event updated successfully!', 'success');
+      } else {
+        // Creating new event
+        if (imageFile) {
+          imageUrl = await ImageManager.upload(imageFile, 'event-images');
+        }
+
+        const eventData = {
+          title,
+          summary,
+          society,
+          imageUrl,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        await addDoc(collection(db, 'events'), eventData);
+        NotificationManager.show('Event saved successfully!', 'success');
       }
 
-      const eventData = {
-        title,
-        summary,
-        society,
-        imageUrl,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-
-      await addDoc(collection(db, 'events'), eventData);
-
-      NotificationManager.show('Event saved successfully!', 'success');
       this.clearForm();
       this.loadAll();
     } catch (error) {
@@ -534,7 +561,28 @@ class EventManager {
       const saveBtn = document.getElementById('save-event-btn');
       saveBtn.disabled = false;
       saveBtn.textContent = 'Save Event';
+      state.editingEventId = null;
     }
+  }
+
+  static edit(eventId) {
+    const event = state.events.find(e => e.id === eventId);
+    if (!event) return;
+
+    state.editingEventId = eventId;
+
+    document.getElementById('event-title').value = event.title || '';
+    document.getElementById('event-summary').value = event.summary || '';
+    document.getElementById('event-society').value = event.society || 'Event';
+
+    const saveBtn = document.getElementById('save-event-btn');
+    saveBtn.textContent = 'Update Event';
+    saveBtn.style.background = '#f59e0b';
+
+    // Scroll to form
+    document.getElementById('events-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    NotificationManager.show('Editing event. Update fields and click "Update Event"', 'info');
   }
 
   static async delete(eventId, imageUrl) {
@@ -880,7 +928,10 @@ class ExecomManager {
 
   static renderSections() {
     const container = document.getElementById('execom-sections-list');
-    if (!container) return;
+    if (!container) {
+      console.error('Execom sections list container not found');
+      return;
+    }
     
     if (state.execomSections.length === 0) {
       container.innerHTML = `
@@ -892,7 +943,6 @@ class ExecomManager {
       return;
     }
 
-    // Group by section name
     const grouped = {};
     state.execomSections.forEach(item => {
       if (!grouped[item.sectionName]) {
@@ -904,7 +954,7 @@ class ExecomManager {
     container.innerHTML = Object.entries(grouped).map(([sectionName, members]) => `
       <div class="execom-section-item">
         <div class="execom-section-header">
-          <h3>${sectionName}</h3>
+          <h3>${this.escapeHtml(sectionName)}</h3>
           <span style="color: var(--text-dim);">${members.length} member(s)</span>
         </div>
         <table class="execom-members-table">
@@ -921,14 +971,15 @@ class ExecomManager {
               <tr>
                 <td>
                   ${member.imageUrl ? `
-                    <img src="${member.imageUrl}" alt="${member.name}" 
+                    <img src="${member.imageUrl}" alt="${this.escapeHtml(member.name)}" 
                          style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
                   ` : '👤'}
                 </td>
                 <td>${this.escapeHtml(member.name)}</td>
                 <td>${this.escapeHtml(member.position)}</td>
-                <td>
-                  <button class="btn-delete" onclick="window.deleteExecomMember('${member.id}', '${member.imageUrl || ''}')">Delete</button>
+                <td style="white-space: nowrap;">
+                  <button class="btn-edit" onclick="ExecomManager.edit('${member.id}')">Edit</button>
+                  <button class="btn-delete" onclick="ExecomManager.delete('${member.id}', '${member.imageUrl || ''}')">Delete</button>
                 </td>
               </tr>
             `).join('')}
@@ -938,60 +989,116 @@ class ExecomManager {
     `).join('');
   }
 
-  static async save() {
+    static async save() {
     try {
-      const saveBtn = document.getElementById('save-member-btn'); // ✅ Fixed ID
+      const saveBtn = document.getElementById('save-member-btn');
       if (saveBtn) {
         saveBtn.disabled = true;
-        saveBtn.textContent = 'Saving...';
+        saveBtn.textContent = state.editingMemberId ? 'Updating...' : 'Saving...';
       }
 
       const sectionName = document.getElementById('execom-section-name')?.value?.trim();
       const name = document.getElementById('execom-member-name')?.value?.trim();
       const position = document.getElementById('execom-member-position')?.value?.trim();
-      const imageFile = document.getElementById('execom-member-image')?.files[0]; // ✅ Fixed ID
+      const imageFile = document.getElementById('execom-member-image')?.files[0];
 
-      // Validation
-      if (!sectionName) {
-        NotificationManager.show('Please select a section', 'warning');
-        return;
-      }
-
-      if (!name || !position) {
-        NotificationManager.show('Please fill in name and position', 'warning');
+      if (!sectionName || !name || !position) {
+        NotificationManager.show('Please fill in all required fields', 'warning');
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = state.editingMemberId ? 'Update Member' : 'Save Member';
+        }
         return;
       }
 
       let imageUrl = null;
-      if (imageFile) {
-        imageUrl = await ImageManager.upload(imageFile, 'execom-images');
+
+      if (state.editingMemberId) {
+        // Editing existing member
+        const existingMember = state.execomSections.find(m => m.id === state.editingMemberId);
+        imageUrl = existingMember?.imageUrl || null;
+
+        if (imageFile) {
+          // Delete old image if uploading new
+          if (imageUrl) await ImageManager.delete(imageUrl);
+          imageUrl = await ImageManager.upload(imageFile, 'execom-images');
+        }
+
+        const updatedData = {
+          sectionName,
+          name,
+          position,
+          imageUrl,
+          updatedAt: new Date().toISOString()
+        };
+
+        await updateDoc(doc(db, 'execom-sections', state.editingMemberId), updatedData);
+
+        NotificationManager.show('Member updated successfully!', 'success');
+      } else {
+        // Adding new member
+        if (imageFile) {
+          imageUrl = await ImageManager.upload(imageFile, 'execom-images');
+        }
+
+        const execomData = {
+          sectionName,
+          name,
+          position,
+          imageUrl,
+          createdAt: new Date().toISOString()
+        };
+
+        await addDoc(collection(db, 'execom-sections'), execomData);
+        NotificationManager.show('Member added successfully!', 'success');
       }
 
-      const execomData = {
-        sectionName,
-        name,
-        position,
-        imageUrl,
-        createdAt: new Date().toISOString()
-      };
-
-      await addDoc(collection(db, 'execom-sections'), execomData);
-      
-      NotificationManager.show('ExeCom member added successfully!', 'success');
       this.clearForm();
+      state.editingMemberId = null; // Reset editing state
       await this.loadAll();
+
+      // Reset button text
+      if (saveBtn) {
+        saveBtn.textContent = 'Save Member';
+        saveBtn.style.background = ''; // reset color
+      }
+
     } catch (error) {
       console.error('Save ExeCom error:', error);
       NotificationManager.show(`Failed to save: ${error.message}`, 'error');
     } finally {
-      const saveBtn = document.getElementById('save-member-btn'); // ✅ Fixed ID
+      const saveBtn = document.getElementById('save-member-btn');
       if (saveBtn) {
         saveBtn.disabled = false;
-        saveBtn.textContent = 'Save Member';
       }
     }
   }
+  static edit(memberId) {
+    const member = state.execomSections.find(m => m.id === memberId);
+    if (!member) {
+      NotificationManager.show('Member not found', 'error');
+      return;
+    }
 
+    state.editingMemberId = memberId;
+
+    // Populate form fields
+    document.getElementById('execom-section-name').value = member.sectionName || '';
+    document.getElementById('execom-member-name').value = member.name || '';
+    document.getElementById('execom-member-position').value = member.position || '';
+
+    // Change save button text
+    const saveBtn = document.getElementById('save-member-btn');
+    if (saveBtn) {
+      saveBtn.textContent = 'Update Member';
+      saveBtn.style.background = '#f59e0b'; // optional: highlight update mode
+    }
+
+    // Scroll to form
+    document.querySelector('#execom-section').scrollIntoView({ behavior: 'smooth' });
+
+    NotificationManager.show('Editing member. Make changes and click "Update Member"', 'info');
+  }
   static async delete(execomId, imageUrl) {
     if (!confirm('Delete this member? This action cannot be undone.')) {
       return;
@@ -1291,7 +1398,7 @@ function initializeEventListeners() {
   const execomSaveBtn = document.getElementById('save-section-btn');
   const execomClearBtn = document.getElementById('clear-section-btn');
   
-  if (execomSaveBtn) {
+if (execomSaveBtn) {
     execomSaveBtn.onclick = () => ExecomManager.save();
   }
   if (execomClearBtn) {
