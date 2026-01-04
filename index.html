@@ -552,7 +552,7 @@
   <div class="cursor" id="cursor"></div>
 
   <!-- Load Firebase integration first -->
-  <script type="module" >
+ <script type="module">
     // ============================================
 // INDEX PAGE FIREBASE INTEGRATION
 // Dynamically load Events, Gallery, and ExeCom from Firebase
@@ -610,14 +610,12 @@ function truncate(text, maxLength) {
 // ============================================
 async function loadQuickLinks() {
   try {
-    // Load Coming Soon
     const comingSoonDoc = await getDoc(doc(db, 'quick-links', 'coming-soon'));
     if (comingSoonDoc.exists()) {
       const data = comingSoonDoc.data();
       updateUpcomingCard(data);
     }
 
-    // Load Live Now
     const liveNowDoc = await getDoc(doc(db, 'quick-links', 'live-now'));
     if (liveNowDoc.exists()) {
       const data = liveNowDoc.data();
@@ -649,7 +647,6 @@ function updateUpcomingCard(data) {
     if (upName) upName.textContent = data.title || 'Event';
     if (upWhen) upWhen.textContent = data.subtitle || '';
 
-    // Add click handler if CTA URL exists
     if (data.ctaUrl) {
       upCard.style.cursor = 'pointer';
       upCard.onclick = () => window.open(data.ctaUrl, '_blank');
@@ -678,7 +675,6 @@ function updateLiveNowCard(data) {
     if (liveName) liveName.textContent = data.title || 'Live Event';
     if (liveWhen) liveWhen.textContent = data.subtitle || '';
 
-    // Add click handler if CTA URL exists
     if (data.ctaUrl) {
       liveCard.style.cursor = 'pointer';
       liveCard.onclick = () => window.open(data.ctaUrl, '_blank');
@@ -696,7 +692,7 @@ async function loadEvents() {
     const q = query(
       collection(db, 'events'),
       orderBy('createdAt', 'desc'),
-      limit(12) // Load up to 12 events for the carousel
+      limit(12)
     );
     
     const snapshot = await getDocs(q);
@@ -727,7 +723,6 @@ function renderEvents(events) {
     return;
   }
 
-  // Create event cards (will be triplicated for infinite scroll in main script)
   track.innerHTML = events.map(event => `
     <article class="card event tilt evt">
       <div class="shine"></div>
@@ -743,7 +738,6 @@ function renderEvents(events) {
     </article>
   `).join('');
 
-  // Reinitialize carousel after loading events
   initializeCarousel();
 }
 
@@ -767,7 +761,7 @@ async function loadGallery() {
     const q = query(
       collection(db, 'gallery'),
       orderBy('order', 'asc'),
-      limit(6) // Show only 6 images on homepage
+      limit(6)
     );
     
     const snapshot = await getDocs(q);
@@ -818,7 +812,6 @@ function renderGalleryError() {
   `;
 }
 
-// Lightbox functionality
 window.openLightbox = function(imageUrl) {
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
@@ -827,7 +820,6 @@ window.openLightbox = function(imageUrl) {
     lightboxImg.src = imageUrl;
     lightbox.style.display = 'flex';
     
-    // Close on click
     lightbox.onclick = () => {
       lightbox.style.display = 'none';
     };
@@ -835,42 +827,55 @@ window.openLightbox = function(imageUrl) {
 };
 
 // ============================================
-// LOAD EXECOM MEMBERS
+// LOAD EXECOM MEMBERS - FIXED ORDER
 // ============================================
 async function loadExecom() {
   try {
-    // Load only Core Committee members for homepage
-    const q = query(
+    // Fetch ALL Core Committee members (no limit yet)
+    const baseQuery = query(
       collection(db, 'execom-sections'),
-      where('sectionName', '==', 'Core Committee'),
-      limit(6)
+      where('sectionName', '==', 'Core Committee')
     );
-    
-    const snapshot = await getDocs(q);
-    const members = snapshot.docs.map(doc => ({
+
+    const snapshot = await getDocs(baseQuery);
+    let members = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     }));
 
-    // If no Core Committee members, load any 6 members
     if (members.length === 0) {
-      const allMembersQuery = query(
-        collection(db, 'execom-sections'),
-        limit(6)
-      );
-      const allSnapshot = await getDocs(allMembersQuery);
-      const allMembers = allSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      renderExecom(allMembers);
-    } else {
-      renderExecom(members);
+      throw new Error('No Core Committee members found');
     }
 
-    console.log(`✅ Loaded ${members.length} ExeCom members`);
+    // Define the exact desired order for 2025-26
+    const desiredOrder = [
+      "Vignesh Narrayan S S",     // Chairperson
+      "Jasi Ansari",              // Secretary
+      "Anantha Padmanabhan P",    // Vice Chair
+      "Aiswarya M",               // Treasurer
+      "Neeraj J",                 // Webmaster
+      "Naina Mariam Anish"        // ECC | Student Relations
+    ];
+
+    // Sort members based on the desired order
+    members.sort((a, b) => {
+      const indexA = desiredOrder.indexOf(a.name?.trim());
+      const indexB = desiredOrder.indexOf(b.name?.trim());
+      
+      // If name not in list, push to end
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+      return indexA - indexB;
+    });
+
+    // Now limit to 6 (in case there are more)
+    members = members.slice(0, 6);
+
+    renderExecom(members);
+    console.log(`✅ Loaded and sorted ${members.length} Core Committee members in fixed order`);
+
   } catch (error) {
-    console.error('Error loading ExeCom:', error);
+    console.error('❌ Error loading Core Panel:', error);
     renderExecomError();
   }
 }
@@ -921,24 +926,14 @@ function initializeCarousel() {
   const prevBtn = document.getElementById('prevEvt');
   const nextBtn = document.getElementById('nextEvt');
   
-  console.log('Track:', track);
-  console.log('PrevBtn:', prevBtn);
-  console.log('NextBtn:', nextBtn);
-  
   if (!track || !prevBtn || !nextBtn) {
-    console.error('Missing elements!');
+    console.error('Missing carousel elements!');
     return;
   }
 
   const cards = Array.from(track.querySelectorAll('.evt'));
-  if (cards.length === 0) {
-    console.error('No cards found!');
-    return;
-  }
+  if (cards.length === 0) return;
 
-  console.log('Found', cards.length, 'cards');
-
-  // Clone cards for infinite scroll
   cards.forEach(card => {
     const cloneAfter = card.cloneNode(true);
     const cloneBefore = card.cloneNode(true);
@@ -953,7 +948,7 @@ function initializeCarousel() {
   function getCardWidth() {
     const card = allCards[0];
     const style = getComputedStyle(track);
-    const gap = parseInt(style.gap || style.columnGap || '20');
+    const gap = parseInt(style.gap || '20');
     return card.offsetWidth + gap;
   }
   
@@ -978,10 +973,8 @@ function initializeCarousel() {
 
   track.addEventListener('transitionend', handleTransitionEnd);
 
-  // Use addEventListener instead of onclick
   prevBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log('Prev clicked, current index:', currentIndex);
     if (isTransitioning) return;
     isTransitioning = true;
     currentIndex--;
@@ -990,20 +983,17 @@ function initializeCarousel() {
 
   nextBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log('Next clicked, current index:', currentIndex);
     if (isTransitioning) return;
     isTransitioning = true;
     currentIndex++;
     updateCarousel(true);
   });
 
-  // Initial position
   updateCarousel(false);
   
   window.addEventListener('resize', () => updateCarousel(false));
 }
 
-// Make sure to call it when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeCarousel);
 } else {
@@ -1017,7 +1007,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log('🚀 Loading Firebase content for index page...');
   
   try {
-    // Load all sections in parallel
     await Promise.all([
       loadQuickLinks(),
       loadEvents(),
@@ -1030,7 +1019,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('❌ Error loading content:', error);
   }
 });
-  </script>
+</script>
   <!-- Then load main script -->
   <script type="module" src="script.js"></script>
 </body>

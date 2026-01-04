@@ -331,91 +331,22 @@
   </section>
 
   <!-- Committee contacts -->
-  <section id="committee">
+  <section id="team">
     <div class="container">
       <div class="section-head">
-        <h2 class="section-title">Committee Contacts</h2>
-        <p class="section-sub">
-          Reach the right person directly for faster responses.
-        </p>
+        <h2 class="section-title">Meet Our Team (ExeCom)</h2>
+        <a class="btn btn-ghost magnetic" href="execom.html">View Full ExeCom</a>
       </div>
-
-      <div class="team" data-reveal>
-        <div class="card member tilt">
-          <div class="avatar" style="--img: url('members/sameen.jpg')"></div>
-          <div>
-            <h4>Sameen Sardar S</h4>
-            <div class="role">Chairperson</div>
-            <div class="chips" style="margin-top: 8px">
-              <a class="chip" href="mailto:sameensardar@ieee.org">Email</a>
-            </div>
-          </div>
-          <div class="shine"></div>
-        </div>
-
-        <div class="card member tilt">
-          <div class="avatar" style="--img: url('members/varun.jpg')"></div>
-          <div>
-            <h4>Varun Vinod</h4>
-            <div class="role">Secretary & CS SBC Chair</div>
-            <div class="chips" style="margin-top: 8px">
-              <a class="chip" href="mailto:vinod-varun.vinod@ieee.org">Email</a>
-            </div>
-          </div>
-          <div class="shine"></div>
-        </div>
-
-        <div class="card member tilt">
-          <div class="avatar" style="--img: url('members/prx.jpg')"></div>
-          <div>
-            <h4>Prasanth Somakumar Nair</h4>
-            <div class="role">Vice‑Chair & LINK Rep.</div>
-            <div class="chips" style="margin-top: 8px">
-              <a class="chip" href="mailto:prasanthsomakumarnair@ieee.org">Email</a>
-            </div>
-          </div>
-          <div class="shine"></div>
-        </div>
-
-        <div class="card member tilt">
-          <div class="avatar" style="--img: url('members/jasi.png')"></div>
-          <div>
-            <h4>Jasi Ansari</h4>
-            <div class="role">Joint Secretary, CS SBC Secretary, Content Curator</div>
-            <div class="chips" style="margin-top: 8px">
-              <a class="chip" href="mailto:jasiansari@ieee.org">Email</a>
-            </div>
-          </div>
-          <div class="shine"></div>
-        </div>
-
-        <div class="card member tilt">
-          <div class="avatar" style="--img: url('members/arathy.jpg')"></div>
-          <div>
-            <h4>Arathy G</h4>
-            <div class="role">Treasurer</div>
-            <div class="chips" style="margin-top: 8px">
-              <a class="chip" href="mailto:treasury@mcet.edu">Email</a>
-            </div>
-          </div>
-          <div class="shine"></div>
-        </div>
-
-        <div class="card member tilt">
-          <div class="avatar" style="--img: url('members/vivek.jpg')"></div>
-          <div>
-            <h4>Vivekanand V S</h4>
-            <div class="role">Publicity Lead & Student Relations</div>
-            <div class="chips" style="margin-top: 8px">
-              <a class="chip" href="mailto:vivekanandvs@ieee.org">Email</a>
-              <a class="chip" href="https://wa.me/918891047315">Phone.no</a>
-            </div>
-          </div>
-          <div class="shine"></div>
+      <div class="team" data-reveal id="teamGrid">
+        <!-- Loading placeholder -->
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+          <p>Loading team members...</p>
         </div>
       </div>
     </div>
   </section>
+
 
   <!-- FAQs -->
   <section id="faqs">
@@ -593,6 +524,474 @@
   <div class="cursor" id="cursor"></div>
 
   <script src="./script.js"></script>
+ <script type="module">
+    // ============================================
+// INDEX PAGE FIREBASE INTEGRATION
+// Dynamically load Events, Gallery, and ExeCom from Firebase
+// ============================================
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getFirestore, 
+  collection, 
+  getDocs, 
+  query, 
+  orderBy,
+  limit,
+  doc,
+  getDoc,
+  where
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// ============================================
+// FIREBASE INITIALIZATION
+// ============================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBDTXfo3tp-go9Ik5P0pMPl4wQWC-ZPtqo",
+  authDomain: "ieee-sb-mcet-35fd1.firebaseapp.com",
+  projectId: "ieee-sb-mcet-35fd1",
+  storageBucket: "ieee-sb-mcet-35fd1.firebasestorage.app",
+  messagingSenderId: "293340494704",
+  appId: "1:293340494704:web:8898a2fa50be3130792db5",
+  measurementId: "G-FJKGYYHNC7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+console.log('✅ Firebase initialized for Index page');
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function truncate(text, maxLength) {
+  if (!text) return '';
+  return text.length > maxLength 
+    ? escapeHtml(text.substring(0, maxLength)) + '...'
+    : escapeHtml(text);
+}
+
+// ============================================
+// LOAD QUICK LINKS (Coming Soon & Live Now)
+// ============================================
+async function loadQuickLinks() {
+  try {
+    const comingSoonDoc = await getDoc(doc(db, 'quick-links', 'coming-soon'));
+    if (comingSoonDoc.exists()) {
+      const data = comingSoonDoc.data();
+      updateUpcomingCard(data);
+    }
+
+    const liveNowDoc = await getDoc(doc(db, 'quick-links', 'live-now'));
+    if (liveNowDoc.exists()) {
+      const data = liveNowDoc.data();
+      updateLiveNowCard(data);
+    }
+
+    console.log('✅ Loaded Quick Links');
+  } catch (error) {
+    console.error('Error loading quick links:', error);
+  }
+}
+
+function updateUpcomingCard(data) {
+  const upCard = document.getElementById('upCard');
+  const upBadge = document.getElementById('upBadge');
+  const upName = document.getElementById('upName');
+  const upWhen = document.getElementById('upWhen');
+
+  if (upCard && data.status === 'active') {
+    upCard.style.display = 'flex';
+    upCard.dataset.status = 'upcoming';
+    
+    if (data.imageUrl) {
+      const thumb = upCard.querySelector('.thumb');
+      if (thumb) thumb.style.setProperty('--img', `url('${data.imageUrl}')`);
+    }
+    
+    if (upBadge) upBadge.textContent = data.badge || 'Upcoming';
+    if (upName) upName.textContent = data.title || 'Event';
+    if (upWhen) upWhen.textContent = data.subtitle || '';
+
+    if (data.ctaUrl) {
+      upCard.style.cursor = 'pointer';
+      upCard.onclick = () => window.open(data.ctaUrl, '_blank');
+    }
+  } else if (upCard) {
+    upCard.style.display = 'none';
+  }
+}
+
+function updateLiveNowCard(data) {
+  const liveCard = document.getElementById('liveNow');
+  const liveBadge = document.getElementById('liveNowBadge');
+  const liveName = document.getElementById('liveNowName');
+  const liveWhen = document.getElementById('liveNowWhen');
+
+  if (liveCard && data.status === 'live') {
+    liveCard.style.display = 'flex';
+    liveCard.dataset.status = 'live';
+    
+    if (data.imageUrl) {
+      const thumb = liveCard.querySelector('.thumb');
+      if (thumb) thumb.style.setProperty('--img', `url('${data.imageUrl}')`);
+    }
+    
+    if (liveBadge) liveBadge.textContent = data.badge || 'Live';
+    if (liveName) liveName.textContent = data.title || 'Live Event';
+    if (liveWhen) liveWhen.textContent = data.subtitle || '';
+
+    if (data.ctaUrl) {
+      liveCard.style.cursor = 'pointer';
+      liveCard.onclick = () => window.open(data.ctaUrl, '_blank');
+    }
+  } else if (liveCard) {
+    liveCard.style.display = 'none';
+  }
+}
+
+// ============================================
+// LOAD EVENTS
+// ============================================
+async function loadEvents() {
+  try {
+    const q = query(
+      collection(db, 'events'),
+      orderBy('createdAt', 'desc'),
+      limit(12)
+    );
+    
+    const snapshot = await getDocs(q);
+    const events = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    renderEvents(events);
+    console.log(`✅ Loaded ${events.length} events`);
+  } catch (error) {
+    console.error('Error loading events:', error);
+    renderEventsError();
+  }
+}
+
+function renderEvents(events) {
+  const track = document.getElementById('eventTrack');
+  if (!track) return;
+
+  if (events.length === 0) {
+    track.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+        <p>No events yet. Check back soon!</p>
+      </div>
+    `;
+    return;
+  }
+
+  track.innerHTML = events.map(event => `
+    <article class="card event tilt evt">
+      <div class="shine"></div>
+      <div class="media">
+        ${event.imageUrl ? `<img src="${event.imageUrl}" alt="${escapeHtml(event.title)}" />` : '<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%;"></div>'}
+        <div class="overlay"></div>
+      </div>
+      <div class="meta">
+        <span class="tag">${event.featured ? '⭐ Featured' : 'Event'}</span>
+        <h4 class="card-title-sm">${escapeHtml(event.title)}</h4>
+        <p class="section-sub">${truncate(event.summary, 60)}</p>
+      </div>
+    </article>
+  `).join('');
+
+  initializeCarousel();
+}
+
+function renderEventsError() {
+  const track = document.getElementById('eventTrack');
+  if (!track) return;
+  
+  track.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+      <p>Failed to load events. Please refresh the page.</p>
+    </div>
+  `;
+}
+
+// ============================================
+// LOAD GALLERY
+// ============================================
+async function loadGallery() {
+  try {
+    const q = query(
+      collection(db, 'gallery'),
+      orderBy('order', 'asc'),
+      limit(6)
+    );
+    
+    const snapshot = await getDocs(q);
+    const gallery = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    renderGallery(gallery);
+    console.log(`✅ Loaded ${gallery.length} gallery images`);
+  } catch (error) {
+    console.error('Error loading gallery:', error);
+    renderGalleryError();
+  }
+}
+
+function renderGallery(items) {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+
+  if (items.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+        <p>No gallery images yet. Check back soon!</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = items.map(item => `
+    <a class="tile tilt" onclick="openLightbox('${item.imageUrl}')">
+      <div class="shine"></div>
+      <img alt="${escapeHtml(item.title || 'Gallery image')}" src="${item.imageUrl}" loading="lazy" />
+    </a>
+  `).join('');
+}
+
+function renderGalleryError() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+      <p>Failed to load gallery. Please refresh the page.</p>
+    </div>
+  `;
+}
+
+window.openLightbox = function(imageUrl) {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  
+  if (lightbox && lightboxImg) {
+    lightboxImg.src = imageUrl;
+    lightbox.style.display = 'flex';
+    
+    lightbox.onclick = () => {
+      lightbox.style.display = 'none';
+    };
+  }
+};
+
+// ============================================
+// LOAD EXECOM MEMBERS - FIXED ORDER
+// ============================================
+async function loadExecom() {
+  try {
+    // Fetch ALL Core Committee members (no limit yet)
+    const baseQuery = query(
+      collection(db, 'execom-sections'),
+      where('sectionName', '==', 'Core Committee')
+    );
+
+    const snapshot = await getDocs(baseQuery);
+    let members = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    if (members.length === 0) {
+      throw new Error('No Core Committee members found');
+    }
+
+    // Define the exact desired order for 2025-26
+    const desiredOrder = [
+      "Vignesh Narrayan S S",     // Chairperson
+      "Jasi Ansari",              // Secretary
+      "Anantha Padmanabhan P",    // Vice Chair
+      "Aiswarya M",               // Treasurer
+      "Neeraj J",                 // Webmaster
+      "Naina Mariam Anish"        // ECC | Student Relations
+    ];
+
+    // Sort members based on the desired order
+    members.sort((a, b) => {
+      const indexA = desiredOrder.indexOf(a.name?.trim());
+      const indexB = desiredOrder.indexOf(b.name?.trim());
+      
+      // If name not in list, push to end
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+      return indexA - indexB;
+    });
+
+    // Now limit to 6 (in case there are more)
+    members = members.slice(0, 6);
+
+    renderExecom(members);
+    console.log(`✅ Loaded and sorted ${members.length} Core Committee members in fixed order`);
+
+  } catch (error) {
+    console.error('❌ Error loading Core Panel:', error);
+    renderExecomError();
+  }
+}
+
+function renderExecom(members) {
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+
+  if (members.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+        <p>No team members yet. Check back soon!</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = members.map(member => `
+    <div class="card member tilt">
+      <div class="avatar" style="--img: url('${member.imageUrl || 'https://via.placeholder.com/150'}')"></div>
+      <div>
+        <h4>${escapeHtml(member.name)}</h4>
+        <div class="role">${escapeHtml(member.position)}</div>
+      </div>
+      <div class="shine"></div>
+    </div>
+  `).join('');
+}
+
+function renderExecomError() {
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+      <p>Failed to load team members. Please refresh the page.</p>
+    </div>
+  `;
+}
+
+// ============================================
+// CAROUSEL INITIALIZATION
+// ============================================
+function initializeCarousel() {
+  const track = document.getElementById('eventTrack');
+  const prevBtn = document.getElementById('prevEvt');
+  const nextBtn = document.getElementById('nextEvt');
+  
+  if (!track || !prevBtn || !nextBtn) {
+    console.error('Missing carousel elements!');
+    return;
+  }
+
+  const cards = Array.from(track.querySelectorAll('.evt'));
+  if (cards.length === 0) return;
+
+  cards.forEach(card => {
+    const cloneAfter = card.cloneNode(true);
+    const cloneBefore = card.cloneNode(true);
+    track.appendChild(cloneAfter);
+    track.insertBefore(cloneBefore, track.firstChild);
+  });
+
+  const allCards = track.querySelectorAll('.evt');
+  let currentIndex = cards.length;
+  let isTransitioning = false;
+  
+  function getCardWidth() {
+    const card = allCards[0];
+    const style = getComputedStyle(track);
+    const gap = parseInt(style.gap || '20');
+    return card.offsetWidth + gap;
+  }
+  
+  function updateCarousel(smooth = true) {
+    const cardWidth = getCardWidth();
+    const offset = -currentIndex * cardWidth;
+    track.style.transition = smooth ? 'transform 0.5s ease' : 'none';
+    track.style.transform = `translateX(${offset}px)`;
+  }
+
+  function handleTransitionEnd() {
+    isTransitioning = false;
+    
+    if (currentIndex <= 0) {
+      currentIndex = cards.length;
+      updateCarousel(false);
+    } else if (currentIndex >= cards.length * 2) {
+      currentIndex = cards.length;
+      updateCarousel(false);
+    }
+  }
+
+  track.addEventListener('transitionend', handleTransitionEnd);
+
+  prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex--;
+    updateCarousel(true);
+  });
+
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex++;
+    updateCarousel(true);
+  });
+
+  updateCarousel(false);
+  
+  window.addEventListener('resize', () => updateCarousel(false));
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeCarousel);
+} else {
+  initializeCarousel();
+}
+
+// ============================================
+// INITIALIZE ON LOAD
+// ============================================
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('🚀 Loading Firebase content for index page...');
+  
+  try {
+    await Promise.all([
+      loadQuickLinks(),
+      loadEvents(),
+      loadGallery(),
+      loadExecom()
+    ]);
+    
+    console.log('✅ All content loaded successfully');
+  } catch (error) {
+    console.error('❌ Error loading content:', error);
+  }
+});
+</script>
 </body>
 
 </html>
