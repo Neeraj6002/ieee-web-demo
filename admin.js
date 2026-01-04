@@ -1,6 +1,6 @@
 // ============================================
 // FIREBASE CONFIGURATION - COMPLETE ADMIN PANEL
-// Quick Links + Events + Event Highlights + Gallery + ExeCom Management
+// Quick Links + Events + Event Highlights + Gallery + ExeCom Management + MCET Updates
 // ============================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -69,6 +69,7 @@ const state = {
   eventHighlights: [],
   gallery: [],
   execomSections: [],
+  mcetupdates: [],
   quickLinks: {
     comingSoon: null,
     liveNow: null
@@ -188,6 +189,7 @@ class AuthManager {
     EventHighlightsManager.loadAll();
     GalleryManager.loadAll();
     ExecomManager.loadAll();
+      McetupdatesManager.loadAll();
   }
 
   static showLogin() {
@@ -492,7 +494,7 @@ class EventManager {
     try {
       const saveBtn = document.getElementById('save-event-btn');
       saveBtn.disabled = true;
-      saveBtn.textContent = 'Saving...';
+      saveBtn.textContent = state.editingEventId ? 'Updating...' : 'Saving...';
 
       const title = document.getElementById('event-title').value.trim();
       const summary = document.getElementById('event-summary').value.trim();
@@ -502,27 +504,54 @@ class EventManager {
       if (!title || !summary || !society) {
         NotificationManager.show('Please fill in all required fields', 'warning');
         saveBtn.disabled = false;
-        saveBtn.textContent = 'Save Event';
+        saveBtn.textContent = state.editingEventId ? 'Update Event' : 'Save Event';
         return;
       }
 
       let imageUrl = null;
-      if (imageFile) {
-        imageUrl = await ImageManager.upload(imageFile, 'event-images');
+      
+      if (state.editingEventId) {
+        // Editing existing event
+        const existingEvent = state.events.find(e => e.id === state.editingEventId);
+        imageUrl = existingEvent?.imageUrl || null;
+        
+        if (imageFile) {
+          // Delete old image if new one is uploaded
+          if (imageUrl) {
+            await ImageManager.delete(imageUrl);
+          }
+          imageUrl = await ImageManager.upload(imageFile, 'event-images');
+        }
+
+        const eventData = {
+          title,
+          summary,
+          society,
+          imageUrl,
+          updatedAt: new Date().toISOString()
+        };
+
+        await updateDoc(doc(db, 'events', state.editingEventId), eventData);
+        NotificationManager.show('Event updated successfully!', 'success');
+      } else {
+        // Creating new event
+        if (imageFile) {
+          imageUrl = await ImageManager.upload(imageFile, 'event-images');
+        }
+
+        const eventData = {
+          title,
+          summary,
+          society,
+          imageUrl,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        await addDoc(collection(db, 'events'), eventData);
+        NotificationManager.show('Event saved successfully!', 'success');
       }
 
-      const eventData = {
-        title,
-        summary,
-        society,
-        imageUrl,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-
-      await addDoc(collection(db, 'events'), eventData);
-
-      NotificationManager.show('Event saved successfully!', 'success');
       this.clearForm();
       this.loadAll();
     } catch (error) {
@@ -532,7 +561,28 @@ class EventManager {
       const saveBtn = document.getElementById('save-event-btn');
       saveBtn.disabled = false;
       saveBtn.textContent = 'Save Event';
+      state.editingEventId = null;
     }
+  }
+
+  static edit(eventId) {
+    const event = state.events.find(e => e.id === eventId);
+    if (!event) return;
+
+    state.editingEventId = eventId;
+
+    document.getElementById('event-title').value = event.title || '';
+    document.getElementById('event-summary').value = event.summary || '';
+    document.getElementById('event-society').value = event.society || 'Event';
+
+    const saveBtn = document.getElementById('save-event-btn');
+    saveBtn.textContent = 'Update Event';
+    saveBtn.style.background = '#f59e0b';
+
+    // Scroll to form
+    document.getElementById('events-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    NotificationManager.show('Editing event. Update fields and click "Update Event"', 'info');
   }
 
   static async delete(eventId, imageUrl) {
@@ -878,7 +928,10 @@ class ExecomManager {
 
   static renderSections() {
     const container = document.getElementById('execom-sections-list');
-    if (!container) return;
+    if (!container) {
+      console.error('Execom sections list container not found');
+      return;
+    }
     
     if (state.execomSections.length === 0) {
       container.innerHTML = `
@@ -890,7 +943,6 @@ class ExecomManager {
       return;
     }
 
-    // Group by section name
     const grouped = {};
     state.execomSections.forEach(item => {
       if (!grouped[item.sectionName]) {
@@ -902,7 +954,7 @@ class ExecomManager {
     container.innerHTML = Object.entries(grouped).map(([sectionName, members]) => `
       <div class="execom-section-item">
         <div class="execom-section-header">
-          <h3>${sectionName}</h3>
+          <h3>${this.escapeHtml(sectionName)}</h3>
           <span style="color: var(--text-dim);">${members.length} member(s)</span>
         </div>
         <table class="execom-members-table">
@@ -919,14 +971,15 @@ class ExecomManager {
               <tr>
                 <td>
                   ${member.imageUrl ? `
-                    <img src="${member.imageUrl}" alt="${member.name}" 
+                    <img src="${member.imageUrl}" alt="${this.escapeHtml(member.name)}" 
                          style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
                   ` : '👤'}
                 </td>
                 <td>${this.escapeHtml(member.name)}</td>
                 <td>${this.escapeHtml(member.position)}</td>
-                <td>
-                  <button class="btn-delete" onclick="window.deleteExecomMember('${member.id}', '${member.imageUrl || ''}')">Delete</button>
+                <td style="white-space: nowrap;">
+                  <button class="btn-edit" onclick="ExecomManager.edit('${member.id}')">Edit</button>
+                  <button class="btn-delete" onclick="ExecomManager.delete('${member.id}', '${member.imageUrl || ''}')">Delete</button>
                 </td>
               </tr>
             `).join('')}
@@ -936,60 +989,116 @@ class ExecomManager {
     `).join('');
   }
 
-  static async save() {
+    static async save() {
     try {
-      const saveBtn = document.getElementById('save-member-btn'); // ✅ Fixed ID
+      const saveBtn = document.getElementById('save-member-btn');
       if (saveBtn) {
         saveBtn.disabled = true;
-        saveBtn.textContent = 'Saving...';
+        saveBtn.textContent = state.editingMemberId ? 'Updating...' : 'Saving...';
       }
 
       const sectionName = document.getElementById('execom-section-name')?.value?.trim();
       const name = document.getElementById('execom-member-name')?.value?.trim();
       const position = document.getElementById('execom-member-position')?.value?.trim();
-      const imageFile = document.getElementById('execom-member-image')?.files[0]; // ✅ Fixed ID
+      const imageFile = document.getElementById('execom-member-image')?.files[0];
 
-      // Validation
-      if (!sectionName) {
-        NotificationManager.show('Please select a section', 'warning');
-        return;
-      }
-
-      if (!name || !position) {
-        NotificationManager.show('Please fill in name and position', 'warning');
+      if (!sectionName || !name || !position) {
+        NotificationManager.show('Please fill in all required fields', 'warning');
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = state.editingMemberId ? 'Update Member' : 'Save Member';
+        }
         return;
       }
 
       let imageUrl = null;
-      if (imageFile) {
-        imageUrl = await ImageManager.upload(imageFile, 'execom-images');
+
+      if (state.editingMemberId) {
+        // Editing existing member
+        const existingMember = state.execomSections.find(m => m.id === state.editingMemberId);
+        imageUrl = existingMember?.imageUrl || null;
+
+        if (imageFile) {
+          // Delete old image if uploading new
+          if (imageUrl) await ImageManager.delete(imageUrl);
+          imageUrl = await ImageManager.upload(imageFile, 'execom-images');
+        }
+
+        const updatedData = {
+          sectionName,
+          name,
+          position,
+          imageUrl,
+          updatedAt: new Date().toISOString()
+        };
+
+        await updateDoc(doc(db, 'execom-sections', state.editingMemberId), updatedData);
+
+        NotificationManager.show('Member updated successfully!', 'success');
+      } else {
+        // Adding new member
+        if (imageFile) {
+          imageUrl = await ImageManager.upload(imageFile, 'execom-images');
+        }
+
+        const execomData = {
+          sectionName,
+          name,
+          position,
+          imageUrl,
+          createdAt: new Date().toISOString()
+        };
+
+        await addDoc(collection(db, 'execom-sections'), execomData);
+        NotificationManager.show('Member added successfully!', 'success');
       }
 
-      const execomData = {
-        sectionName,
-        name,
-        position,
-        imageUrl,
-        createdAt: new Date().toISOString()
-      };
-
-      await addDoc(collection(db, 'execom-sections'), execomData);
-      
-      NotificationManager.show('ExeCom member added successfully!', 'success');
       this.clearForm();
+      state.editingMemberId = null; // Reset editing state
       await this.loadAll();
+
+      // Reset button text
+      if (saveBtn) {
+        saveBtn.textContent = 'Save Member';
+        saveBtn.style.background = ''; // reset color
+      }
+
     } catch (error) {
       console.error('Save ExeCom error:', error);
       NotificationManager.show(`Failed to save: ${error.message}`, 'error');
     } finally {
-      const saveBtn = document.getElementById('save-member-btn'); // ✅ Fixed ID
+      const saveBtn = document.getElementById('save-member-btn');
       if (saveBtn) {
         saveBtn.disabled = false;
-        saveBtn.textContent = 'Save Member';
       }
     }
   }
+  static edit(memberId) {
+    const member = state.execomSections.find(m => m.id === memberId);
+    if (!member) {
+      NotificationManager.show('Member not found', 'error');
+      return;
+    }
 
+    state.editingMemberId = memberId;
+
+    // Populate form fields
+    document.getElementById('execom-section-name').value = member.sectionName || '';
+    document.getElementById('execom-member-name').value = member.name || '';
+    document.getElementById('execom-member-position').value = member.position || '';
+
+    // Change save button text
+    const saveBtn = document.getElementById('save-member-btn');
+    if (saveBtn) {
+      saveBtn.textContent = 'Update Member';
+      saveBtn.style.background = '#f59e0b'; // optional: highlight update mode
+    }
+
+    // Scroll to form
+    document.querySelector('#execom-section').scrollIntoView({ behavior: 'smooth' });
+
+    NotificationManager.show('Editing member. Make changes and click "Update Member"', 'info');
+  }
   static async delete(execomId, imageUrl) {
     if (!confirm('Delete this member? This action cannot be undone.')) {
       return;
@@ -1023,6 +1132,162 @@ class ExecomManager {
     return div.innerHTML;
   }
 }
+//mcet updates
+class McetupdatesManager {
+  static async loadAll() {
+    try {
+      const q = query(collection(db, 'mcetupdates'), orderBy('order', 'asc'));
+      const snapshot = await getDocs(q);
+      
+      state.mcetupdates = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      this.renderGrid();
+      console.log(`✅ Loaded ${state.mcetupdates.length} MCET updates`);
+    } catch (error) {
+      console.error('Load MCET updates error:', error);
+      NotificationManager.show('Failed to load MCET updates', 'error');
+    }
+  }
+
+  static renderGrid() {
+    const grid = document.getElementById('mcetupdates-grid');
+    if (!grid) {
+      console.error('MCET updates grid element not found');
+      return;
+    }
+
+    console.log('Rendering MCET updates grid with items:', state.mcetupdates);
+    
+    if (state.mcetupdates.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+          <p>No MCET updates yet. Upload your first update!</p>
+        </div>
+      `;
+      return;
+    } 
+
+    grid.innerHTML = state.mcetupdates.map(item => {
+      console.log('Rendering MCET updates item:', item);
+      
+      return `
+        <div class="mcetupdates-card">
+          <img 
+            src="${item.imageUrl}" 
+            alt="${this.escapeHtml(item.title || 'MCET update image')}"
+            onerror="console.error('Image failed to load:', '${item.imageUrl}'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            onload="console.log('Image loaded successfully');"
+          />
+          <div style="display: none; align-items: center; justify-content: center; height: 200px; background: #f1f5f9; color: #64748b; font-size: 14px; text-align: center; padding: 20px; flex-direction: column;">
+            <div>⚠️ Image failed to load</div>
+            <small style="font-size: 11px; word-break: break-all; margin-top: 8px; max-width: 100%;">${item.imageUrl?.substring(0, 80) || 'No URL'}...</small>
+          </div>
+          <div class="mcetupdates-card-info">
+            <div class="mcetupdates-card-title">${this.escapeHtml(item.title || 'Untitled')}</div>
+            <small style="color: #64748b; display: block; margin-bottom: 8px;">Category: ${this.escapeHtml(item.category || 'all')}</small>
+            <small style="color: #64748b; display: block; margin-bottom: 8px;">Order: ${item.order || 1}</small>
+            <button class="btn-delete" onclick="window.deleteMcetupdatesImage('${item.id}', '${item.imageUrl.replace(/'/g, "\\'")}')">Delete</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  static async save() {
+    try {
+      const saveBtn = document.getElementById('mcetupdates-save-btn');
+      if (!saveBtn) {
+        console.error('Save button not found');
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Uploading...';
+
+      const title = document.getElementById('mcetupdates-title').value.trim() || 'Untitled';
+      const category = document.getElementById('mcetupdates-category').value.trim() || 'all';
+      const order = parseInt(document.getElementById('mcetupdates-order').value) || 1;
+      const imageFile = document.getElementById('mcetupdates-image').files[0];
+
+      if (!imageFile) {
+        NotificationManager.show('Please select an image', 'warning');
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Item';
+        return;
+      }
+
+      const imageUrl = await ImageManager.upload(imageFile, 'mcetupdates-images');
+
+      const mcetupdatesData = {
+        title,
+        category,
+        order,
+        imageUrl,
+        createdAt: new Date().toISOString()
+      };
+
+      await addDoc(collection(db, 'mcetupdates'), mcetupdatesData);
+      
+      NotificationManager.show('MCET update uploaded successfully!', 'success');
+      this.clearForm();
+      this.loadAll();
+    } catch (error) {
+      console.error('Save MCET updates error:', error);
+      NotificationManager.show(`Failed to upload: ${error.message}`, 'error');
+    } finally {
+      const saveBtn = document.getElementById('mcetupdates-save-btn');
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Item';
+      }
+    }
+  }
+
+  static async delete(mcetupdatesId, imageUrl) {
+    if (!confirm('Delete this update? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      if (imageUrl) {
+        await ImageManager.delete(imageUrl);
+      }
+
+      await deleteDoc(doc(db, 'mcetupdates', mcetupdatesId));
+
+      NotificationManager.show('MCET update deleted successfully!', 'success');
+      this.loadAll();
+    } catch (error) {
+      console.error('Delete MCET updates error:', error);
+      NotificationManager.show(`Failed to delete: ${error.message}`, 'error');
+    }
+  }
+
+  static clearForm() {
+    const titleInput = document.getElementById('mcetupdates-title');
+    const categoryInput = document.getElementById('mcetupdates-category');
+    const orderInput = document.getElementById('mcetupdates-order');
+    const imageInput = document.getElementById('mcetupdates-image');
+
+    if (titleInput) titleInput.value = '';
+    if (categoryInput) categoryInput.value = '';
+    if (orderInput) orderInput.value = '1';
+    if (imageInput) imageInput.value = '';
+  }
+
+  static escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+}
+
+// Make delete function available globally (if needed for inline onclick)
+window.deleteMcetupdatesImage = (id, url) => McetupdatesManager.delete(id, url);
 
 // Make sure to initialize the event listeners
 document.addEventListener('DOMContentLoaded', () => {
@@ -1133,11 +1398,18 @@ function initializeEventListeners() {
   const execomSaveBtn = document.getElementById('save-section-btn');
   const execomClearBtn = document.getElementById('clear-section-btn');
   
-  if (execomSaveBtn) {
+if (execomSaveBtn) {
     execomSaveBtn.onclick = () => ExecomManager.save();
   }
   if (execomClearBtn) {
     execomClearBtn.onclick = () => ExecomManager.clearForm();
+  }
+
+    // MCET Updates
+ const mcetupdatesSaveBtn = document.getElementById('mcetupdates-save-btn');
+  
+  if (mcetupdatesSaveBtn) {
+    mcetupdatesSaveBtn.onclick = () => McetupdatesManager.save();
   }
 }
 
@@ -1149,6 +1421,7 @@ window.EventManager = EventManager;
 window.EventHighlightsManager = EventHighlightsManager;
 window.GalleryManager = GalleryManager;
 window.ExecomManager = ExecomManager;
+window.McetupdatesManager = McetupdatesManager;
 
 // Global functions for onclick handlers
 window.editEvent = (id) => EventManager.edit(id);
@@ -1156,6 +1429,7 @@ window.deleteEvent = (id, url) => EventManager.delete(id, url);
 window.deleteHighlight = (id, url) => EventHighlightsManager.delete(id, url);
 window.deleteGalleryImage = (id, url) => GalleryManager.delete(id, url);
 window.deleteExecomMember = (id, url) => ExecomManager.delete(id, url);
+window.deleteMcetupdatesImage = (id, url) => McetupdatesManager.delete(id, url);
 
 // ============================================
 // INITIALIZE APPLICATION

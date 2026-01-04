@@ -1,6 +1,6 @@
 // ============================================
-// OPTIMIZED FIREBASE INTEGRATION
-// Consolidated and performance-optimized code
+// OPTIMIZED FIREBASE INTEGRATION v2.1
+// Consolidated, performance-optimized code
 // ============================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -17,7 +17,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // ============================================
-// FIREBASE INITIALIZATION (Singleton)
+// FIREBASE INITIALIZATION
 // ============================================
 const firebaseConfig = {
   apiKey: "AIzaSyBDTXfo3tp-go9Ik5P0pMPl4wQWC-ZPtqo",
@@ -32,12 +32,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-console.log('✅ Firebase initialized');
+console.log('✅ Firebase initialized successfully');
 
 // ============================================
-// SHARED UTILITIES
+// UTILITY FUNCTIONS
 // ============================================
 const Utils = {
+  // Sanitize text to prevent XSS
   escapeHtml(text) {
     if (!text) return '';
     const div = document.createElement('div');
@@ -45,6 +46,7 @@ const Utils = {
     return div.innerHTML;
   },
 
+  // Truncate long text with ellipsis
   truncate(text, maxLength) {
     if (!text) return '';
     return text.length > maxLength 
@@ -52,59 +54,76 @@ const Utils = {
       : this.escapeHtml(text);
   },
 
+  // Generate SVG placeholder for missing images
   createPlaceholder(text = 'Event Image', bgColor = '%23334155', textColor = '%2394a3b8') {
     return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='${bgColor}'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui' font-size='18' fill='${textColor}'%3E${text}%3C/text%3E%3C/svg%3E`;
   },
 
-  errorPlaceholder: null, // Will be set below
+  // Error placeholder
+  get errorPlaceholder() {
+    return this.createPlaceholder('Image Error', '%23dc2626', '%23fff');
+  },
 
+  // Initialize tilt effects if available
   initTilts(container) {
     if (typeof window.initTilts === 'function') {
       window.initTilts(container);
     }
   },
 
+  // Initialize reveal animations on scroll
   initRevealAnimations(container) {
     const revealEls = container.querySelectorAll('[data-reveal], .tile');
     if (typeof IntersectionObserver === 'undefined') return;
     
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.2 });
     
-    revealEls.forEach((el) => io.observe(el));
+    revealEls.forEach((el) => observer.observe(el));
   },
 
+  // Render empty state UI
   renderEmptyState(container, icon, message) {
     if (!container) return;
     container.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+      <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #64748b;">
         <div style="font-size: 3rem; margin-bottom: 1rem;">${icon}</div>
-        <p>${message}</p>
+        <p style="font-size: 1.1rem;">${message}</p>
       </div>
     `;
   },
 
+  // Render error state UI
   renderErrorState(container, message) {
     if (!container) return;
     container.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
+      <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #ef4444;">
         <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
-        <p>${message}</p>
+        <p style="font-size: 1.1rem;">${message}</p>
+      </div>
+    `;
+  },
+
+  // Render loading state UI
+  renderLoadingState(container, message = 'Loading...') {
+    if (!container) return;
+    container.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #64748b;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">⏳</div>
+        <p style="font-size: 1.1rem;">${message}</p>
       </div>
     `;
   }
 };
 
-Utils.errorPlaceholder = Utils.createPlaceholder('Image Error', '%23dc2626', '%23fff');
-
 // ============================================
-// SOCIETY CONFIGURATIONS (Shared)
+// SOCIETY COLOR CONFIGURATIONS
 // ============================================
 const SOCIETIES = {
   'CS': { color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.2)', label: 'CS' },
@@ -133,9 +152,9 @@ const QuickLinks = {
         this.updateCard('live', liveNowDoc.data());
       }
 
-      console.log('✅ Loaded Quick Links');
+      console.log('✅ Quick Links loaded successfully');
     } catch (error) {
-      console.error('Error loading quick links:', error);
+      console.error('❌ Error loading quick links:', error);
     }
   },
 
@@ -190,13 +209,19 @@ const Events = {
       );
       
       const snapshot = await getDocs(q);
-      const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const events = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .sort((a, b) => {
+          const timeA = a.createdAt?.seconds || a.createdAt || 0;
+          const timeB = b.createdAt?.seconds || b.createdAt || 0;
+          return timeB - timeA;
+        });
 
       this.renderIndex(events);
-      console.log(`✅ Loaded ${events.length} events for index`);
+      console.log(`✅ Loaded ${events.length} events (newest first)`);
     } catch (error) {
-      console.error('Error loading events:', error);
-      Utils.renderErrorState(document.getElementById('eventTrack'), 'Failed to load events. Please refresh the page.');
+      console.error('❌ Error loading events:', error);
+      Utils.renderErrorState(document.getElementById('eventTrack'), 'Failed to load events. Please refresh.');
     }
   },
 
@@ -215,8 +240,8 @@ const Events = {
       this.renderFeatured(events);
       console.log(`✅ Loaded ${events.length} featured events`);
     } catch (error) {
-      console.error('Error loading featured events:', error);
-      Utils.renderErrorState(document.getElementById('eventTrack'), 'Failed to load featured events. Please try again later.');
+      console.error('❌ Error loading featured events:', error);
+      Utils.renderErrorState(document.getElementById('eventTrack'), 'Failed to load featured events.');
     }
   },
 
@@ -229,8 +254,8 @@ const Events = {
       this.renderPast(events);
       console.log(`✅ Loaded ${events.length} past events`);
     } catch (error) {
-      console.error('Error loading past events:', error);
-      Utils.renderErrorState(document.getElementById('pastEventsGrid'), 'Failed to load past events. Please try again later.');
+      console.error('❌ Error loading past events:', error);
+      Utils.renderErrorState(document.getElementById('pastEventsGrid'), 'Failed to load past events.');
     }
   },
 
@@ -252,7 +277,7 @@ const Events = {
     if (!track) return;
 
     if (events.length === 0) {
-      Utils.renderEmptyState(track, '📋', 'No featured events yet. Check back soon!');
+      Utils.renderEmptyState(track, '📋', 'No featured events yet.');
       return;
     }
 
@@ -265,7 +290,7 @@ const Events = {
     if (!grid) return;
 
     if (events.length === 0) {
-      Utils.renderEmptyState(grid, '📋', 'No past events yet. Check back soon!');
+      Utils.renderEmptyState(grid, '📋', 'No past events yet.');
       return;
     }
 
@@ -309,8 +334,9 @@ const Events = {
     const cards = track.querySelectorAll('.evt');
     if (cards.length === 0) return;
 
-    const firstClone = Array.from(cards).map(card => card.cloneNode(true));
-    const lastClone = Array.from(cards).map(card => card.cloneNode(true));
+    const cardArray = Array.from(cards);
+    const firstClone = cardArray.map(card => card.cloneNode(true));
+    const lastClone = cardArray.map(card => card.cloneNode(true));
     
     firstClone.forEach(clone => track.appendChild(clone));
     lastClone.reverse().forEach(clone => track.insertBefore(clone, track.firstChild));
@@ -369,9 +395,9 @@ const Gallery = {
       this.render(this.allItems, isFullGallery);
       console.log(`✅ Loaded ${this.allItems.length} gallery images`);
     } catch (error) {
-      console.error('Error loading gallery:', error);
-      const grid = document.getElementById(isFullGallery ? 'galleryGrid' : 'galleryGrid');
-      Utils.renderErrorState(grid, 'Failed to load gallery. Please refresh the page.');
+      console.error('❌ Error loading gallery:', error);
+      const grid = document.getElementById('galleryGrid');
+      Utils.renderErrorState(grid, 'Failed to load gallery.');
     }
   },
 
@@ -380,7 +406,7 @@ const Gallery = {
     if (!grid) return;
 
     if (items.length === 0) {
-      Utils.renderEmptyState(grid, '🖼️', 'No gallery images yet. Check back soon!');
+      Utils.renderEmptyState(grid, '🖼️', 'No gallery images yet.');
       return;
     }
 
@@ -442,30 +468,29 @@ const ExeCom = {
     "CS ExeCom": "cs-execom"
   },
 
-async loadForIndex() {
+  async loadForIndex() {
     try {
       const q = query(
-        collection(db, 'events'),
-        orderBy('createdAt', 'desc'),
-        limit(12)
+        collection(db, 'execom-sections'),
+        where('sectionName', '==', 'Core Committee'),
+        limit(6)
       );
       
       const snapshot = await getDocs(q);
-      // Ensure newest events are first by checking timestamp
-      const events = snapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data() }))
-        .sort((a, b) => {
-          // Handle Firestore Timestamp objects
-          const timeA = a.createdAt?.seconds || a.createdAt || 0;
-          const timeB = b.createdAt?.seconds || b.createdAt || 0;
-          return timeB - timeA; // Descending order (newest first)
-        });
+      let members = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-      this.renderIndex(events);
-      console.log(`✅ Loaded ${events.length} events for index (newest first)`);
+      // Fallback: load any 6 members if no Core Committee found
+      if (members.length === 0) {
+        const allQ = query(collection(db, 'execom-sections'), limit(6));
+        const allSnapshot = await getDocs(allQ);
+        members = allSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
+
+      this.renderGrid(members, 'teamGrid');
+      console.log(`✅ Loaded ${members.length} ExeCom members`);
     } catch (error) {
-      console.error('Error loading events:', error);
-      Utils.renderErrorState(document.getElementById('eventTrack'), 'Failed to load events. Please refresh the page.');
+      console.error('❌ Error loading ExeCom:', error);
+      this.renderError('teamGrid');
     }
   },
 
@@ -494,7 +519,7 @@ async loadForIndex() {
         this.renderSection(sectionName, members);
       });
     } catch (error) {
-      console.error('❌ Error loading ExeCom data:', error);
+      console.error('❌ Error loading full ExeCom:', error);
     }
   },
 
@@ -503,7 +528,7 @@ async loadForIndex() {
     if (!grid) return;
 
     if (members.length === 0) {
-      Utils.renderEmptyState(grid, '👥', 'No team members yet. Check back soon!');
+      Utils.renderEmptyState(grid, '👥', 'No team members yet.');
       return;
     }
 
@@ -513,7 +538,7 @@ async loadForIndex() {
   renderSection(sectionName, members) {
     const sectionId = this.SECTION_MAPPINGS[sectionName];
     if (!sectionId) {
-      console.warn(`⚠️ No mapping found for section: ${sectionName}`);
+      console.warn(`⚠️ No mapping for section: ${sectionName}`);
       return;
     }
 
@@ -525,12 +550,18 @@ async loadForIndex() {
 
     const teamContainer = section.querySelector('.team[data-reveal]');
     if (!teamContainer) {
-      console.warn(`⚠️ Team container not found in section: ${sectionId}`);
+      console.warn(`⚠️ Team container not found: ${sectionId}`);
       return;
     }
 
     teamContainer.innerHTML = members.map(member => this.createMemberCard(member)).join('');
     console.log(`✅ Rendered ${members.length} members in ${sectionName}`);
+  },
+
+  renderError(containerId) {
+    const grid = document.getElementById(containerId);
+    if (!grid) return;
+    Utils.renderErrorState(grid, 'Failed to load team members.');
   },
 
   createMemberCard(member) {
@@ -550,38 +581,98 @@ async loadForIndex() {
 };
 
 // ============================================
+// MCET UPDATES MODULE
+// ============================================
+const McetUpdates = {
+  async load() {
+    const grid = document.querySelector('.gallery-grid');
+    if (!grid) return;
+
+    try {
+      Utils.renderLoadingState(grid, 'Loading MCET Updates...');
+
+      // Sort by createdAt in DESCENDING order (newest first)
+      const q = query(collection(db, 'mcetupdates'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+        Utils.renderEmptyState(grid, '📰', 'No updates yet. Check back soon!');
+        return;
+      }
+
+      const updates = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      this.render(updates, grid);
+      
+      console.log(`✅ Loaded ${updates.length} MCET Updates (newest first)`);
+    } catch (error) {
+      console.error('❌ Error loading MCET updates:', error);
+      Utils.renderErrorState(grid, 'Failed to load updates. Please try again.');
+    }
+  },
+
+  render(updates, grid) {
+    grid.innerHTML = updates.map((update, index) => {
+      const title = update.title || `MCET Update Vol ${updates.length - index}`;
+      
+      return `
+        <a href="${update.imageUrl}" class="tile tilt m-update" data-lightbox="mcet">
+          <div class="shine"></div>
+          <img 
+            src="${update.imageUrl}" 
+            alt="${Utils.escapeHtml(title)}" 
+            onerror="this.src='${Utils.errorPlaceholder}'"
+            loading="lazy" />
+          <div class="tile-overlay">
+            <p class="tile-title">${Utils.escapeHtml(title)}</p>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+    Utils.initTilts(grid);
+    Utils.initRevealAnimations(grid);
+
+    // Re-initialize lightbox if available
+    if (window.initLightbox) window.initLightbox();
+  }
+};
+
+// Expose for debugging
+window.loadMcetUpdates = () => McetUpdates.load();
+
+// ============================================
 // PAGE INITIALIZERS
 // ============================================
 const PageInit = {
-  /* async index() {
-    console.log('🚀 Loading Index Page...');
+  async index() {
+    console.log('🚀 Initializing Index Page...');
     await Promise.all([
       QuickLinks.load(),
       Events.loadForIndex(),
       Gallery.load(false),
-      ExeCom.loadExecom()
+      ExeCom.loadForIndex()
     ]);
-    console.log('✅ Index page loaded');
-  }, */
+    console.log('✅ Index page loaded successfully');
+  },
 
   async events() {
-    console.log('🚀 Loading Events Page...');
+    console.log('🚀 Initializing Events Page...');
     await Promise.all([
       QuickLinks.load(),
       Events.loadFeatured(),
       Events.loadPast()
     ]);
-    console.log('✅ Events page loaded');
+    console.log('✅ Events page loaded successfully');
   },
 
   async execom() {
-    console.log('🚀 Loading ExeCom Page...');
+    console.log('🚀 Initializing ExeCom Page...');
     await ExeCom.loadFull();
-    console.log('✅ ExeCom page loaded');
+    console.log('✅ ExeCom page loaded successfully');
   },
 
   async gallery() {
-    console.log('🚀 Loading Gallery Page...');
+    console.log('🚀 Initializing Gallery Page...');
     await Gallery.load(true);
     
     // Setup filter clicks
@@ -593,13 +684,13 @@ const PageInit = {
       });
     });
 
-    // Optional: Auto-refresh every 5 minutes
-    setInterval(() => {
-      console.log('🔄 Refreshing gallery...');
-      Gallery.load(true);
-    }, 5 * 60 * 1000);
+    console.log('✅ Gallery page loaded successfully');
+  },
 
-    console.log('✅ Gallery page loaded');
+  async mcetUpdates() {
+    console.log('🚀 Initializing MCET Updates Page...');
+    await McetUpdates.load();
+    console.log('✅ MCET Updates page loaded successfully');
   }
 };
 
@@ -615,90 +706,28 @@ function detectAndInit() {
     PageInit.execom();
   } else if (path.includes('gallery.html') || (document.getElementById('galleryGrid') && document.querySelector('.chips'))) {
     PageInit.gallery();
+  } else if (path.includes('mcet') || document.querySelector('.gallery-grid .m-update')) {
+    PageInit.mcetUpdates();
   } else {
     PageInit.index();
   }
 }
 
+// Initialize on DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', detectAndInit);
 } else {
   detectAndInit();
 }
 
-//...........
-async function loadExecom() {
-  try {
-    // Load only Core Committee members for homepage
-    const q = query(
-      collection(db, 'execom-sections'),
-      where('sectionName', '==', 'Core Committee'),
-      limit(6)
-    );
-    
-    const snapshot = await getDocs(q);
-    const members = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
+// Export modules globally for external access
+window.FirebaseModules = {
+  QuickLinks,
+  Events,
+  Gallery,
+  ExeCom,
+  McetUpdates,
+  PageInit
+};
 
-    // If no Core Committee members, load any 6 members
-    if (members.length === 0) {
-      const allMembersQuery = query(
-        collection(db, 'execom-sections'),
-        limit(6)
-      );
-      const allSnapshot = await getDocs(allMembersQuery);
-      const allMembers = allSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      renderExecom(allMembers);
-    } else {
-      renderExecom(members);
-    }
-
-    console.log(`✅ Loaded ${members.length} ExeCom members`);
-  } catch (error) {
-    console.error('Error loading ExeCom:', error);
-    renderExecomError();
-  }
-}
-
-function renderExecom(members) {
-  const grid = document.getElementById('teamGrid');
-  if (!grid) return;
-
-  if (members.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
-        <p>No team members yet. Check back soon!</p>
-      </div>
-    `;
-    return;
-  }
-
-  grid.innerHTML = members.map(member => `
-    <div class="card member tilt">
-      <div class="avatar" style="--img: url('${member.imageUrl || 'https://via.placeholder.com/150'}')"></div>
-      <div>
-        <h4>${escapeHtml(member.name)}</h4>
-        <div class="role">${escapeHtml(member.position)}</div>
-      </div>
-      <div class="shine"></div>
-    </div>
-  `).join('');
-}
-
-function renderExecomError() {
-  const grid = document.getElementById('teamGrid');
-  if (!grid) return;
-  
-  grid.innerHTML = `
-    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
-      <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
-      <p>Failed to load team members. Please refresh the page.</p>
-    </div>
-  `;
-}
+console.log('🎉 Firebase Integration v2.1 loaded successfully');
