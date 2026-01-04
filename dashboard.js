@@ -465,7 +465,8 @@ const ExeCom = {
     "Team Coordinators": "coordinators",
     "WIE-AG ExeCom": "wie-execom",
     "PES ExeCom": "pes-execom",
-    "CS ExeCom": "cs-execom"
+    "CS ExeCom": "cs-execom",
+    "Mentor": "Mentor"
   },
 
   async loadForIndex() {
