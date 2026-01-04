@@ -1,6 +1,6 @@
 // ============================================
 // FIREBASE CONFIGURATION - COMPLETE ADMIN PANEL
-// Quick Links + Events + Event Highlights + Gallery + ExeCom Management
+// Quick Links + Events + Event Highlights + Gallery + ExeCom Management + MCET Updates
 // ============================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -69,6 +69,7 @@ const state = {
   eventHighlights: [],
   gallery: [],
   execomSections: [],
+  mcetupdates: [],
   quickLinks: {
     comingSoon: null,
     liveNow: null
@@ -188,6 +189,7 @@ class AuthManager {
     EventHighlightsManager.loadAll();
     GalleryManager.loadAll();
     ExecomManager.loadAll();
+      McetupdatesManager.loadAll();
   }
 
   static showLogin() {
@@ -1023,6 +1025,162 @@ class ExecomManager {
     return div.innerHTML;
   }
 }
+//mcet updates
+class McetupdatesManager {
+  static async loadAll() {
+    try {
+      const q = query(collection(db, 'mcetupdates'), orderBy('order', 'asc'));
+      const snapshot = await getDocs(q);
+      
+      state.mcetupdates = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      this.renderGrid();
+      console.log(`✅ Loaded ${state.mcetupdates.length} MCET updates`);
+    } catch (error) {
+      console.error('Load MCET updates error:', error);
+      NotificationManager.show('Failed to load MCET updates', 'error');
+    }
+  }
+
+  static renderGrid() {
+    const grid = document.getElementById('mcetupdates-grid');
+    if (!grid) {
+      console.error('MCET updates grid element not found');
+      return;
+    }
+
+    console.log('Rendering MCET updates grid with items:', state.mcetupdates);
+    
+    if (state.mcetupdates.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+          <p>No MCET updates yet. Upload your first update!</p>
+        </div>
+      `;
+      return;
+    } 
+
+    grid.innerHTML = state.mcetupdates.map(item => {
+      console.log('Rendering MCET updates item:', item);
+      
+      return `
+        <div class="mcetupdates-card">
+          <img 
+            src="${item.imageUrl}" 
+            alt="${this.escapeHtml(item.title || 'MCET update image')}"
+            onerror="console.error('Image failed to load:', '${item.imageUrl}'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            onload="console.log('Image loaded successfully');"
+          />
+          <div style="display: none; align-items: center; justify-content: center; height: 200px; background: #f1f5f9; color: #64748b; font-size: 14px; text-align: center; padding: 20px; flex-direction: column;">
+            <div>⚠️ Image failed to load</div>
+            <small style="font-size: 11px; word-break: break-all; margin-top: 8px; max-width: 100%;">${item.imageUrl?.substring(0, 80) || 'No URL'}...</small>
+          </div>
+          <div class="mcetupdates-card-info">
+            <div class="mcetupdates-card-title">${this.escapeHtml(item.title || 'Untitled')}</div>
+            <small style="color: #64748b; display: block; margin-bottom: 8px;">Category: ${this.escapeHtml(item.category || 'all')}</small>
+            <small style="color: #64748b; display: block; margin-bottom: 8px;">Order: ${item.order || 1}</small>
+            <button class="btn-delete" onclick="window.deleteMcetupdatesImage('${item.id}', '${item.imageUrl.replace(/'/g, "\\'")}')">Delete</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  static async save() {
+    try {
+      const saveBtn = document.getElementById('mcetupdates-save-btn');
+      if (!saveBtn) {
+        console.error('Save button not found');
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Uploading...';
+
+      const title = document.getElementById('mcetupdates-title').value.trim() || 'Untitled';
+      const category = document.getElementById('mcetupdates-category').value.trim() || 'all';
+      const order = parseInt(document.getElementById('mcetupdates-order').value) || 1;
+      const imageFile = document.getElementById('mcetupdates-image').files[0];
+
+      if (!imageFile) {
+        NotificationManager.show('Please select an image', 'warning');
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Item';
+        return;
+      }
+
+      const imageUrl = await ImageManager.upload(imageFile, 'mcetupdates-images');
+
+      const mcetupdatesData = {
+        title,
+        category,
+        order,
+        imageUrl,
+        createdAt: new Date().toISOString()
+      };
+
+      await addDoc(collection(db, 'mcetupdates'), mcetupdatesData);
+      
+      NotificationManager.show('MCET update uploaded successfully!', 'success');
+      this.clearForm();
+      this.loadAll();
+    } catch (error) {
+      console.error('Save MCET updates error:', error);
+      NotificationManager.show(`Failed to upload: ${error.message}`, 'error');
+    } finally {
+      const saveBtn = document.getElementById('mcetupdates-save-btn');
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Item';
+      }
+    }
+  }
+
+  static async delete(mcetupdatesId, imageUrl) {
+    if (!confirm('Delete this update? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      if (imageUrl) {
+        await ImageManager.delete(imageUrl);
+      }
+
+      await deleteDoc(doc(db, 'mcetupdates', mcetupdatesId));
+
+      NotificationManager.show('MCET update deleted successfully!', 'success');
+      this.loadAll();
+    } catch (error) {
+      console.error('Delete MCET updates error:', error);
+      NotificationManager.show(`Failed to delete: ${error.message}`, 'error');
+    }
+  }
+
+  static clearForm() {
+    const titleInput = document.getElementById('mcetupdates-title');
+    const categoryInput = document.getElementById('mcetupdates-category');
+    const orderInput = document.getElementById('mcetupdates-order');
+    const imageInput = document.getElementById('mcetupdates-image');
+
+    if (titleInput) titleInput.value = '';
+    if (categoryInput) categoryInput.value = '';
+    if (orderInput) orderInput.value = '1';
+    if (imageInput) imageInput.value = '';
+  }
+
+  static escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+}
+
+// Make delete function available globally (if needed for inline onclick)
+window.deleteMcetupdatesImage = (id, url) => McetupdatesManager.delete(id, url);
 
 // Make sure to initialize the event listeners
 document.addEventListener('DOMContentLoaded', () => {
@@ -1139,6 +1297,13 @@ function initializeEventListeners() {
   if (execomClearBtn) {
     execomClearBtn.onclick = () => ExecomManager.clearForm();
   }
+
+    // MCET Updates
+ const mcetupdatesSaveBtn = document.getElementById('mcetupdates-save-btn');
+  
+  if (mcetupdatesSaveBtn) {
+    mcetupdatesSaveBtn.onclick = () => McetupdatesManager.save();
+  }
 }
 
 // ============================================
@@ -1149,6 +1314,7 @@ window.EventManager = EventManager;
 window.EventHighlightsManager = EventHighlightsManager;
 window.GalleryManager = GalleryManager;
 window.ExecomManager = ExecomManager;
+window.McetupdatesManager = McetupdatesManager;
 
 // Global functions for onclick handlers
 window.editEvent = (id) => EventManager.edit(id);
@@ -1156,6 +1322,7 @@ window.deleteEvent = (id, url) => EventManager.delete(id, url);
 window.deleteHighlight = (id, url) => EventHighlightsManager.delete(id, url);
 window.deleteGalleryImage = (id, url) => GalleryManager.delete(id, url);
 window.deleteExecomMember = (id, url) => ExecomManager.delete(id, url);
+window.deleteMcetupdatesImage = (id, url) => McetupdatesManager.delete(id, url);
 
 // ============================================
 // INITIALIZE APPLICATION
