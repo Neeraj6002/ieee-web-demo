@@ -442,58 +442,32 @@ const ExeCom = {
     "CS ExeCom": "cs-execom"
   },
 
- async loadForIndex() {
-  try {
-    // First try to load Core Committee members
-    const coreQuery = query(
-      collection(db, 'execom-sections'),
-      where('sectionName', '==', 'Core Committee'),
-      limit(6)
-    );
-    
-    let snapshot = await getDocs(coreQuery);
-    let members = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-    // Fallback: if no Core Committee members, load any 6 members
-    if (members.length === 0) {
-      console.log('⚠️ No Core Committee members found, loading any members...');
-      const fallbackQuery = query(
-        collection(db, 'execom-sections'),
-        limit(6)
+async loadForIndex() {
+    try {
+      const q = query(
+        collection(db, 'events'),
+        orderBy('createdAt', 'desc'),
+        limit(12)
       );
-      snapshot = await getDocs(fallbackQuery);
-      members = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    }
+      
+      const snapshot = await getDocs(q);
+      // Ensure newest events are first by checking timestamp
+      const events = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .sort((a, b) => {
+          // Handle Firestore Timestamp objects
+          const timeA = a.createdAt?.seconds || a.createdAt || 0;
+          const timeB = b.createdAt?.seconds || b.createdAt || 0;
+          return timeB - timeA; // Descending order (newest first)
+        });
 
-    // Render the members or show empty state
-    if (members.length > 0) {
-      this.renderGrid(members, 'teamGrid');
-      console.log(`✅ Loaded ${members.length} ExeCom members for index`);
-    } else {
-      console.log('⚠️ No ExeCom members found');
-      const teamGrid = document.getElementById('teamGrid');
-      if (teamGrid) {
-        teamGrid.innerHTML = `
-          <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #64748b;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
-            <p>No team members available at the moment.</p>
-          </div>
-        `;
-      }
+      this.renderIndex(events);
+      console.log(`✅ Loaded ${events.length} events for index (newest first)`);
+    } catch (error) {
+      console.error('Error loading events:', error);
+      Utils.renderErrorState(document.getElementById('eventTrack'), 'Failed to load events. Please refresh the page.');
     }
-  } catch (error) {
-    console.error('❌ Error loading ExeCom:', error);
-    const teamGrid = document.getElementById('teamGrid');
-    if (teamGrid) {
-      teamGrid.innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
-          <p>Failed to load team members. Please refresh the page.</p>
-        </div>
-      `;
-    }
-  }
-},
+  },
 
   async loadFull() {
     try {
