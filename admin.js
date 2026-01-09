@@ -55,7 +55,7 @@ googleProvider.setCustomParameters({
   prompt: 'select_account'
 });
 
-console.log('✅ Firebase initialized (Auth, Firestore, Storage)');
+
 
 // ============================================
 // APPLICATION STATE
@@ -224,7 +224,7 @@ class ImageManager {
 
       const downloadURL = await getDownloadURL(snapshot.ref);
 
-      console.log('✅ Image uploaded:', downloadURL);
+    
       return downloadURL;
     } catch (error) {
       console.error('Upload error:', error);
@@ -250,7 +250,7 @@ class ImageManager {
       const storageRef = ref(storage, filePath);
       await deleteObject(storageRef);
       
-      console.log('✅ Image deleted:', filePath);
+      
     } catch (error) {
       if (error.code === 'storage/object-not-found') {
         console.warn('Image not found in storage:', imageUrl);
@@ -293,7 +293,7 @@ class QuickLinksManager {
         this.populateLiveNowForm(state.quickLinks.liveNow);
       }
 
-      console.log('✅ Loaded Quick Links');
+      
     } catch (error) {
       console.error('Load Quick Links error:', error);
       NotificationManager.show('Failed to load quick links', 'error');
@@ -437,7 +437,7 @@ class EventManager {
       }));
 
       this.renderTable();
-      console.log(`✅ Loaded ${state.events.length} events`);
+      
     } catch (error) {
       console.error('Load events error:', error);
       NotificationManager.show('Failed to load events', 'error');
@@ -640,7 +640,7 @@ class EventHighlightsManager {
       }));
       
       this.renderGrid();
-      console.log(`✅ Loaded ${state.eventHighlights.length} event highlights`);
+      
     } catch (error) {
       console.error('Load event highlights error:', error);
       NotificationManager.show('Failed to load event highlights', 'error');
@@ -773,7 +773,7 @@ class GalleryManager {
       }));
       
       this.renderGrid();
-      console.log(`✅ Loaded ${state.gallery.length} gallery images`);
+    
     } catch (error) {
       console.error('Load gallery error:', error);
       NotificationManager.show('Failed to load gallery', 'error');
@@ -787,7 +787,7 @@ static renderGrid() {
       return;
     }
     
-    console.log('Rendering gallery grid with items:', state.gallery);
+  
     
     if (state.gallery.length === 0) {
       grid.innerHTML = `
@@ -800,7 +800,7 @@ static renderGrid() {
     } 
 
     grid.innerHTML = state.gallery.map(item => {
-      console.log('Rendering gallery item:', item);
+      
       
       return `
         <div class="gallery-card">
@@ -808,7 +808,7 @@ static renderGrid() {
             src="${item.imageUrl}" 
             alt="${this.escapeHtml(item.title || 'Gallery image')}"
             onerror="console.error('Image failed to load:', '${item.imageUrl}'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            onload="console.log('Image loaded successfully');"
+            "
           />
           <div style="display: none; align-items: center; justify-content: center; height: 200px; background: #f1f5f9; color: #64748b; font-size: 14px; text-align: center; padding: 20px; flex-direction: column;">
             <div>⚠️ Image failed to load</div>
@@ -919,7 +919,7 @@ class ExecomManager {
       }));
       
       this.renderSections();
-      console.log(`✅ Loaded ${state.execomSections.length} ExeCom sections`);
+     
     } catch (error) {
       console.error('Load ExeCom error:', error);
       NotificationManager.show('Failed to load ExeCom sections', 'error');
@@ -1145,7 +1145,7 @@ class McetupdatesManager {
       }));
       
       this.renderGrid();
-      console.log(`✅ Loaded ${state.mcetupdates.length} MCET updates`);
+ 
     } catch (error) {
       console.error('Load MCET updates error:', error);
       NotificationManager.show('Failed to load MCET updates', 'error');
@@ -1159,7 +1159,7 @@ class McetupdatesManager {
       return;
     }
 
-    console.log('Rendering MCET updates grid with items:', state.mcetupdates);
+    
     
     if (state.mcetupdates.length === 0) {
       grid.innerHTML = `
@@ -1172,7 +1172,7 @@ class McetupdatesManager {
     } 
 
     grid.innerHTML = state.mcetupdates.map(item => {
-      console.log('Rendering MCET updates item:', item);
+   
       
       return `
         <div class="mcetupdates-card">
@@ -1180,7 +1180,7 @@ class McetupdatesManager {
             src="${item.imageUrl}" 
             alt="${this.escapeHtml(item.title || 'MCET update image')}"
             onerror="console.error('Image failed to load:', '${item.imageUrl}'); this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            onload="console.log('Image loaded successfully');"
+       
           />
           <div style="display: none; align-items: center; justify-content: center; height: 200px; background: #f1f5f9; color: #64748b; font-size: 14px; text-align: center; padding: 20px; flex-direction: column;">
             <div>⚠️ Image failed to load</div>
@@ -1434,9 +1434,7 @@ window.deleteMcetupdatesImage = (id, url) => McetupdatesManager.delete(id, url);
 // ============================================
 // INITIALIZE APPLICATION
 // ============================================
-console.log('🚀 IEEE Admin Panel - Complete Management System');
-console.log('✅ Firebase Services: Auth, Firestore, Storage');
-console.log('📦 Features: Quick Links, Events, Event Highlights, Gallery, ExeCom');
+
 
 // Initialize auth and event listeners
 AuthManager.initialize();

@@ -559,7 +559,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-console.log('✅ Firebase initialized for Index page');
+
 
 // ============================================
 // UTILITY FUNCTIONS
@@ -594,7 +594,7 @@ async function loadQuickLinks() {
       updateLiveNowCard(data);
     }
 
-    console.log('✅ Loaded Quick Links');
+
   } catch (error) {
     console.error('Error loading quick links:', error);
   }
@@ -674,7 +674,7 @@ async function loadEvents() {
     }));
 
     renderEvents(events);
-    console.log(`✅ Loaded ${events.length} events`);
+    
   } catch (error) {
     console.error('Error loading events:', error);
     renderEventsError();
@@ -743,7 +743,7 @@ async function loadGallery() {
     }));
 
     renderGallery(gallery);
-    console.log(`✅ Loaded ${gallery.length} gallery images`);
+    
   } catch (error) {
     console.error('Error loading gallery:', error);
     renderGalleryError();
@@ -844,7 +844,7 @@ async function loadExecom() {
     members = members.slice(0, 6);
 
     renderExecom(members);
-    console.log(`✅ Loaded and sorted ${members.length} Core Committee members in fixed order`);
+   
 
   } catch (error) {
     console.error('❌ Error loading Core Panel:', error);
@@ -976,7 +976,7 @@ if (document.readyState === 'loading') {
 // INITIALIZE ON LOAD
 // ============================================
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('🚀 Loading Firebase content for index page...');
+
   
   try {
     await Promise.all([
@@ -986,7 +986,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       loadExecom()
     ]);
     
-    console.log('✅ All content loaded successfully');
+    
   } catch (error) {
     console.error('❌ Error loading content:', error);
   }
