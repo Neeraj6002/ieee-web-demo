@@ -464,6 +464,7 @@ const ExeCom = {
     "WIE-AG ExeCom": "wie-execom",
     "PES ExeCom": "pes-execom",
     "CS ExeCom": "cs-execom",
+   "EMBS Execom" : "embs-execom",
     "Mentor": "Mentor"
   },
 
