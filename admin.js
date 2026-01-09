@@ -1123,7 +1123,7 @@ class ExecomManager {
     document.getElementById('execom-section-name').value = '';
     document.getElementById('execom-member-name').value = '';
     document.getElementById('execom-member-position').value = '';
-    document.getElementById('execom-member-image').value = ''; // ✅ Fixed ID
+    document.getElementById('execom-member-image').value = ''; 
   }
 
   static escapeHtml(text) {
