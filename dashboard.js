@@ -32,7 +32,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-console.log('✅ Firebase initialized successfully');
 
 // ============================================
 // UTILITY FUNCTIONS
@@ -152,7 +151,6 @@ const QuickLinks = {
         this.updateCard('live', liveNowDoc.data());
       }
 
-      console.log('✅ Quick Links loaded successfully');
     } catch (error) {
       console.error('❌ Error loading quick links:', error);
     }
@@ -218,7 +216,7 @@ const Events = {
         });
 
       this.renderIndex(events);
-      console.log(`✅ Loaded ${events.length} events (newest first)`);
+     
     } catch (error) {
       console.error('❌ Error loading events:', error);
       Utils.renderErrorState(document.getElementById('eventTrack'), 'Failed to load events. Please refresh.');
@@ -238,7 +236,7 @@ const Events = {
       const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
       this.renderFeatured(events);
-      console.log(`✅ Loaded ${events.length} featured events`);
+     
     } catch (error) {
       console.error('❌ Error loading featured events:', error);
       Utils.renderErrorState(document.getElementById('eventTrack'), 'Failed to load featured events.');
@@ -252,7 +250,7 @@ const Events = {
       const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
       this.renderPast(events);
-      console.log(`✅ Loaded ${events.length} past events`);
+   
     } catch (error) {
       console.error('❌ Error loading past events:', error);
       Utils.renderErrorState(document.getElementById('pastEventsGrid'), 'Failed to load past events.');
@@ -393,7 +391,7 @@ const Gallery = {
       this.allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
       this.render(this.allItems, isFullGallery);
-      console.log(`✅ Loaded ${this.allItems.length} gallery images`);
+    
     } catch (error) {
       console.error('❌ Error loading gallery:', error);
       const grid = document.getElementById('galleryGrid');
@@ -488,7 +486,7 @@ const ExeCom = {
       }
 
       this.renderGrid(members, 'teamGrid');
-      console.log(`✅ Loaded ${members.length} ExeCom members`);
+   
     } catch (error) {
       console.error('❌ Error loading ExeCom:', error);
       this.renderError('teamGrid');
@@ -501,7 +499,7 @@ const ExeCom = {
       const snapshot = await getDocs(q);
       
       if (snapshot.empty) {
-        console.log('⚠️ No ExeCom data found');
+        
         return;
       }
 
@@ -514,7 +512,7 @@ const ExeCom = {
         sections[sectionName].push({ id: doc.id, ...data });
       });
 
-      console.log('✅ Loaded sections:', Object.keys(sections));
+     
 
       Object.entries(sections).forEach(([sectionName, members]) => {
         this.renderSection(sectionName, members);
@@ -556,7 +554,7 @@ const ExeCom = {
     }
 
     teamContainer.innerHTML = members.map(member => this.createMemberCard(member)).join('');
-    console.log(`✅ Rendered ${members.length} members in ${sectionName}`);
+    
   },
 
   renderError(containerId) {
@@ -604,7 +602,7 @@ const McetUpdates = {
       const updates = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       this.render(updates, grid);
       
-      console.log(`✅ Loaded ${updates.length} MCET Updates (newest first)`);
+    
     } catch (error) {
       console.error('❌ Error loading MCET updates:', error);
       Utils.renderErrorState(grid, 'Failed to load updates. Please try again.');
@@ -646,34 +644,34 @@ window.loadMcetUpdates = () => McetUpdates.load();
 // ============================================
 const PageInit = {
   async index() {
-    console.log('🚀 Initializing Index Page...');
+   
     await Promise.all([
       QuickLinks.load(),
       Events.loadForIndex(),
       Gallery.load(false),
       ExeCom.loadForIndex()
     ]);
-    console.log('✅ Index page loaded successfully');
+    
   },
 
   async events() {
-    console.log('🚀 Initializing Events Page...');
+
     await Promise.all([
       QuickLinks.load(),
       Events.loadFeatured(),
       Events.loadPast()
     ]);
-    console.log('✅ Events page loaded successfully');
+    
   },
 
   async execom() {
-    console.log('🚀 Initializing ExeCom Page...');
+    
     await ExeCom.loadFull();
-    console.log('✅ ExeCom page loaded successfully');
+    
   },
 
   async gallery() {
-    console.log('🚀 Initializing Gallery Page...');
+    
     await Gallery.load(true);
     
     // Setup filter clicks
@@ -685,13 +683,13 @@ const PageInit = {
       });
     });
 
-    console.log('✅ Gallery page loaded successfully');
+    
   },
 
   async mcetUpdates() {
-    console.log('🚀 Initializing MCET Updates Page...');
+   
     await McetUpdates.load();
-    console.log('✅ MCET Updates page loaded successfully');
+   
   }
 };
 
@@ -731,4 +729,3 @@ window.FirebaseModules = {
   PageInit
 };
 
-console.log('🎉 Firebase Integration v2.1 loaded successfully');
