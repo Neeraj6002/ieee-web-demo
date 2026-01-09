@@ -456,7 +456,7 @@ window.openLightbox = function(imageUrl) {
 // EXECOM MODULE
 // ============================================
 const ExeCom = {
-  SECTION_MAPPINGS: {
+SECTION_MAPPINGS: {
     "Advisory & Faculty": "advisors",
     "Core Committee": "core-2025",
     "Team Leads": "leads",
@@ -464,7 +464,7 @@ const ExeCom = {
     "WIE-AG ExeCom": "wie-execom",
     "PES ExeCom": "pes-execom",
     "CS ExeCom": "cs-execom",
-   "EMBS Execom" : "embs-execom",
+    "EMBS ExeCom": "embs-execom",
     "Mentor": "Mentor"
   },
 
